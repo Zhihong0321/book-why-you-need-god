@@ -1,0 +1,6 @@
+# Archived content
+archieve-gitignore/
+
+# Kiro/Claude config
+.claude/
+.kiro/
