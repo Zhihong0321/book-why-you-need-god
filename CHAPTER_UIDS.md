@@ -5,7 +5,9 @@
 | INTRO | front_note.md | Introduction / Front Note |
 | NDEXP | nde_research_report.md | NDE Experience — Soul Exists |
 | MFPRT | messianic-fingerprint-audit-report.md | Messianic Fingerprint — God Identified |
+| RSDLT | 08a_resurrection_delta.md | Resurrection Delta — Only the Resurrection Explains the Gap |
 | CMD10 | 10a_ten_commandments.md | Ten Commandments — Mother of All Laws / Father of Prophecy |
+| GDSIG | 10a2_god_signature.md | God's Signature — Three Promises Fulfilled Across Millennia |
 | BLDNA | 10b_bible_dna.md | Bible DNA — All Humanity's Memory |
 | ROADS | 10_all_roads_same_address.md | All Roads Same Address — Convergence |
 | GODMG | message_to_non_believer.md | God's Message to Non-Believers |

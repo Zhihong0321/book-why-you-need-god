@@ -33,6 +33,15 @@ PART2_HEADER = """
 
 """
 
+APPENDIX_HEADER = """
+
+═══════════════════════════════════════════════════════════════════
+# 彩蛋 | 附录
+## 不承担论证重量，但值得一看。
+═══════════════════════════════════════════════════════════════════
+
+"""
+
 # ── Chapter order ──────────────────────────────────────────────────────
 # Tuple: (uid, filename, part_marker_before)
 #   part_marker_before = None | "PART1" | "PART2"
@@ -47,10 +56,10 @@ CHAPTERS = [
     ("NDEXP", "nde_research_report.md",                "PART1"),
     ("ONEGD", "onegod.md",                             None),
     ("MFPRT", "messianic-fingerprint-audit-report.md", None),
+    ("RSDLT", "08a_resurrection_delta.md",             None),
     ("CMD10", "10a_ten_commandments.md",               None),
-    ("BLDNA", "10b_bible_dna.md",                      None),
+    ("GDSIG", "10a2_god_signature.md",                 None),
     ("ROADS", "10_all_roads_same_address.md",          None),
-    ("GODMG", "message_to_non_believer.md",            None),
     ("UNVRS", "03b_universe_is_yours.md",              None),
     ("P1END", "part1_ending.md",                       None),
 
@@ -65,6 +74,10 @@ CHAPTERS = [
     ("ETERN", "07_eternal_punishment.md",              None),
     ("RSRCT", "08_jesus_resurrection.md",              None),
     ("RSPND", "09_why_must_i_face_final_judgement.md", None),
+
+    # ─── 彩蛋 | 附录（不承担论证重量） ───
+    ("BLDNA", "10b_bible_dna.md",                      "APPENDIX"),
+    ("GODMG", "message_to_non_believer.md",            None),
 ]
 
 
@@ -147,6 +160,8 @@ def main():
             parts.append(PART1_HEADER)
         elif part_marker == "PART2":
             parts.append(PART2_HEADER)
+        elif part_marker == "APPENDIX":
+            parts.append(APPENDIX_HEADER)
 
         source, tag, content = resolve(uid, filename)
         parts.append(divider(n, uid, source) + content)

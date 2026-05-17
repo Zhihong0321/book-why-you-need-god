@@ -2411,3 +2411,225 @@ YEAR: UNKNOWN
 USED_FOR: Supports the analogy of irreversible quantum state collapse as a physical model for the irreversibility of post-death spiritual state.
 URL: https://plato.stanford.edu/archives/win2025/entries/qm-decoherence/
 ---
+
+## RSDLT — 08a_resurrection_delta
+
+[RSDLT-001]
+CHAPTER: RSDLT
+TYPE: PRIMARY
+AUTHOR: Paul the Apostle
+TITLE: 1 Corinthians 15:14 (哥林多前书 15:14)
+SOURCE: New Testament
+YEAR: c. AD 55
+USED_FOR: Paul's falsifiable declaration — "If Christ has not been raised, our preaching is useless and so is your faith" — staking the entire movement on a verifiable historical claim.
+URL: NONE
+---
+
+[RSDLT-002]
+CHAPTER: RSDLT
+TYPE: LEGAL
+AUTHOR: Ulpian (compiled in Justinian's Digest)
+TITLE: Digest 49.16 — De re militari (Roman military law on dereliction of duty)
+SOURCE: Corpus Juris Civilis
+YEAR: c. AD 3rd century (Ulpian); AD 533 (compilation)
+USED_FOR: Confirms Roman soldiers faced execution for dereliction of duty, including failure to confirm death of a condemned prisoner.
+URL: NONE
+---
+
+[RSDLT-003]
+CHAPTER: RSDLT
+TYPE: JOURNAL
+AUTHOR: Edwards, W.D.; Gabel, W.J.; Hosmer, F.E.
+TITLE: On the Physical Death of Jesus Christ
+SOURCE: Journal of the American Medical Association (JAMA), Vol. 255, No. 11, pp. 1455–1463
+YEAR: 1986
+USED_FOR: Medical analysis concluding that the flow of "blood and water" from the spear wound (John 19:34) is consistent with pericardial effusion and pleural effusion, confirming cardiac death.
+URL: NONE
+---
+
+[RSDLT-004]
+CHAPTER: RSDLT
+TYPE: PRIMARY
+AUTHOR: Mark (traditional)
+TITLE: Gospel of Mark 14:50
+SOURCE: New Testament
+YEAR: c. AD 65-70
+USED_FOR: Records that all disciples fled when Jesus was arrested — "They all forsook him and fled."
+URL: NONE
+---
+
+[RSDLT-005]
+CHAPTER: RSDLT
+TYPE: PRIMARY
+AUTHOR: Mark (traditional)
+TITLE: Gospel of Mark 14:66-72
+SOURCE: New Testament
+YEAR: c. AD 65-70
+USED_FOR: Records Peter's three denials of knowing Jesus, including before a servant girl, establishing the "before" baseline of cowardice.
+URL: NONE
+---
+
+[RSDLT-006]
+CHAPTER: RSDLT
+TYPE: PRIMARY
+AUTHOR: Flavius Josephus
+TITLE: Jewish Antiquities (《犹太古史》) 18.116-119; 20.97-98; Jewish War 7.253-274
+SOURCE: c. AD 93-94
+YEAR: c. AD 93-94
+USED_FOR: Documents the fate of other messianic/revolutionary movements (John the Baptist, Theudas, Judas the Galilean, Bar Kokhba) — all ended permanently upon the leader's death, establishing the historical norm that Jesus' movement violated.
+URL: NONE
+---
+
+[RSDLT-007]
+CHAPTER: RSDLT
+TYPE: PRIMARY
+AUTHOR: Luke (traditional)
+TITLE: Acts of the Apostles 2:14-36
+SOURCE: New Testament
+YEAR: c. AD 80-85
+USED_FOR: Records Peter's Pentecost sermon in Jerusalem publicly declaring "God has raised this Jesus to life, and we are all witnesses of it."
+URL: NONE
+---
+
+[RSDLT-008]
+CHAPTER: RSDLT
+TYPE: PRIMARY
+AUTHOR: Luke (traditional)
+TITLE: Acts of the Apostles 5:29
+SOURCE: New Testament
+YEAR: c. AD 80-85
+USED_FOR: Records Peter's declaration before the Sanhedrin — "We must obey God rather than human beings" — demonstrating the behavioral delta from cowardice to defiance.
+URL: NONE
+---
+
+[RSDLT-009]
+CHAPTER: RSDLT
+TYPE: PRIMARY
+AUTHOR: Clement of Rome
+TITLE: 1 Clement (克莱门特一书) 5:1-4
+SOURCE: Letter to the Corinthians
+YEAR: c. AD 96
+USED_FOR: Earliest non-biblical confirmation of Peter's martyrdom in Rome — "having borne his testimony, [he] went to his appointed place of glory." Tradition of inverted crucifixion attested by Origen (c. AD 230, in Eusebius HE 3.1.2).
+URL: NONE
+---
+
+[RSDLT-010]
+CHAPTER: RSDLT
+TYPE: PRIMARY
+AUTHOR: Clement of Rome; Eusebius of Caesarea
+TITLE: 1 Clement 5; Eusebius, Ecclesiastical History (《教会史》) Books 2-3
+SOURCE: c. AD 96 (Clement); c. AD 325 (Eusebius)
+YEAR: c. AD 96–325
+USED_FOR: Confirms apostolic martyrdom traditions — multiple apostles died for their eyewitness testimony across different cities and decades.
+URL: NONE
+---
+
+[RSDLT-011]
+CHAPTER: RSDLT
+TYPE: PRIMARY
+AUTHOR: Paul the Apostle
+TITLE: Galatians 1:13-14; Philippians 3:5-6
+SOURCE: New Testament
+YEAR: c. AD 49-55
+USED_FOR: Paul's self-testimony of his pre-conversion status — Pharisee, student of Gamaliel, zealous persecutor of the church, advancing beyond his peers in Judaism.
+URL: NONE
+---
+
+[RSDLT-012]
+CHAPTER: RSDLT
+TYPE: PRIMARY
+AUTHOR: Paul the Apostle
+TITLE: 2 Corinthians 11:23-27
+SOURCE: New Testament
+YEAR: c. AD 55-56
+USED_FOR: Paul's catalogue of sufferings — five times 39 lashes, three times beaten with rods, once stoned, three shipwrecks, constant danger — documenting the cost of his post-conversion life.
+URL: NONE
+---
+
+[RSDLT-013]
+CHAPTER: RSDLT
+TYPE: PRIMARY
+AUTHOR: John the Evangelist (traditional)
+TITLE: Gospel of John 7:5
+SOURCE: New Testament
+YEAR: c. AD 90-100
+USED_FOR: Records that Jesus' own brothers did not believe in him during his ministry — "For even his own brothers did not believe in him."
+URL: NONE
+---
+
+[RSDLT-014]
+CHAPTER: RSDLT
+TYPE: PRIMARY
+AUTHOR: Flavius Josephus
+TITLE: Jewish Antiquities (《犹太古史》) 20.200 (§20.9.1)
+SOURCE: c. AD 93-94
+YEAR: c. AD 93-94
+USED_FOR: Non-Christian independent confirmation of James' (brother of Jesus) execution by stoning under High Priest Ananus ben Ananus in AD 62. Josephus identifies him as "the brother of Jesus who is called Christ."
+URL: NONE
+---
+
+[RSDLT-015]
+CHAPTER: RSDLT
+TYPE: BOOK
+AUTHOR: Gary R. Habermas; Michael R. Licona
+TITLE: The Case for the Resurrection of Jesus
+SOURCE: Kregel Publications, Grand Rapids
+YEAR: 2004
+USED_FOR: Comprehensive analysis of hallucination hypothesis failure — clinical psychology does not support group hallucinations of identical content; hallucinations do not explain empty tomb, enemy conversions, or 40-day duration.
+URL: NONE
+---
+
+[RSDLT-016]
+CHAPTER: RSDLT
+TYPE: BOOK
+AUTHOR: Gerd Lüdemann
+TITLE: What Really Happened to Jesus: A Historical Approach to the Resurrection
+SOURCE: Westminster John Knox Press, Louisville
+YEAR: 1995
+USED_FOR: Skeptical scholar confirming the 1 Corinthians 15:3-7 creed dates to within 2-5 years of the crucifixion (c. AD 30-35). Lüdemann accepts the creed's early dating despite rejecting the resurrection itself.
+URL: NONE
+---
+
+[RSDLT-017]
+CHAPTER: RSDLT
+TYPE: PRIMARY
+AUTHOR: Luke (traditional)
+TITLE: Acts of the Apostles 8:1
+SOURCE: New Testament
+YEAR: c. AD 80-85
+USED_FOR: Records Saul's approval of Stephen's execution — "And Saul approved of their killing him" — establishing his active role as persecutor.
+URL: NONE
+---
+
+[RSDLT-018]
+CHAPTER: RSDLT
+TYPE: PRIMARY
+AUTHOR: Matthew (traditional)
+TITLE: Gospel of Matthew 28:11-15
+SOURCE: New Testament
+YEAR: c. AD 80-85
+USED_FOR: Records the Jewish authorities' counter-narrative ("his disciples came during the night and stole him away while we were asleep") — which inadvertently confirms the tomb was empty, as the dispute is over WHY it was empty, not WHETHER it was empty.
+URL: NONE
+---
+
+[RSDLT-019]
+CHAPTER: RSDLT
+TYPE: PRIMARY
+AUTHOR: Luke (traditional); Mark (traditional); John (traditional)
+TITLE: Luke 24:1-12; Mark 16:1-8; John 20:1-2
+SOURCE: New Testament
+YEAR: c. AD 65-100
+USED_FOR: All Gospel accounts record women (Mary Magdalene and others) as the first witnesses to the empty tomb — a detail no fabricator would invent in a culture where female testimony was legally inadmissible (criterion of embarrassment).
+URL: NONE
+---
+
+[RSDLT-020]
+CHAPTER: RSDLT
+TYPE: PRIMARY
+AUTHOR: John the Evangelist (traditional)
+TITLE: Gospel of John 20:25
+SOURCE: New Testament
+YEAR: c. AD 90-100
+USED_FOR: Records Thomas's public doubt — "Unless I see the nail marks in his hands and put my finger where the nails were, and put my hand into his side, I will not believe" — an anti-fabrication detail no propagandist would include about a core team member.
+URL: NONE
+---
