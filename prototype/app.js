@@ -235,7 +235,151 @@
 
 })();
 
-// ===== TEXT EFFECTS ENGINE =====
+// ===== REFERENCE PANEL ENGINE =====
+(function () {
+    'use strict';
+
+    // Reference database (from BOOK_REFERENCES.md)
+    var REFS = {
+        'NDEXP-001': {
+            author: 'van Lommel, P. et al.',
+            title: 'Near-death experience in survivors of cardiac arrest',
+            source: 'The Lancet',
+            year: '2001',
+            type: 'JOURNAL',
+            used_for: 'Prospective study of 344 cardiac arrest survivors showing NDE clarity inversely correlated with brain damage'
+        },
+        'NDEXP-002': {
+            author: 'Parnia, S. et al.',
+            title: 'AWARE—AWAreness during REsuscitation',
+            source: 'Resuscitation',
+            year: '2014',
+            type: 'JOURNAL',
+            used_for: 'AWARE study of 2,060 cardiac arrest patients showing NDE during flat EEG states'
+        },
+        'NDEXP-003': {
+            author: 'Ring, K. & Cooper, S.',
+            title: 'Mindsight: Near-Death and Out-of-Body Experiences in the Blind',
+            source: 'William James Center',
+            year: '1999',
+            type: 'BOOK',
+            used_for: 'Study of 31 visually impaired/blind NDErs including congenitally blind reporting visual perception'
+        },
+        'NDEXP-004': {
+            author: 'Morse, M.',
+            title: 'Closer to the Light: Learning from the Near-Death Experiences of Children',
+            source: 'Villard Books',
+            year: '1990',
+            type: 'BOOK',
+            used_for: 'Children aged 3-12 reporting full NDE protocol stack without religious education or media exposure'
+        },
+        'NDEXP-005': {
+            author: 'Greyson, B.',
+            title: 'Incidence and correlates of near-death experiences in a cardiac care unit',
+            source: 'General Hospital Psychiatry',
+            year: '2003',
+            type: 'JOURNAL',
+            used_for: 'NDE scale data showing cognitive clarity scores above normal waking baseline'
+        },
+        'NDEXP-006': {
+            author: '刘建勋等',
+            title: '唐山大地震濒死体验调查研究',
+            source: '中国内部报告',
+            year: '1979',
+            type: 'PRIMARY',
+            used_for: '81 NDE reports from Tangshan earthquake survivors in materialist-education environment showing Western-identical core elements'
+        },
+        'NDEXP-007': {
+            author: 'Pasricha, S. & Stevenson, I.',
+            title: 'Near-death experiences in India',
+            source: 'Academic journal',
+            year: '1986',
+            type: 'JOURNAL',
+            used_for: 'Hindu-culture NDE study showing core protocol consistent despite cultural coloring'
+        },
+        'NDEXP-008': {
+            author: 'Greyson, B.',
+            title: 'Near-death experiences in suicide attempters',
+            source: 'JAMA',
+            year: '1991',
+            type: 'JOURNAL',
+            used_for: '证明自杀未遂者的 NDE 与非自杀者一致，具有教育性而非逃避性'
+        },
+        'NDEXP-009': {
+            author: 'Parnia, S. et al.',
+            title: 'AWARE II',
+            source: 'Circulation',
+            year: '2020',
+            type: 'JOURNAL',
+            used_for: '隐藏目标实验，验证心脏骤停期间的离体感知'
+        },
+        'NDEXP-010': {
+            author: 'van Lommel, P.',
+            title: 'Consciousness Beyond Life',
+            source: 'HarperOne',
+            year: '2010',
+            type: 'BOOK',
+            used_for: '假牙案例（1979）的详细记录，证明深昏迷状态下的可验证感知'
+        },
+        'NDEXP-011': {
+            author: 'IANDS',
+            title: 'Al Sullivan Case',
+            source: 'IANDS Archives',
+            year: '1988',
+            type: 'CASE STUDY',
+            used_for: '心脏手术患者在术后准确描述主刀医生的独特习惯动作'
+        }
+    };
+
+    var panel = document.getElementById('refPanel');
+    var panelId = document.getElementById('refPanelId');
+    var panelBody = document.getElementById('refPanelBody');
+    var panelClose = document.getElementById('refPanelClose');
+
+    // Click handler for all ref tags
+    document.addEventListener('click', function (e) {
+        var tag = e.target.closest('.ref-tag');
+        if (tag) {
+            var refKey = tag.getAttribute('data-ref');
+            openRef(refKey);
+            return;
+        }
+        // Click outside panel closes it
+        if (panel.classList.contains('open') && !panel.contains(e.target)) {
+            closeRef();
+        }
+    });
+
+    panelClose.addEventListener('click', closeRef);
+
+    function openRef(key) {
+        var data = REFS[key];
+        if (!data) return;
+
+        panelId.textContent = '[' + key + ']';
+
+        var html = '';
+        html += '<div class="ref-field"><span class="ref-label">Author</span><span class="ref-value">' + data.author + '</span></div>';
+        html += '<div class="ref-field"><span class="ref-label">Title</span><span class="ref-value">' + data.title + '</span></div>';
+        html += '<div class="ref-field"><span class="ref-label">Source</span><span class="ref-value">' + data.source + ' (' + data.year + ')</span></div>';
+        html += '<div class="ref-field"><span class="ref-label">Type</span><span class="ref-value">' + data.type + '</span></div>';
+        html += '<div class="ref-field"><span class="ref-label">Used for</span><span class="ref-value">' + data.used_for + '</span></div>';
+
+        panelBody.innerHTML = html;
+        panel.classList.add('open');
+    }
+
+    function closeRef() {
+        panel.classList.remove('open');
+    }
+
+    // ESC key closes
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeRef();
+    });
+
+})();
+
 // Separate from mood engine — uses IntersectionObserver for scroll-triggered effects
 (function () {
     'use strict';

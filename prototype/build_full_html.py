@@ -1,4 +1,16 @@
-<!DOCTYPE html>
+"""
+Build the full NDEXP prototype HTML from the restructured source.
+Run: python build_full_html.py
+Output: index_full.html
+"""
+import os
+
+output_path = os.path.join(os.path.dirname(__file__), 'index_full.html')
+
+# We'll build the HTML as a big string
+parts = []
+
+parts.append('''<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -35,7 +47,9 @@
             <div class="aurora-layer a3"></div>
         </div>
     </div>
+''')
 
+parts.append('''
     <audio id="track-calm" loop preload="auto">
         <source src="../music_asset/Scott Buckley - Snowfall.mp3" type="audio/mpeg">
     </audio>
@@ -65,7 +79,10 @@
     </div>
 
     <main class="content" id="mainContent">
+''')
 
+# ZONE 1: 结论
+parts.append('''
         <section class="zone" data-mood="calm">
             <div class="chapter-label">结论</div>
             <div class="text-block">
@@ -74,7 +91,10 @@
                 <p class="fx-glow">当接口断电，意识不会消亡——它回家。</p>
             </div>
         </section>
+''')
 
+# ZONE 2: 逻辑
+parts.append('''
         <section class="zone" data-mood="wonder">
             <div class="chapter-label">逻辑</div>
             <div class="text-block">
@@ -99,11 +119,17 @@
                 <p>我们来看数据怎么说。</p>
             </div>
         </section>
+''')
 
+# LIGHTSPEED TRANSITION
+parts.append('''
         <section class="zone-transition" data-transition="lightspeed">
             <div class="transition-space"></div>
         </section>
+''')
 
+# ZONE 3: 论证
+parts.append('''
         <section class="zone" data-mood="awe">
             <div class="chapter-label">论证</div>
             <div class="text-block">
@@ -143,7 +169,10 @@
                 <blockquote class="fx-quote">视觉不是视网膜的产物，而是意识的固有属性。当脱离物质身体时，这种原生感知能力不再受限于特定感官硬件的有无。</blockquote>
                 <p>这如同一个人一直通过一扇小窗户看世界，当墙壁消失时，他发现自己本来就站在旷野中——视野从未真正被限制，只是被窗框遮挡。</p>
             </div>
+''')
 
+# 综合审计结论 table + architecture diagram
+parts.append('''
             <div class="text-block">
                 <h3>综合审计结论</h3>
                 <table>
@@ -158,7 +187,10 @@
                 </table>
             </div>
         </section>
+''')
 
+# ZONE 4: 证据 — full 4 modules
+parts.append('''
         <section class="zone" data-mood="awe">
             <div class="chapter-label">证据</div>
             <div class="text-block">
@@ -180,7 +212,10 @@
                     </tbody>
                 </table>
             </div>
+''')
 
+# Protocol stack table + Module 1 + Module 2
+parts.append('''
             <div class="text-block">
                 <h3>底层协议栈：跨域一致性</h3>
                 <table>
@@ -240,7 +275,10 @@
                     </tbody>
                 </table>
             </div>
+''')
 
+# Module 3 + Module 4
+parts.append('''
             <div class="divider"></div>
             <div class="text-block">
                 <h3>模块 3：跨文化核心元素一致性</h3>
@@ -289,11 +327,17 @@
                 </table>
             </div>
         </section>
+''')
 
+# LIGHTSPEED TRANSITION 2
+parts.append('''
         <section class="zone-transition" data-transition="lightspeed">
             <div class="transition-space"></div>
         </section>
+''')
 
+# ZONE 5: 结尾 — weight mood
+parts.append('''
         <section class="zone" data-mood="weight">
             <div class="text-block closing">
                 <p><strong>你刚刚看完的，不只是一组科学数据。</strong></p>
@@ -338,3 +382,11 @@
     <script src="app.js"></script>
 </body>
 </html>
+''')
+
+# Write output
+with open(output_path, 'w', encoding='utf-8') as f:
+    f.write(''.join(parts))
+
+print(f'Built: {output_path}')
+print(f'Size: {len("".join(parts))} chars')
