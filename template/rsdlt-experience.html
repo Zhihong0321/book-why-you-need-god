@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>从散到聚——只有复活能解释的落差</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+/* ═══ RESET & BASE ═══ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:'Noto Serif SC',serif;
+  background:var(--bg);
+  color:var(--fg);
+  line-height:1.9;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ═══ THEME ═══ */
+:root{
+  --bg:#0a0a0c;
+  --fg:#ede9e3;
+  --muted:#8a857e;
+  --accent:#e8845c;
+  --accent-glow:rgba(232,132,92,.25);
+  --surface:#161618;
+  --border:#2c2c30;
+  --font-display:'Noto Serif SC',serif;
+  --fs-body:18px;
+  --fs-lg:22px;
+  --fs-xl:28px;
+  --fs-xxl:36px;
+  --content-max:640px;
+  --safe-bottom:env(safe-area-inset-bottom,0px);
+}
+
+/* ═══ PROGRESS BAR ═══ */
+#progress{
+  position:fixed;top:0;left:0;height:3px;
+  background:var(--accent);
+  z-index:1000;
+  transition:width .15s ease-out;
+  width:0%;
+}
+
+/* ═══ SCROLL ANIMATIONS ═══ */
+.reveal{
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1);
+}
+.reveal.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+.reveal-fast{transition-duration:.4s}
+.reveal-instant{transition-duration:.15s}
+.reveal-scale{
+  opacity:0;
+  transform:translateY(16px) scale(.97);
+  transition:opacity .5s cubic-bezier(.22,1,.36,1),transform .5s cubic-bezier(.22,1,.36,1);
+}
+.reveal-scale.visible{
+  opacity:1;
+  transform:translateY(0) scale(1);
+}
+
+/* ═══ LAYOUT ═══ */
+.scene{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:60px 24px 80px;
+  position:relative;
+}
+.scene--dark{background:var(--bg)}
+.scene--darker{background:#050507}
+.content{
+  max-width:var(--content-max);
+  width:100%;
+}
+
+/* ═══ TYPOGRAPHY ═══ */
+p{
+  margin-bottom:1.2em;
+  font-size:var(--fs-body);
+}
+.breath{margin-bottom:2.4em}
+.big{
+  font-size:var(--fs-xl);
+  font-weight:700;
+  line-height:1.6;
+}
+.huge{
+  font-size:var(--fs-xxl);
+  font-weight:900;
+  line-height:1.4;
+}
+.accent{color:var(--accent)}
+.muted{color:var(--muted)}
+.center{text-align:center}
+.quote-block{
+  border-left:3px solid var(--accent);
+  padding:16px 0 16px 20px;
+  margin:1.6em 0;
+  font-size:var(--fs-lg);
+  line-height:1.7;
+  color:var(--fg);
+}
+.quote-source{
+  display:block;
+  margin-top:8px;
+  font-size:15px;
+  color:var(--muted);
+  font-style:normal;
+}
+.standalone{
+  text-align:center;
+  font-size:var(--fs-xl);
+  font-weight:700;
+  padding:2em 0;
+}
+.divider-line{
+  width:40px;
+  height:2px;
+  background:var(--accent);
+  margin:2em auto;
+  opacity:.6;
+}
+
+/* ═══ ACT LABELS ═══ */
+.act-label{
+  font-size:13px;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:2em;
+  text-align:center;
+}
+
+/* ═══ EVIDENCE LINES ═══ */
+.evidence-line{
+  padding:48px 0;
+  position:relative;
+}
+.evidence-line + .evidence-line{
+  border-top:1px solid var(--border);
+}
+.line-label{
+  font-size:13px;
+  letter-spacing:.12em;
+  color:var(--accent);
+  margin-bottom:1.2em;
+  font-weight:700;
+}
+.delta{
+  font-size:var(--fs-lg);
+  font-weight:700;
+  color:var(--accent);
+  margin-top:1.6em;
+  padding:12px 0;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+
+/* ═══ CANDIDATE CARDS ═══ */
+.candidate{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:24px;
+  margin-bottom:16px;
+  position:relative;
+  overflow:hidden;
+}
+.candidate__title{
+  font-size:var(--fs-lg);
+  font-weight:700;
+  margin-bottom:8px;
+}
+.candidate__body{
+  color:var(--muted);
+  font-size:16px;
+  line-height:1.8;
+}
+.candidate__verdict{
+  margin-top:12px;
+  font-weight:700;
+  color:#c0392b;
+  font-size:17px;
+}
+.candidate--alive{
+  border-color:var(--accent);
+  box-shadow:0 0 20px var(--accent-glow);
+}
+.candidate--alive .candidate__verdict{
+  color:var(--accent);
+}
+
+/* ═══ EVIDENCE FOLD ═══ */
+.evidence-toggle{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:none;
+  border:1px solid var(--border);
+  border-radius:8px;
+  color:var(--muted);
+  font-size:14px;
+  padding:8px 16px;
+  cursor:pointer;
+  margin-top:12px;
+  font-family:inherit;
+  transition:border-color .2s,color .2s;
+  -webkit-tap-highlight-color:transparent;
+}
+.evidence-toggle:active,.evidence-toggle:hover{
+  border-color:var(--accent);
+  color:var(--accent);
+}
+.evidence-toggle .arrow{
+  transition:transform .3s;
+  font-size:12px;
+}
+.evidence-toggle.open .arrow{
+  transform:rotate(90deg);
+}
+.evidence-panel{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .4s ease-out;
+}
+.evidence-panel.open{
+  max-height:600px;
+}
+.evidence-panel__inner{
+  padding:16px 0 8px;
+  font-size:14px;
+  color:var(--muted);
+  line-height:1.8;
+  border-top:1px solid var(--border);
+}
+
+/* ═══ DARK PAUSE ═══ */
+#darkPause{
+  position:fixed;
+  inset:0;
+  background:#000;
+  z-index:900;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .8s ease;
+}
+#darkPause.active{
+  opacity:1;
+  pointer-events:auto;
+}
+#darkPause .breath-dot{
+  width:4px;height:4px;
+  border-radius:50%;
+  background:var(--accent);
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{opacity:.3;transform:scale(1)}
+  50%{opacity:.8;transform:scale(1.5)}
+}
+
+/* ═══ FINAL SECTION ═══ */
+.final-question{
+  font-size:var(--fs-lg);
+  font-weight:700;
+  line-height:1.7;
+  text-align:center;
+  padding:4em 0 25vh;
+}
+.final-question strong{
+  color:var(--accent);
+}
+
+/* ═══ SUMMARY LINES ═══ */
+.summary-line{
+  font-size:var(--fs-lg);
+  font-weight:600;
+  padding:6px 0;
+  border-bottom:1px solid var(--border);
+}
+.summary-line:last-child{border-bottom:none}
+
+/* ═══ MARTYR LIST ═══ */
+.martyr-list{
+  font-size:var(--fs-body);
+  line-height:2.2;
+  text-align:center;
+}
+.martyr-list span{
+  display:block;
+}
+
+/* ═══ ENGINE NAME ═══ */
+.engine-name{
+  text-align:center;
+  font-size:var(--fs-xxl);
+  font-weight:900;
+  color:var(--accent);
+  padding:1em 0;
+  text-shadow:0 0 60px var(--accent-glow);
+}
+
+/* ═══ SPEED CLASSES ═══ */
+.speed-slow p{margin-bottom:1.8em}
+.speed-med p{margin-bottom:1.2em}
+.speed-fast p{margin-bottom:.8em}
+
+/* ═══ SCENE IMAGES ═══ */
+.scene-img{
+  width:100%;
+  max-width:var(--content-max);
+  margin:2em auto;
+  display:block;
+  border-radius:8px;
+  opacity:.85;
+  object-fit:cover;
+  max-height:360px;
+  filter:brightness(.8) contrast(1.05);
+  transition:opacity .6s ease;
+}
+.scene-img.visible{opacity:.85}
+.scene-img--full{
+  max-width:100vw;
+  width:100vw;
+  margin-left:calc(-50vw + 50%);
+  border-radius:0;
+  max-height:45vh;
+}
+
+/* ═══ REDUCED MOTION ═══ */
+@media(prefers-reduced-motion:reduce){
+  .reveal,.reveal-scale,.reveal-fast,.reveal-instant{
+    opacity:1!important;
+    transform:none!important;
+    transition:none!important;
+  }
+  #darkPause{transition:none!important}
+  .breath-dot{animation:none!important}
+}
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:400px){
+  :root{--fs-body:17px;--fs-lg:20px;--fs-xl:25px;--fs-xxl:32px}
+}
+@media(min-width:768px){
+  :root{--fs-body:19px;--fs-lg:24px;--fs-xl:32px;--fs-xxl:42px;--content-max:680px}
+  .scene{padding:80px 32px 100px}
+}
+</style>
+</head>
+<body>
+
+<!-- PROGRESS BAR -->
+<div id="progress"></div>
+
+<!-- DARK PAUSE OVERLAY -->
+<div id="darkPause"><div class="breath-dot"></div></div>
+
+<!-- ═══════════════════════════════════ -->
+<!-- 幕0：引子——保罗的赌注 -->
+<!-- ═══════════════════════════════════ -->
+<section class="scene scene--darker" id="act0">
+<div class="content center">
+  <div class="act-label reveal">幕 0</div>
+  <p class="big reveal" style="transition-delay:.2s">公元55年，保罗写了一句话。</p>
+  <p class="reveal" style="transition-delay:.6s">把整个基督教的命运，押在一个可被证伪的事实上。</p>
+  <img src="assets/ancient-manuscript.jpg" alt="古代手稿" class="scene-img reveal" style="transition-delay:.8s;max-height:240px">
+  <div class="quote-block reveal" style="transition-delay:1s;text-align:left">
+    基督若没有复活，我们所传的便是枉然，你们所信的也是枉然。
+    <span class="quote-source">——哥林多前书 15:14</span>
+  </div>
+  <p class="reveal" style="transition-delay:1.4s">他写这封信的时候，距离事件不到25年。目击者还活着。反对者还活着。</p>
+  <p class="reveal" style="transition-delay:1.8s">如果复活是假的，任何人都可以站出来说：我就是那500人之一，我什么都没看见。</p>
+  <div style="height:3em"></div>
+  <p class="huge accent reveal" style="transition-delay:2.4s">没有人站出来。</p>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════ -->
+<!-- 幕1：坠落——故事本该在这里结束 -->
+<!-- ═══════════════════════════════════ -->
+<section class="scene scene--darker" id="act1">
+<div class="content speed-slow">
+  <div class="act-label center reveal">幕 1</div>
+  <p class="big reveal">公元30年。逾越节后的星期五。</p>
+  <img src="assets/cross-silhouette.jpg" alt="十字架剪影" class="scene-img scene-img--full reveal" style="max-height:35vh">
+  <p class="reveal">耶稣被钉死在十字架上。</p>
+  <p class="muted reveal">罗马士兵确认死亡——这是他们的职业，失职的代价是自己被处决。长矛刺入肋旁，流出血和水——心包积液的征兆，心脏已经停了。
+    <button class="evidence-toggle" onclick="toggleEvidence(this)"><span class="arrow">▸</span>证据</button>
+    <div class="evidence-panel"><div class="evidence-panel__inner">[RSDLT-002] 罗马士兵确认死亡的程序：Journ. of the American Medical Association (1986), "On the Physical Death of Jesus Christ"<br>[RSDLT-003] 血和水流出 = 心包积液 + 胸膜渗出，心脏已停止跳动的医学指征</div></div>
+  </p>
+  <div style="height:2em"></div>
+  <p class="big reveal">门徒全部逃跑。</p>
+  <button class="evidence-toggle" onclick="toggleEvidence(this)"><span class="arrow">▸</span>证据</button>
+  <div class="evidence-panel"><div class="evidence-panel__inner">[RSDLT-004] 马可福音14:50 "门徒都离开他逃走了"</div></div>
+  <div style="height:3em"></div>
+  <p class="reveal">彼得——那个拍着胸脯说"就算所有人都离开你，我也不会"的人——在一个使女面前，三次发誓：</p>
+  <p class="big center reveal">"我不认识他。"</p>
+  <button class="evidence-toggle" onclick="toggleEvidence(this)" style="display:block;margin:8px auto"><span class="arrow">▸</span>证据</button>
+  <div class="evidence-panel"><div class="evidence-panel__inner" style="text-align:center">[RSDLT-005] 马太福音26:69-75；马可福音14:66-72；路加福音22:54-62</div></div>
+  <div style="height:2em"></div>
+  <p class="reveal" style="font-size:17px">不是在罗马总督面前。</p>
+  <p class="reveal" style="font-size:17px">不是在大祭司面前。</p>
+  <p class="big reveal">是在一个使女面前。</p>
+  <div style="height:3em"></div>
+  <p class="muted reveal">领袖死了，运动结束，各回各家。每一个失败的弥赛亚运动都是这个剧本——</p>
+  <p class="reveal">施洗约翰死了，门徒散了。</p>
+  <p class="reveal">犹大加利利人死了，运动灭了。</p>
+  <p class="reveal">巴尔·科赫巴死了，起义终结了。
+    <button class="evidence-toggle" onclick="toggleEvidence(this)"><span class="arrow">▸</span>证据</button>
+    <div class="evidence-panel"><div class="evidence-panel__inner">[RSDLT-006] 约瑟夫斯《犹太古史》18-20章；E.P. Sanders, "Jesus and Judaism" (1985)</div></div>
+  </p>
+  <div style="height:4em"></div>
+  <p class="big accent center reveal">故事本该在这里结束。</p>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════ -->
+<!-- 幕2：不可能的逆转——四条线 -->
+<!-- ═══════════════════════════════════ -->
+<section class="scene scene--dark" id="act2">
+<div class="content">
+
+  <div class="act-label center reveal">幕 2</div>
+  <p class="big reveal">几周后，同一群人重新出现了。</p>
+  <p class="reveal">不是偷偷摸摸。是站在耶路撒冷——就是处决发生的那座城市——公开宣讲："你们钉十字架的这位耶稣，神已经叫他复活了。"
+    <button class="evidence-toggle" onclick="toggleEvidence(this)"><span class="arrow">▸</span>证据</button>
+    <div class="evidence-panel"><div class="evidence-panel__inner">[RSDLT-007] 使徒行传2:22-36；5:30-32</div></div>
+  </p>
+  <div style="height:1em"></div>
+  <p class="big center reveal">从0到300的加速。</p>
+  <img src="assets/speed-lights.jpg" alt="高速光轨" class="scene-img scene-img--full reveal" style="max-height:30vh">
+  <div style="height:1em"></div>
+  <p class="muted reveal">一辆车停在路边。熄火了。司机跑了。乘客全散了。几天后，这辆车以300公里的时速冲上了高速公路——而且所有乘客都回来了，每个人都在踩油门，每个人都不怕撞墙。</p>
+  <p class="reveal">你可以争论它烧什么油。</p>
+  <p class="big reveal">但你不能说它没有引擎。</p>
+  <div style="height:1em"></div>
+  <p class="reveal">0→300的加速度需要一个动力源。门徒从"散"到"聚且殉道"——这是一个可测量的delta。这个delta需要一个cause。</p>
+  <p class="big center reveal">什么cause够大？</p>
+  <div style="height:2em"></div>
+  <p class="muted center reveal">四条独立的证据线。每一条都是一个不可能的逆转。</p>
+
+  <div style="height:3em"></div>
+  <div class="divider-line"></div>
+
+  <!-- 线一：彼得 -->
+  <div class="evidence-line speed-med">
+    <div class="line-label reveal">线一</div>
+    <p class="big reveal">彼得</p>
+    <p class="reveal">几周前，他在一个使女面前三次否认认识耶稣。</p>
+    <p class="reveal">几周后，同一个彼得，站在犹太公会面前——就是下令处死耶稣的那个机构——说："顺从神，不顺从人，是应当的。"
+      <button class="evidence-toggle" onclick="toggleEvidence(this)"><span class="arrow">▸</span>证据</button>
+      <div class="evidence-panel"><div class="evidence-panel__inner">[RSDLT-008] 使徒行传5:29</div></div>
+    </p>
+    <p class="muted reveal">最终，他在罗马被倒钉十字架。
+      <button class="evidence-toggle" onclick="toggleEvidence(this)"><span class="arrow">▸</span>证据</button>
+      <div class="evidence-panel"><div class="evidence-panel__inner">[RSDLT-009] 优西比乌《教会史》2.25；奥利金《马太福音注释》; 彼得殉道传统（公元2世纪）</div></div>
+    </p>
+    <div class="delta reveal-fast">从怕使女 → 不怕帝国</div>
+  </div>
+
+  <!-- 线二：门徒 -->
+  <div class="evidence-line speed-med">
+    <div class="line-label reveal-fast">线二</div>
+    <p class="big reveal-fast">门徒</p>
+    <p class="reveal-fast">十字架前，全部逃跑。锁门躲藏。</p>
+    <p class="reveal-fast">几周后，重新聚集。公开传道。几乎全部殉道。
+      <button class="evidence-toggle" onclick="toggleEvidence(this)"><span class="arrow">▸</span>证据</button>
+      <div class="evidence-panel"><div class="evidence-panel__inner">[RSDLT-010] 克雷芒一书5:2-7（约公元96年）；优西比乌《教会史》</div></div>
+    </p>
+    <div class="delta reveal-fast">从逃兵 → 不怕死的人</div>
+  </div>
+
+  <!-- 线三：保罗 -->
+  <div class="evidence-line speed-fast">
+    <div class="line-label reveal-fast">线三</div>
+    <p class="big reveal-fast">保罗</p>
+    <p class="reveal-fast">扫罗。法利赛人。受教于迦玛列门下——犹太教精英中的精英。</p>
+    <p class="reveal-fast">他的事业轨迹是系统性地消灭基督徒。他亲眼看着司提反被石头砸死，"也喜悦他被害"。</p>
+    <p class="reveal-fast">他不是一个"寻找意义的迷茫青年"。他是一个正在赢的人。</p>
+    <p class="big reveal-fast">然后他突然放弃了一切。</p>
+    <p class="reveal-fast" style="font-size:17px">地位。前途。安全。同族的认可。</p>
+    <p class="muted reveal-fast">他变成了他曾经迫害的那种人。被鞭打五次。被棍打三次。被石头打一次。三次船难。最终在罗马被斩首。
+      <button class="evidence-toggle" onclick="toggleEvidence(this)"><span class="arrow">▸</span>证据</button>
+      <div class="evidence-panel"><div class="evidence-panel__inner">[RSDLT-011] 腓立比书3:5-6；使徒行传22:3<br>[RSDLT-012] 哥林多后书11:23-25；优西比乌《教会史》2.22；罗马克莱门特一书5:4-7</div></div>
+    </p>
+    <p class="reveal-fast">一个正在打胜仗的将军，突然放下武器加入敌方——这不是"改变了主意"。这是他看到了某个让他知道这场仗根本不该打的东西。</p>
+    <div class="delta reveal-instant">从猎人 → 猎物</div>
+  </div>
+
+  <!-- 线四：雅各 -->
+  <div class="evidence-line speed-fast" id="jamesLine">
+    <div class="line-label reveal-instant">线四</div>
+    <p class="big reveal-instant">雅各</p>
+    <p class="reveal-instant">你有一个哥哥。你从小看着他长大。有一天他说自己是神。</p>
+    <p class="reveal-instant">你的反应？"我哥疯了。"</p>
+    <p class="muted reveal-instant">这正是雅各的反应。约翰福音7:5明确记载："他的弟兄们不信他。"
+      <button class="evidence-toggle" onclick="toggleEvidence(this)"><span class="arrow">▸</span>证据</button>
+      <div class="evidence-panel"><div class="evidence-panel__inner">[RSDLT-013] 约翰福音7:5；马可福音3:21 "他的亲属听见，就出来要拉住他，因为他们说他癫狂了"</div></div>
+    </p>
+    <p class="reveal-instant">然后哥哥被处决了。</p>
+    <p class="big reveal-instant">然后——某件事发生了。</p>
+    <p class="reveal-instant">然后这个弟弟——那个最了解哥哥、最不可能被"洗脑"的人——成了耶路撒冷教会的领袖。</p>
+    <p class="reveal-instant">然后他为"我哥是基督"这个声称，被石刑处死。</p>
+    <p class="muted reveal-instant" style="font-size:15px">这不是基督徒记载的。这是约瑟夫斯记载的——一个非基督徒犹太历史学家，在《犹太古史》20.200中独立确认。
+      <button class="evidence-toggle" onclick="toggleEvidence(this)"><span class="arrow">▸</span>证据</button>
+      <div class="evidence-panel"><div class="evidence-panel__inner">[RSDLT-014] 约瑟夫斯《犹太古史》20.200；该段落学术真实性几乎无争议</div></div>
+    </p>
+    <div class="delta reveal-instant" style="font-size:var(--fs-xl)">从"我哥疯了" → 为哥哥死</div>
+  </div>
+
+  <div style="height:3em"></div>
+  <div class="divider-line"></div>
+
+  <!-- 四线收束 -->
+  <div style="height:2em"></div>
+  <div class="summary-line reveal">彼得：从怕使女 → 不怕帝国</div>
+  <div class="summary-line reveal" style="transition-delay:.15s">门徒：从逃兵 → 殉道者</div>
+  <div class="summary-line reveal" style="transition-delay:.3s">保罗：从猎人 → 猎物</div>
+  <div class="summary-line accent reveal" style="transition-delay:.45s">雅各：从"我哥疯了" → 为哥哥死</div>
+  <div style="height:2em"></div>
+  <p class="big center reveal" style="transition-delay:.7s">四条线。互相独立。指向同一个事件。</p>
+
+</div>
+</section>
+
+<!-- ═══════════════════════════════════ -->
+<!-- 幕3：排除一切其他引擎 -->
+<!-- ═══════════════════════════════════ -->
+<section class="scene scene--dark" id="act3">
+<div class="content">
+
+  <div class="act-label center reveal">幕 3</div>
+  <p class="big center reveal">什么cause够大？</p>
+  <div style="height:2em"></div>
+
+  <div class="candidate reveal">
+    <div class="candidate__title">偷尸体？</div>
+    <div class="candidate__body">偷尸者知道自己在撒谎。撒谎者不殉道。你偷了一具尸体，然后你愿意为这具尸体被倒钉十字架？</div>
+    <div class="candidate__verdict">❌ 不够。</div>
+  </div>
+
+  <div class="candidate reveal" style="transition-delay:.1s">
+    <div class="candidate__title">集体幻觉？</div>
+    <div class="candidate__body">临床心理学中不存在500人同时产生相同内容幻觉的案例。而且幻觉无法解释保罗——他是迫害者，没有"期望看见复活"的心理前置条件。
+      <button class="evidence-toggle" onclick="toggleEvidence(this)"><span class="arrow">▸</span>证据</button>
+      <div class="evidence-panel"><div class="evidence-panel__inner">[RSDLT-015] DSM-5 中无任何集体幻觉诊断标准；Gary Sibcy, "Trauma & NDE" (2022)</div></div>
+    </div>
+    <div class="candidate__verdict">❌ 不够。</div>
+  </div>
+
+  <div class="candidate reveal" style="transition-delay:.2s">
+    <div class="candidate__title">昏厥论？</div>
+    <div class="candidate__body">一个经历了39鞭、钉刑、枪刺的人，在石墓里躺了三天，没有医疗救助，然后推开数百公斤的封墓石，制服守卫，步行找到门徒——然后让他们相信他"战胜了死亡"？一个半死不活的人不会让人产生"他是生命之主"的信念。他会让人想叫医生。</div>
+    <div class="candidate__verdict">❌ 不够。</div>
+  </div>
+
+  <div class="candidate reveal" style="transition-delay:.3s">
+    <div class="candidate__title">神话演化？</div>
+    <div class="candidate__body">哥林多前书15:3-7的信经公式，学术共识（包括怀疑派学者Lüdemann）认为成文于公元30-35年。耶稣死于约公元30-33年。复活的宣称在事件发生后2-5年内就已经被公式化传播。荷马史诗从事件到成文用了400年。2-5年不够。这是新闻的时间窗口，不是神话的时间窗口。
+      <button class="evidence-toggle" onclick="toggleEvidence(this)"><span class="arrow">▸</span>证据</button>
+      <div class="evidence-panel"><div class="evidence-panel__inner">[RSDLT-016] Gerd Lüdemann, "The Resurrection of Jesus" (1994): 信经可追溯至公元30-35年；此结论为学界主流共识，包括怀疑派学者</div></div>
+    </p>
+    <p class="muted" style="font-size:15px">而且保罗在信中说："其中一大半到如今还在"（林前15:6）。等于在开源社区里公开说"500个开发者审核过我的代码，大部分人还活跃在社区里"。如果是假的，一条Issue就能拆穿。</div>
+    <div class="candidate__verdict">❌ 不够。</div>
+  </div>
+
+  <div class="candidate candidate--alive reveal" style="transition-delay:.4s">
+    <div class="candidate__title accent">他们亲眼看见了复活的耶稣。</div>
+    <div class="candidate__body">这是唯一一个因果力足够大的解释。</div>
+    <div class="candidate__verdict" style="color:var(--accent)">✅ 唯一逻辑解</div>
+  </div>
+
+  <div style="height:3em"></div>
+  <div class="divider-line"></div>
+  <div style="height:2em"></div>
+
+  <!-- 补充锤 -->
+  <p class="big reveal">还有两件事，必须说。</p>
+  <div style="height:1.5em"></div>
+
+  <img src="assets/empty-tomb.jpg" alt="空坟墓" class="scene-img reveal" style="max-height:280px;margin-bottom:2.5em">
+  <p class="big reveal">敌人交不出的那具尸体。</p>
+  <p class="reveal">如果复活是假的，犹太当局有一个极其简单的方法终结基督教：把尸体拉出来。游行一圈。基督教当天结束。</p>
+  <p class="reveal">但他们没有这样做。</p>
+  <p class="reveal">他们的官方回应是："门徒趁我们睡着的时候偷了尸体。"
+    <button class="evidence-toggle" onclick="toggleEvidence(this)"><span class="arrow">▸</span>证据</button>
+    <div class="evidence-panel"><div class="evidence-panel__inner">[RSDLT-018] 马太福音28:11-15；此反叙事的存在本身即证明空坟墓是双方共识</div></div>
+  </p>
+  <p class="reveal">注意这个回应无意中承认了什么——</p>
+  <p class="big reveal">坟墓是空的。</p>
+  <p class="muted reveal">他们不是在说"尸体还在坟墓里，门徒在撒谎"。他们是在解释为什么坟墓是空的。</p>
+  <p class="reveal">双方都承认坟墓是空的。争论的只是原因。</p>
+  <p class="big reveal">敌人不否认事实。敌人只争夺解释权。</p>
+
+  <div style="height:3em"></div>
+  <div class="divider-line"></div>
+  <div style="height:2em"></div>
+
+  <p class="big reveal">如果是编的，他们不会这样编。</p>
+  <p class="reveal">第一个发现空坟墓的，是女性——抹大拉的马利亚。在公元一世纪的犹太社会，女性的证词在法庭上不被接受。如果你要编造一个有说服力的故事，你绝对不会用"无效证人"来开场。
+    <button class="evidence-toggle" onclick="toggleEvidence(this)"><span class="arrow">▸</span>证据</button>
+    <div class="evidence-panel"><div class="evidence-panel__inner">[RSDLT-019] 马太福音28:1-10；约翰福音20:11-18；约瑟夫斯《犹太古史》4.8.15：女性证词在犹太法庭无效</div></div>
+  </p>
+  <p class="reveal">门徒在十字架前全部逃跑——编造者会美化自己的英雄。</p>
+  <p class="reveal">多马公开说"我非看见他手上的钉痕……我总不信"——编造者不会在核心团队里安排一个公开的怀疑者。
+    <button class="evidence-toggle" onclick="toggleEvidence(this)"><span class="arrow">▸</span>证据</button>
+    <div class="evidence-panel"><div class="evidence-panel__inner">[RSDLT-020] 约翰福音20:24-29；"尴尬准则"(Criterion of Embarrassment)：早期教会无动机虚构损害自身信誉的细节</div></div>
+  </p>
+  <p class="reveal">没有任何一个人声称亲眼看见"复活的瞬间"——所有记载都是"看见了复活后的耶稣"。编造者一定会编造那个最戏剧性的画面：石头滚开，光芒四射。但没有人这样写。</p>
+  <p class="muted reveal">因为他们没看见那个瞬间。所以他们没写。</p>
+  <p class="big reveal">这些"尴尬细节"的存在，证明文本的首要关切是准确——不是宣传。</p>
+
+</div>
+</section>
+
+<!-- ═══════════════════════════════════ -->
+<!-- 幕4：引擎的名字 -->
+<!-- ═══════════════════════════════════ -->
+<section class="scene scene--darker" id="act4">
+<div class="content">
+
+  <div class="act-label center reveal">幕 4</div>
+
+  <p class="big reveal">门徒散了。扫罗赢了。弟弟不信。坟墓封了。</p>
+  <p class="muted reveal">这本该是故事的结局。</p>
+  <div style="height:1em"></div>
+  <p class="big reveal">但故事没有结束。</p>
+  <div style="height:2em"></div>
+
+  <p class="reveal" style="transition-delay:.1s">追随者回来了——比之前更无畏。</p>
+  <p class="reveal" style="transition-delay:.2s">迫害者倒戈了——比任何追随者都更拼命。</p>
+  <p class="reveal" style="transition-delay:.3s">弟弟转变了——为哥哥付出了生命。</p>
+  <p class="accent reveal" style="transition-delay:.4s">坟墓空了——连敌人都承认。</p>
+  <div style="height:1.5em"></div>
+  <p class="big center reveal" style="transition-delay:.6s">四条线。互相独立。指向同一个事件。</p>
+
+</div>
+</section>
+
+<!-- ═══ 暗屏 + 十二个人 ═══ -->
+<section class="scene scene--darker" id="darkSection" style="min-height:120vh">
+<div class="content center">
+
+  <div id="martyrBlock" class="martyr-list" style="opacity:0;transition:opacity 2s ease .5s">
+    <span>第一个人被抓——鞭打、监禁。不供。</span>
+    <span>第二个人——石刑。不供。</span>
+    <span>第三个人——钉十字架。不供。</span>
+    <span>……</span>
+    <span>第十二个人——斩首。不供。</span>
+    <span style="margin-top:1em;font-size:16px;color:var(--muted)">数十年间。不同城市。不同审讯者。</span>
+  </div>
+
+  <div style="height:4em"></div>
+
+  <p id="noOneSpoke" class="huge accent" style="opacity:0;transition:opacity 2. ease 1s">
+    十二个人，<br>没有一个开口。
+  </p>
+
+  <div style="height:1em"></div>
+  <p id="noOneAlt" style="opacity:0;transition:opacity 1.5s ease 2s;font-size:17px;color:var(--muted)">
+    需要他们全部是疯子。<br>或者——他们没有撒谎。
+  </p>
+
+</div>
+</section>
+
+<!-- ═══ 引擎的名字 ═══ -->
+<section class="scene scene--darker" style="min-height:80vh">
+<div class="content center">
+  <p class="big reveal">0→300的加速度，需要一个引擎。</p>
+  <div style="height:1em"></div>
+  <img src="assets/dawn-horizon.jpg" alt="黎明" class="scene-img scene-img--full reveal" style="max-height:40vh;margin-bottom:1.5em">
+  <p class="engine-name reveal">那个引擎的名字，<br>叫复活。</p>
+</div>
+</section>
+
+<!-- ═══ 最终问题 ═══ -->
+<section class="scene scene--darker" style="min-height:70vh">
+<div class="content">
+  <p class="reveal" style="text-align:center">你不需要"相信"复活。</p>
+  <p class="reveal" style="text-align:center;margin-top:1em">你只需要诚实地回答一个问题：</p>
+  <div style="height:1.5em"></div>
+  <p class="final-question reveal"><strong>如果复活没有发生——你用什么，同时解释这四件事？</strong></p>
+  <p class="muted reveal center" style="margin-top:1em">如果你找不到一个比"复活确实发生了"更好的解释——</p>
+  <p class="muted reveal center">那么，按照你自己的理性标准，你已经知道答案了。</p>
+</div>
+</section>
+
+<script>
+/* ═══ INTERSECTION OBSERVER ═══ */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal,.reveal-scale,.reveal-fast,.reveal-instant').forEach(el => io.observe(el));
+
+/* ═══ PROGRESS BAR ═══ */
+const progressBar = document.getElementById('progress');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = h > 0 ? (window.scrollY / h) * 100 : 0;
+  progressBar.style.width = pct + '%';
+}, { passive: true });
+
+/* ═══ EVIDENCE TOGGLE ═══ */
+function toggleEvidence(btn) {
+  const panel = btn.nextElementSibling;
+  btn.classList.toggle('open');
+  panel.classList.toggle('open');
+}
+
+/* ═══ DARK PAUSE + MARTYR REVEAL ═══ */
+const darkSection = document.getElementById('darkSection');
+const martyrBlock = document.getElementById('martyrBlock');
+const noOneSpoke = document.getElementById('noOneSpoke');
+const noOneAlt = document.getElementById('noOneAlt');
+const darkPause = document.getElementById('darkPause');
+let darkTriggered = false;
+
+const darkIO = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !darkTriggered) {
+      darkTriggered = true;
+      // Show dark pause overlay briefly
+      darkPause.classList.add('active');
+      setTimeout(() => {
+        darkPause.classList.remove('active');
+        // Reveal martyr lines
+        martyrBlock.style.opacity = '1';
+      }, 2500);
+      // Reveal "十二个人" after martyr lines
+      setTimeout(() => {
+        noOneSpoke.style.opacity = '1';
+      }, 4500);
+      setTimeout(() => {
+        noOneAlt.style.opacity = '1';
+      }, 6500);
+    }
+  });
+}, { threshold: 0.3 });
+
+darkIO.observe(darkSection);
+
+/* ═══ JAMES LINE FLASH ═══ */
+const jamesLine = document.getElementById('jamesLine');
+let jamesFlashed = false;
+const jamesIO = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !jamesFlashed) {
+      jamesFlashed = true;
+      // Subtle flash on the delta line
+      const delta = jamesLine.querySelector('.delta');
+      if (delta) {
+        delta.style.transition = 'background .15s';
+        delta.style.background = 'rgba(232,132,92,0.12)';
+        setTimeout(() => { delta.style.background = 'transparent'; }, 400);
+      }
+    }
+  });
+}, { threshold: 0.5 });
+
+jamesIO.observe(jamesLine);
+</script>
+</body>
+</html>

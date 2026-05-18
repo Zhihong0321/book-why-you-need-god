@@ -1,0 +1,944 @@
+<!doctype html>
+<html lang="zh-CN"><head><script data-od-sandbox-shim="">(function(){
+  function makeStore(){
+    var data = {};
+    var api = {
+      getItem: function(k){ return Object.prototype.hasOwnProperty.call(data, k) ? data[k] : null; },
+      setItem: function(k, v){ data[k] = String(v); },
+      removeItem: function(k){ delete data[k]; },
+      clear: function(){ data = {}; },
+      key: function(i){ return Object.keys(data)[i] || null; }
+    };
+    Object.defineProperty(api, 'length', { get: function(){ return Object.keys(data).length; } });
+    return api;
+  }
+  function tryShim(name){
+    var works = false;
+    try { works = !!window[name] && typeof window[name].getItem === 'function'; void window[name].length; }
+    catch (_) { works = false; }
+    if (works) return;
+    try { Object.defineProperty(window, name, { configurable: true, value: makeStore() }); }
+    catch (_) { try { window[name] = makeStore(); } catch (__) {} }
+  }
+  tryShim('localStorage');
+  tryShim('sessionStorage');
+  document.addEventListener('click', (e) => {
+    if (!e.target || !(e.target instanceof Element)) return;
+    var link = e.target.closest('a[href]');
+    if (!link) return;
+    var href = link.getAttribute('href');
+    if (href === null) return;
+    var isAnchor = href.startsWith('#') || href === '';
+    if (isAnchor) {
+      e.preventDefault();
+      if (href === '' || href === '#') {
+        window.scrollTo({ top: 0 });
+        history.replaceState(null, '', ' ');
+      } else {
+        var targetId = href.slice(1);
+        var target = targetId ? document.getElementById(targetId) : null;
+        if (target) {
+          target.scrollIntoView();
+          location.hash === href && history.replaceState(null, '', ' ');
+          location.hash = href;
+        }
+      }
+    } else if (link.getAttribute('target') === '_blank') {
+      e.preventDefault();
+      let safe = false;
+      try {
+        var url = new URL(href, location.href);
+        safe =
+          url.protocol === 'http:' ||
+          url.protocol === 'https:' ||
+          url.protocol === 'mailto:';
+      } catch (_) {}
+      safe && window.open(href, '_blank', 'noopener,noreferrer');
+    }
+  });
+})();</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>你不是不需要神，而是……</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&amp;display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #faf8f5;
+      --surface: #ffffff;
+      --fg: #1a1916;
+      --muted: #6b6964;
+      --border: #e8e5df;
+      --accent: #c96442;
+      --accent-soft: color-mix(in oklch, var(--accent) 12%, transparent);
+      --table-header-bg: color-mix(in oklch, var(--accent) 6%, var(--bg));
+      --table-row-alt: color-mix(in oklch, var(--fg) 2.5%, var(--bg));
+      --table-border: color-mix(in oklch, var(--fg) 8%, var(--bg));
+      --font-display: 'Noto Serif SC', serif;
+      --font-body: 'Noto Serif SC', serif;
+      --fs-body: 18px;
+      --lh: 1.9;
+      --content-max: 680px;
+      --toolbar-h: 56px;
+      --progress-h: 3px;
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+    }
+    [data-theme="dark"] {
+      --bg: #161618;
+      --surface: #1e1e22;
+      --fg: #ede9e3;
+      --muted: #8a857e;
+      --border: #2c2c30;
+      --accent: #e8845c;
+      --table-header-bg: color-mix(in oklch, var(--accent) 8%, var(--surface));
+      --table-row-alt: color-mix(in oklch, var(--fg) 3%, var(--surface));
+      --table-border: color-mix(in oklch, var(--fg) 8%, var(--surface));
+    }
+    /* ═══ COOL INK PALETTE ═══ */
+    [data-palette="cool"] {
+      --bg: #f4f6f9;
+      --surface: #ffffff;
+      --fg: #1c2030;
+      --muted: #5e6578;
+      --border: #dfe3ea;
+      --accent: #4a6fa5;
+      --accent-soft: color-mix(in oklch, var(--accent) 10%, transparent);
+      --table-header-bg: color-mix(in oklch, var(--accent) 10%, var(--surface));
+      --table-row-alt: color-mix(in oklch, var(--accent) 3%, var(--bg));
+      --table-border: color-mix(in oklch, var(--accent) 10%, var(--border));
+    }
+    [data-palette="cool"][data-theme="dark"] {
+      --bg: #0f1219;
+      --surface: #171c26;
+      --fg: #e0e4ec;
+      --muted: #7e8698;
+      --border: #262d3c;
+      --accent: #6b9fd4;
+      --table-row-alt: color-mix(in oklch, var(--accent) 4%, var(--surface));
+      --table-border: color-mix(in oklch, var(--accent) 10%, var(--border));
+    }
+
+    /* Cool Ink — cover gradient */
+    [data-palette="cool"] #cover {
+      background: linear-gradient(135deg, oklch(20% 0.08 260) 0%, oklch(28% 0.10 240) 40%, oklch(32% 0.08 200) 100%);
+    }
+    [data-palette="cool"] #cover::before {
+      background: radial-gradient(ellipse 70% 50% at 50% 70%, oklch(35% 0.12 230 / 0.25), transparent);
+    }
+    /* Cool Ink — cover ornament: three dots instead of line */
+    [data-palette="cool"] #cover .cover-ornament {
+      width: auto; height: auto; background: none;
+      display: flex; gap: 8px;
+    }
+    [data-palette="cool"] #cover .cover-ornament::before {
+      content: '• • •';
+      font-size: 14px; letter-spacing: 4px;
+      opacity: 0.5; color: currentColor;
+    }
+    /* Cool Ink — progress bar gradient */
+    [data-palette="cool"] #progress {
+      background: linear-gradient(90deg, oklch(55% 0.14 250), oklch(60% 0.12 200));
+    }
+    /* Cool Ink — blockquote: top gradient border instead of left */
+    [data-palette="cool"] .chapter blockquote {
+      border-left: none;
+      border-top: none;
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+      padding-top: 28px;
+      background: var(--accent-soft);
+      background-image: linear-gradient(90deg, var(--accent), color-mix(in oklch, var(--accent) 20%, transparent));
+      background-size: 100% 3px;
+      background-repeat: no-repeat;
+      background-position: top;
+    }
+    [data-palette="cool"] .chapter blockquote::before {
+      top: 6px; left: 20px;
+      font-size: 28px;
+    }
+    /* Cool Ink — table header: gradient fill, no underline */
+    [data-palette="cool"] .table-scroller thead tr {
+      background: linear-gradient(135deg, color-mix(in oklch, var(--accent) 12%, var(--surface)), color-mix(in oklch, var(--accent) 4%, var(--surface)));
+    }
+    [data-palette="cool"] .table-scroller th {
+      border-bottom: 1px solid var(--table-border);
+      color: var(--accent);
+    }
+    /* Cool Ink — dividers: centered dots via background */
+    [data-palette="cool"] .chapter .divider {
+      background: none; border: none;
+      height: 20px; margin: 48px 0;
+      display: flex; align-items: center; justify-content: center;
+      background-image: radial-gradient(circle, var(--muted) 1.5px, transparent 1.5px);
+      background-size: 12px 12px;
+      background-repeat: repeat-x;
+      background-position: center;
+      max-width: 60px; margin-left: auto; margin-right: auto;
+    }
+    /* Cool Ink — chapter subtitle uses gradient underline */
+    [data-palette="cool"] .chapter-title + .chapter-subtitle {
+      border-bottom: none;
+      padding-bottom: 22px;
+      background-image: linear-gradient(90deg, var(--accent), transparent);
+      background-size: 100% 2px;
+      background-repeat: no-repeat;
+      background-position: bottom;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-body);
+      font-size: var(--fs-body);
+      line-height: var(--lh);
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: calc(var(--toolbar-h) + 20px);
+      transition: background 0.35s ease, color 0.35s ease;
+    }
+
+    /* Progress bar */
+    #progress {
+      position: fixed; top: 0; left: 0;
+      width: 0%; height: var(--progress-h);
+      background: linear-gradient(90deg, var(--accent), color-mix(in oklch, var(--accent) 70%, oklch(70% 0.14 60)));
+      z-index: 1000;
+      transition: width 0.15s linear;
+      border-radius: 0 2px 2px 0;
+    }
+
+    /* Toolbar */
+    #toolbar {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      height: var(--toolbar-h);
+      background: color-mix(in srgb, var(--surface) 92%, transparent);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 20px;
+      z-index: 900;
+      transition: background 0.35s, border-color 0.35s;
+    }
+    #toolbar button {
+      background: none; border: none; color: var(--fg);
+      font-size: 17px; padding: 10px; min-width: 44px; min-height: 44px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: var(--radius-sm); cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    #toolbar button:hover { background: var(--accent-soft); }
+    #toolbar button:active { transform: scale(0.92); }
+    #toolbar .font-controls { display: flex; gap: 2px; align-items: center; }
+    #toolbar .font-controls span {
+      font-size: 12px; color: var(--muted); min-width: 30px; text-align: center;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Nav drawer */
+    #drawer-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+      z-index: 950; opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    #drawer-overlay.open { opacity: 1; pointer-events: auto; }
+    #drawer {
+      position: fixed; top: 0; left: 0; bottom: 0;
+      width: min(320px, 82vw);
+      background: var(--surface);
+      z-index: 960;
+      transform: translateX(-100%);
+      transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+      overflow-y: auto;
+      padding: 32px 24px;
+      box-shadow: 4px 0 24px rgba(0,0,0,0.08);
+    }
+    #drawer.open { transform: translateX(0); }
+    #drawer h2 {
+      font-family: var(--font-display);
+      font-size: 14px; font-weight: 600;
+      margin: 0 0 24px; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    #drawer a {
+      display: block; padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      color: var(--fg); text-decoration: none;
+      font-size: 15px; line-height: 1.5;
+      transition: color 0.2s;
+    }
+    #drawer a:last-child { border-bottom: none; }
+    #drawer a:hover { color: var(--accent); }
+    #drawer a .ch-num {
+      font-size: 11px; color: var(--muted); letter-spacing: 0.04em;
+      display: block; margin-bottom: 3px;
+    }
+    #drawer a .ch-desc {
+      font-size: 12px; color: var(--muted); margin-top: 3px;
+      display: block; line-height: 1.4;
+    }
+
+    /* Cover */
+    #cover {
+      min-height: 100vh; min-height: 100dvh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 64px 32px;
+      background: linear-gradient(160deg, oklch(22% 0.035 50) 0%, oklch(28% 0.045 42) 50%, oklch(34% 0.05 36) 100%);
+      color: oklch(96% 0.005 80);
+      position: relative;
+      overflow: hidden;
+    }
+    #cover::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 60%, oklch(30% 0.06 40 / 0.3), transparent);
+      pointer-events: none;
+    }
+    #cover .cover-ornament {
+      width: 48px; height: 1px;
+      background: color-mix(in oklch, currentColor 40%, transparent);
+      margin-bottom: 24px;
+    }
+    #cover h1 {
+      font-family: var(--font-display);
+      font-size: clamp(30px, 8vw, 44px);
+      font-weight: 900; line-height: 1.35;
+      letter-spacing: 0.01em;
+      margin: 0 0 20px;
+      position: relative;
+    }
+    #cover .subtitle {
+      font-size: clamp(14px, 3.5vw, 16px);
+      opacity: 0.65; max-width: 26ch;
+      line-height: 1.7;
+      letter-spacing: 0.02em;
+    }
+    #cover .start-btn {
+      margin-top: 56px;
+      padding: 14px 36px;
+      background: var(--accent);
+      color: oklch(96% 0.005 80); border: none;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-body);
+      font-size: 15px; cursor: pointer;
+      min-height: 44px;
+      letter-spacing: 0.04em;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 12px color-mix(in oklch, var(--accent) 30%, transparent);
+    }
+    #cover .start-btn:active { transform: scale(0.96); }
+
+    /* Content sections */
+    .chapter {
+      max-width: var(--content-max);
+      margin: 0 auto;
+      padding: 56px 24px 72px;
+    }
+    .chapter-title {
+      font-family: var(--font-display);
+      font-size: clamp(24px, 5.5vw, 32px);
+      font-weight: 700; line-height: 1.35;
+      margin: 0 0 12px;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+    .chapter-title + .chapter-subtitle {
+      font-size: 14px; color: var(--muted);
+      margin: 0 0 36px; line-height: 1.5;
+      padding-bottom: 20px;
+      border-bottom: 2px solid var(--accent);
+      display: inline-block;
+    }
+    .chapter-title + p, .chapter-title + blockquote, .chapter-title + h2 {
+      margin-top: 36px;
+    }
+    /* Drop cap for first paragraph of each chapter */
+    .chapter > .chapter-title + .chapter-subtitle + p:first-of-type::first-letter,
+    .chapter > .chapter-title ~ p:first-of-type::first-letter {
+      font-family: var(--font-display);
+      font-size: 3.2em; font-weight: 700;
+      float: left;
+      line-height: 0.8;
+      margin: 6px 8px 0 0;
+      color: var(--accent);
+    }
+    .chapter h2 {
+      font-family: var(--font-display);
+      font-size: 19px; font-weight: 700;
+      margin: 48px 0 16px; line-height: 1.4;
+    }
+    .chapter h3 {
+      font-size: 16px; font-weight: 600;
+      margin: 32px 0 12px; line-height: 1.4;
+    }
+    .chapter p { margin: 0 0 18px; text-align: justify; }
+    .chapter blockquote {
+      margin: 28px 0;
+      padding: 20px 24px;
+      border-left: 3px solid var(--accent);
+      background: var(--accent-soft);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      font-size: 0.92em;
+      position: relative;
+    }
+    .chapter blockquote::before {
+      content: '"';
+      position: absolute; top: 8px; left: 10px;
+      font-family: var(--font-display);
+      font-size: 32px; color: var(--accent); opacity: 0.3;
+      line-height: 1;
+    }
+    .chapter blockquote p { margin: 0; text-align: left; }
+
+    /* ═══════════════════════════════════════════
+       PREMIUM TABLE SYSTEM
+       ═══════════════════════════════════════════ */
+    .table-wrap {
+      position: relative;
+      margin: 28px -24px;
+      overflow: hidden;
+    }
+    .table-wrap::before,
+    .table-wrap::after {
+      content: '';
+      position: absolute; top: 0; bottom: 0; width: 40px;
+      z-index: 2; pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .table-wrap::before {
+      left: 0;
+      background: linear-gradient(to right, var(--bg), transparent);
+      opacity: 0;
+    }
+    .table-wrap::after {
+      right: 0;
+      background: linear-gradient(to left, var(--bg), transparent);
+      opacity: 1;
+    }
+    .table-wrap.scrolled-start::before { opacity: 1; }
+    .table-wrap.scrolled-end::after { opacity: 0; }
+    .table-scroll-hint {
+      position: absolute; top: 12px; right: 16px;
+      font-size: 10px; color: var(--muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 3px 8px; border-radius: 10px;
+      z-index: 3; pointer-events: none;
+      opacity: 1; transition: opacity 0.4s;
+      letter-spacing: 0.02em;
+    }
+    .table-wrap.scrolled-start .table-scroll-hint { opacity: 0; }
+    .table-scroller {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 0 24px;
+      scrollbar-width: thin;
+      scrollbar-color: color-mix(in oklch, var(--accent) 30%, var(--border)) transparent;
+    }
+    .table-scroller::-webkit-scrollbar { height: 5px; }
+    .table-scroller::-webkit-scrollbar-track { background: transparent; }
+    .table-scroller::-webkit-scrollbar-thumb {
+      background: color-mix(in oklch, var(--accent) 30%, var(--border));
+      border-radius: 3px;
+    }
+    /* Table container card */
+    .table-scroller table {
+      width: max-content; min-width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 13.5px;
+      border: 1px solid var(--table-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    /* Header row */
+    .table-scroller thead tr {
+      background: var(--table-header-bg);
+    }
+    .table-scroller th {
+      padding: 14px 18px;
+      text-align: left;
+      font-weight: 600; font-size: 11.5px;
+      color: var(--accent);
+      text-transform: uppercase; letter-spacing: 0.06em;
+      border-bottom: 2px solid var(--accent);
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+    /* Body cells */
+    .table-scroller td {
+      padding: 14px 18px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--table-border);
+      white-space: normal; min-width: 130px;
+      line-height: 1.5;
+      color: var(--fg);
+    }
+    /* Alternating row tint */
+    .table-scroller tbody tr:nth-child(even) {
+      background: var(--table-row-alt);
+    }
+    /* Last row no border */
+    .table-scroller tbody tr:last-child td { border-bottom: none; }
+    /* First column emphasis */
+    .table-scroller td:first-child {
+      font-weight: 600;
+      color: var(--fg);
+      white-space: nowrap;
+    }
+
+    .chapter .divider {
+      border: 0; margin: 48px 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border), transparent);
+    }
+
+    /* TOC */
+    #toc { max-width: var(--content-max); margin: 0 auto; padding: 56px 24px; }
+    #toc h2 {
+      font-family: var(--font-display);
+      font-size: 14px; font-weight: 600;
+      margin: 0 0 28px;
+      color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    #toc .toc-list { list-style: none; padding: 0; margin: 0; }
+    #toc .toc-item {
+      display: block;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none; color: var(--fg);
+      transition: color 0.2s;
+    }
+    #toc .toc-item:last-child { border-bottom: none; }
+    #toc .toc-item:hover { color: var(--accent); }
+    #toc .toc-item .toc-num {
+      font-size: 11px; color: var(--muted); letter-spacing: 0.04em;
+      display: block; margin-bottom: 4px;
+    }
+    #toc .toc-item .toc-title {
+      font-family: var(--font-display);
+      font-size: 17px; font-weight: 600;
+      display: block; line-height: 1.4;
+    }
+    #toc .toc-item .toc-desc {
+      font-size: 13px; color: var(--muted);
+      display: block; margin-top: 4px; line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div id="progress"></div>
+
+  <!-- COVER -->
+  <section id="cover" data-od-id="cover">
+    <div class="cover-ornament"></div>
+    <h1>你不是不需要神，<br>而是……</h1>
+    <p class="subtitle">一本用科学、历史与哲学<br>回答终极问题的书</p>
+    <button class="start-btn" onclick="window.scrollTo({top:document.getElementById('toc-section').offsetTop,behavior:'smooth'})">开始阅读</button>
+  </section>
+
+  <!-- TOC -->
+  <section id="toc-section" data-od-id="toc">
+    <div id="toc">
+      <h2>目录</h2>
+      <nav class="toc-list">
+        <a href="#ch1" class="toc-item">
+          <span class="toc-num">第壹章</span>
+          <span class="toc-title">前言：这是一本极度危险的书</span>
+          <span class="toc-desc">为什么这本书要证明耶稣说的是不是真的</span>
+        </a>
+        <a href="#ch2" class="toc-item">
+          <span class="toc-num">第贰章</span>
+          <span class="toc-title">证据链全景图：贡献者名录</span>
+          <span class="toc-desc">从公元前18世纪到2022年诺贝尔奖得主的九层证据</span>
+        </a>
+        <a href="#ch3" class="toc-item">
+          <span class="toc-num">第叁章</span>
+          <span class="toc-title">意识研究报告：濒死体验审计</span>
+          <span class="toc-desc">意识独立于大脑的科学实验证据链</span>
+        </a>
+      </nav>
+    </div>
+  </section>
+
+  <!-- CHAPTER 1: Front Note -->
+  <section id="ch1" class="chapter" data-od-id="ch1">
+    <h1 class="chapter-title">前言：这是一本极度危险的书</h1>
+    <span class="chapter-subtitle">为什么这本书要证明耶稣说的是不是真的</span>
+
+    <p>有一本书，叫圣经。全世界影响力最大的一本书。书内最重要，也是最争议的一句话，就是——耶稣：我就是道路，真理，生命。不借着我，没有人可以到父那里去。</p>
+
+    <p>这是世界出现过，发现道理，领悟生命，找到真理的人。只有一个，耶稣，他说他是道路真理生命。</p>
+
+    <p>这本书的危险，和圣经不同。圣经是记录耶稣的话。这本书是要证明耶稣说的是不是真的。</p>
+
+    <blockquote><p>如果我们证明了 1+1=2，那么 1+1≠2 立刻就变成假的。</p></blockquote>
+
+    <hr class="divider">
+
+    <h2>这本书一页就可以写完</h2>
+
+    <p><strong>1. 灵魂真的存在的科学实验证据</strong>（50年，东西方全球实验）——留下的疑问：那我死后，灵魂怎么办？</p>
+
+    <p><strong>2. 找神，且找到神。</strong>如果有神，有创造主，那神必然在历史中留下只属于上帝的指纹。从上帝的指纹就可以找到神。——留下的疑问：找到神和我的灵魂什么关系？</p>
+
+    <p><strong>3. 先知道有灵魂，先找到谁是神，神在哪里。</strong>就可以听，神怎么说。如果你现在已经看见这独一无二的神，你必须知道这位对我们说了哪些重要的事。</p>
+
+    <p><strong>4. 灵魂的盼望在哪里，我灵魂的债务怎么还？</strong>死亡的可怕不在于它是结束了，死亡的可怕在于它是进入了永恒。</p>
+
+    <p><strong>5. 没有行为代价，只有认知代价。</strong>这个最极端的问题——要么永远的活，或永远的刑罚。这二者之间，你需要的只是认知代价，不是行为代价。</p>
+
+    <hr class="divider">
+
+    <p>本书作为作者，我仅仅提出了思路大纲。这本书能完成靠的是人类几千年，跨文化，跨宗教，集历史、哲学、科学、天文的集成努力。</p>
+
+    <blockquote><p>让全人类看见——占比为0的今生，死后才是生命真正的开始。为全人类解答一个终极的、终端的问题：死后怎么办？</p></blockquote>
+  </section>
+
+  <!-- CHAPTER 2: Cast of Contributors -->
+  <section id="ch2" class="chapter" data-od-id="ch2">
+    <h1 class="chapter-title">证据链全景图</h1>
+    <span class="chapter-subtitle">从公元前18世纪到2022年诺贝尔奖得主</span>
+
+    <p>这是人类历史上跨度最长、参与人数最多、学科最交叉的一项"探测工程"。从公元前18世纪的史诗作者，到2022年诺贝尔物理学奖得主——所有人都在回答同一个问题：</p>
+
+    <blockquote><p>我们所处的这个宇宙，以及我们灵魂深处所欠的那笔债务，究竟指向什么？</p></blockquote>
+
+    <h2>第一层：古代历史学家（非基督徒与敌对见证人）</h2>
+    <div class="table-wrap">
+      <span class="table-scroll-hint">← 滑动 →</span>
+      <div class="table-scroller">
+        <table>
+          <thead><tr><th>姓名</th><th>生卒年</th><th>身份 / 团体</th><th>本书中的贡献</th></tr></thead>
+          <tbody>
+            <tr><td>Flavius Josephus</td><td>c. 37–100 AD</td><td>犹太历史学家，为罗马帝国服务</td><td>确认耶稣为历史人物、其钉十字架史实，以及其弟雅各之死</td></tr>
+            <tr><td>Tacitus</td><td>c. 56–120 AD</td><td>罗马元老院议员、历史学家</td><td>确认基督在本丢彼拉多手下受极刑，记录尼禄对基督徒的迫害</td></tr>
+            <tr><td>Pliny the Younger</td><td>c. 61–113 AD</td><td>罗马比提尼亚总督</td><td>确认早期基督徒"把基督当作神来敬拜"，且拒绝放弃信仰而甘愿受死</td></tr>
+            <tr><td>Mara bar Serapion</td><td>c. 73+ AD</td><td>叙利亚斯多葛哲学家</td><td>最早非基督教文献提到被处决的"智者之王"及其教导的延续</td></tr>
+            <tr><td>Lucian of Samosata</td><td>c. 125–180 AD</td><td>希腊讽刺作家</td><td>以敌对口吻确认基督徒敬拜一位在巴勒斯坦被钉十字架的人</td></tr>
+            <tr><td>Babylonian Talmud</td><td>c. 200–500 AD</td><td>犹太拉比传统</td><td>敌对传统记录耶稣在逾越节期间被处决，提供反面确认</td></tr>
+            <tr><td>Clement of Rome</td><td>d. c. 99 AD</td><td>罗马主教（教皇）</td><td>最早非圣经文献确认彼得在罗马殉道（约成书于公元96年）</td></tr>
+            <tr><td>Eusebius of Caesarea</td><td>c. 260–340 AD</td><td>凯撒利亚主教、教会史家</td><td>记录彼得与保罗的殉道及苦难</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <h2>第二层：圣经作者与初代见证人</h2>
+    <div class="table-wrap">
+      <span class="table-scroll-hint">← 滑动 →</span>
+      <div class="table-scroller">
+        <table>
+          <thead><tr><th>姓名</th><th>生卒年</th><th>身份 / 团体</th><th>本书中的贡献</th></tr></thead>
+          <tbody>
+            <tr><td>保罗 (Paul)</td><td>c. 5–67 AD</td><td>使徒，曾迫害教会</td><td>提供最早的复活目击记录（林前15:3-7），成文于受难后2-5年内</td></tr>
+            <tr><td>路加 (Luke)</td><td>1st c. AD</td><td>医生、历史学家</td><td>记录司提反殉道（约公元34-35年）及雅各被杀</td></tr>
+            <tr><td>约翰 (John)</td><td>1st c. AD</td><td>渔夫、使徒</td><td>记录多马在使徒圈内的公开怀疑（约20:25），支撑"尴尬准则"</td></tr>
+            <tr><td>马可 (Mark)</td><td>1st c. AD</td><td>传道者</td><td>记录门徒在耶稣被捕时四散逃跑，提供难为情的真实细节</td></tr>
+            <tr><td>马太 (Matthew)</td><td>1st c. AD</td><td>税吏、使徒</td><td>记录犹太当局对空坟墓的官方反叙事（"门徒偷了尸体"）</td></tr>
+            <tr><td>司提反 (Stephen)</td><td>d. c. 34–35 AD</td><td>执事</td><td>第一位基督教殉道者，被公会处死</td></tr>
+            <tr><td>雅各（西庇太之子）</td><td>d. c. 44 AD</td><td>使徒</td><td>被希律亚基帕一世处死，最早殉道的使徒之一</td></tr>
+            <tr><td>雅各（耶稣之弟）</td><td>d. 62 AD</td><td>耶路撒冷教会领袖</td><td>被大祭司亚那二世处死，约瑟夫斯独立确认</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <h2>第三层：考古学家（提供物理封存证据）</h2>
+    <div class="table-wrap">
+      <span class="table-scroll-hint">← 滑动 →</span>
+      <div class="table-scroller">
+        <table>
+          <thead><tr><th>姓名</th><th>活跃期</th><th>身份 / 团体</th><th>本书中的贡献</th></tr></thead>
+          <tbody>
+            <tr><td>Antonio Frova</td><td>20th c.</td><td>意大利考古学家</td><td>1961年发现彼拉多石碑，确认彼拉多为犹太巡抚</td></tr>
+            <tr><td>Zvi Greenhut</td><td>20th–21st c.</td><td>以色列考古学家</td><td>1990年发现该亚法骨罐，确认该亚法及第二圣殿葬礼背景</td></tr>
+            <tr><td>Vassilios Tzaferis</td><td>20th c.</td><td>希腊裔以色列考古学家</td><td>1968年发掘出耶何难钉十字架遗骸，确认罗马钉刑铁钉穿透脚跟骨</td></tr>
+            <tr><td>Popovic M. 等</td><td>21st c.</td><td>荷兰/以色列AI研究团队</td><td>2021年以人工智能手写识别分析死海古卷抄经者</td></tr>
+            <tr><td>Bonani G. 等</td><td>20th c.</td><td>瑞士苏黎世联邦理工学院</td><td>1991年对死海古卷进行放射性碳定年，锁定于基督教前世纪</td></tr>
+            <tr><td>Jull A.J.T. 等</td><td>20th c.</td><td>美国亚利桑那大学AMS实验室</td><td>1995年独立加速器质谱定年死海古卷碎片</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <h2>第四层：濒死体验（NDE）科学研究员</h2>
+    <div class="table-wrap">
+      <span class="table-scroll-hint">← 滑动 →</span>
+      <div class="table-scroller">
+        <table>
+          <thead><tr><th>姓名</th><th>活跃期</th><th>身份 / 团体</th><th>本书中的贡献</th></tr></thead>
+          <tbody>
+            <tr><td>Pim van Lommel</td><td>b. 1943</td><td>荷兰心脏病学家</td><td>《柳叶刀》2001年前瞻性研究344名心脏骤停幸存者，NDE清晰度与脑损伤呈反比</td></tr>
+            <tr><td>Sam Parnia</td><td>b. 1964</td><td>英国重症医学/复苏专家</td><td>AWARE (2014) 与 AWARE-II (2020) 研究，验证心脏停跳期间的离体感知</td></tr>
+            <tr><td>Kenneth Ring</td><td>b. 1935</td><td>美国心理学家</td><td>《Mindsight》(1999)：31名视障/盲人的NDE研究，含先天盲人报告视觉感知</td></tr>
+            <tr><td>Michael Morse</td><td>20th–21st c.</td><td>美国儿科医生</td><td>《Closer to the Light》(1990)：3–12岁儿童无宗教教育下的完整NDE协议栈</td></tr>
+            <tr><td>Bruce Greyson</td><td>b. 1946</td><td>美国精神科医生</td><td>NDE发生率与量表研究，认知清晰度评分高于清醒基线</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <h2>第五层：物理学家与宇宙学家</h2>
+    <p>Boltzmann、Einstein、2022年诺贝尔物理学奖得主（Aspect, Clauser, Zeilinger）——量子纠缠非定域性、宇宙微调。</p>
+
+    <h2>第六层：哲学家</h2>
+    <p>Kant、Hegel、Gödel、Aquinas、Kierkegaard、Heidegger、Pascal——从纯粹理性到信仰之跃。</p>
+
+    <h2>第七层：现代护教家与学者</h2>
+    <p>C.S. Lewis、Timothy Keller、Francis Collins（NIH前院长）、William Lane Craig——科学与信仰的交汇。</p>
+
+    <h2>第八层：法律与制度性见证</h2>
+    <p>查士丁尼法典、苏联工作制改革失败、联合国人权宣言——制度层面的反面确认。</p>
+
+    <h2>第九层：远古文明与跨文化见证</h2>
+    <p>吉尔伽美什史诗、玛雅洪水叙事、全球200+独立文化共享的洪水记忆——无已知借用路径。</p>
+
+    <hr class="divider">
+
+    <blockquote><p>本书的立场不是"信仰先于证据"，而是"证据先于结论"。当这些碎片被拼接在一起时，它们指向的不是一个模糊的"更高力量"，而是一个在历史中留下脚印、在法律中留下债务、在十字架上留下代价的具体存在。</p></blockquote>
+  </section>
+
+  <!-- CHAPTER 3: NDE Research Report -->
+  <section id="ch3" class="chapter" data-od-id="ch3">
+    <h1 class="chapter-title">意识研究报告：濒死体验审计</h1>
+    <span class="chapter-subtitle">意识独立于大脑的科学实验证据链</span>
+
+    <h2>结论</h2>
+    <blockquote><p>意识不是大脑的"涌现属性"。意识是一个独立运行的外部系统，大脑是其在物质维度的降维接口。当接口断电，意识不会消亡——它回家。</p></blockquote>
+
+    <h2>核心逻辑</h2>
+    <p>意识从未运行在大脑硬件上。大脑是带宽限制器（Bandwidth Limiter），不是处理器（Processor）。当限制器断电，意识恢复其原生全频运行状态。这如同拔掉一台电视机的电源——电视屏幕熄灭，但广播信号从未中断。</p>
+
+    <hr class="divider">
+
+    <h2>模块 1：硬件断电期间的高阶运算</h2>
+    <p>在2,060例心脏骤停患者中，约9%报告了NDE；其中部分体验发生在心跳停止后20-60秒内——此时脑电图已呈平直状态，大脑皮层无可测量电活动。</p>
+    <p>344例心脏骤停幸存者中，18%报告了NDE。关键发现：体验的清晰度与深度与脑缺氧时间无正相关——即"硬件损伤越重，软件输出越清晰"。</p>
+
+    <h2>模块 2：可验证的离体感知</h2>
+    <p>假牙案例：一名深度昏迷患者在复苏后告知护士："你把我的假牙放在了那个带滑轮的小推车的抽屉里。"该操作发生在患者完全无意识、瞳孔散大期间。</p>
+    <p>Al Sullivan案例：心脏手术患者术后准确描述了主刀医生的独特习惯动作——用肘部指挥助手。Sullivan术前从未见过该医生。</p>
+
+    <h2>模块 3：跨文化协议一致性</h2>
+    <p>1976年唐山大地震81例NDE报告：在唯物主义教育环境下，核心元素与西方NDE完全同构。印度、儿童、先天失明者——底层协议栈跨域一致。</p>
+
+    <h2>模块 4：先天失明者视觉</h2>
+    <p>视网膜从未发育，视神经从未传导过光信号，视觉皮层从未被训练——但在NDE中产生了精确的视觉感知。</p>
+    <blockquote><p>视觉不是视网膜的产物，而是意识的固有属性。当脱离物质身体时，这种原生感知能力不再受限于特定感官硬件的有无。</p></blockquote>
+
+    <hr class="divider">
+
+    <h2>架构判定</h2>
+    <p><strong>旧模型（唯物主义）：</strong>大脑生成意识。硬件断电 = 意识终止。状态：12个致命级逻辑Bug，模型不可维护。</p>
+    <p><strong>新模型（接收器/过滤器模型）：</strong>意识（独立外部系统）→ 大脑（接收/过滤终端）。硬件断电 = 解除带宽限制，意识恢复全频运行。状态：零逻辑Bug。</p>
+  </section>
+
+  <!-- TOOLBAR -->
+  <div id="toolbar">
+    <button id="btn-drawer" aria-label="章节导航">☰</button>
+    <div class="font-controls">
+      <button id="btn-smaller" aria-label="缩小字体">A-</button>
+      <span id="fs-display">18</span>
+      <button id="btn-larger" aria-label="放大字体">A+</button>
+    </div>
+    <button id="btn-palette" aria-label="切换主题风格" title="切换主题">🎨</button>
+    <button id="btn-theme" aria-label="切换深色模式">◐</button>
+  </div>
+
+  <!-- DRAWER -->
+  <div id="drawer-overlay" onclick="toggleDrawer()"></div>
+  <nav id="drawer">
+    <h2>章节导航</h2>
+    <a href="#cover" onclick="toggleDrawer()"><span class="ch-num">封面</span></a>
+    <a href="#ch1" onclick="toggleDrawer()"><span class="ch-num">第一章</span>前言：这是一本极度危险的书<span class="ch-desc">证明耶稣说的是不是真的</span></a>
+    <a href="#ch2" onclick="toggleDrawer()"><span class="ch-num">第二章</span>证据链全景图<span class="ch-desc">九层跨学科证据链</span></a>
+    <a href="#ch3" onclick="toggleDrawer()"><span class="ch-num">第三章</span>意识研究报告<span class="ch-desc">濒死体验科学审计</span></a>
+  </nav>
+
+  <script>
+    // Theme toggle
+    const html = document.documentElement;
+    const btnTheme = document.getElementById('btn-theme');
+    const saved = localStorage.getItem('ebook-theme');
+    if (saved === 'dark') html.setAttribute('data-theme', 'dark');
+
+    btnTheme.addEventListener('click', () => {
+      const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      if (next === 'light') html.removeAttribute('data-theme');
+      else html.setAttribute('data-theme', 'dark');
+      localStorage.setItem('ebook-theme', next);
+    });
+
+    // Palette toggle
+    const btnPalette = document.getElementById('btn-palette');
+    const savedPalette = localStorage.getItem('ebook-palette') || 'warm';
+    if (savedPalette === 'cool') {
+      html.setAttribute('data-palette', 'cool');
+      btnPalette.textContent = '❄️';
+    }
+    btnPalette.addEventListener('click', () => {
+      const current = html.getAttribute('data-palette') || 'warm';
+      const next = current === 'warm' ? 'cool' : 'warm';
+      if (next === 'warm') html.removeAttribute('data-palette');
+      else html.setAttribute('data-palette', 'cool');
+      localStorage.setItem('ebook-palette', next);
+      // Visual feedback
+      btnPalette.textContent = next === 'cool' ? '❄️' : '🎨';
+      const toast = document.createElement('div');
+      toast.textContent = next === 'cool' ? '冷墨主题' : '暖陶主题';
+      Object.assign(toast.style, {
+        position:'fixed',top:'60px',left:'50%',transform:'translateX(-50%)',
+        background:'var(--surface)',color:'var(--fg)',border:'1px solid var(--border)',
+        padding:'8px 16px',borderRadius:'8px',fontSize:'14px',zIndex:'9999',
+        opacity:'1',transition:'opacity 0.4s'
+      });
+      document.body.appendChild(toast);
+      setTimeout(() => { toast.style.opacity = '0'; }, 1200);
+      setTimeout(() => { toast.remove(); }, 1600);
+    });
+
+    // Font size
+    let fs = parseInt(localStorage.getItem('ebook-fs') || '18');
+    const fsDisplay = document.getElementById('fs-display');
+    function applyFs() {
+      document.body.style.fontSize = fs + 'px';
+      fsDisplay.textContent = fs;
+      localStorage.setItem('ebook-fs', fs);
+    }
+    applyFs();
+    document.getElementById('btn-smaller').addEventListener('click', () => { if (fs > 14) { fs -= 2; applyFs(); } });
+    document.getElementById('btn-larger').addEventListener('click', () => { if (fs < 28) { fs += 2; applyFs(); } });
+
+    // Progress bar
+    const progressEl = document.getElementById('progress');
+    window.addEventListener('scroll', () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = h > 0 ? (window.scrollY / h) * 100 : 0;
+      progressEl.style.width = pct + '%';
+    });
+
+    // Drawer
+    function toggleDrawer() {
+      document.getElementById('drawer').classList.toggle('open');
+      document.getElementById('drawer-overlay').classList.toggle('open');
+    }
+    document.getElementById('btn-drawer').addEventListener('click', toggleDrawer);
+
+    // Sliding table scroll indicators
+    document.querySelectorAll('.table-scroller').forEach(scroller => {
+      const wrap = scroller.parentElement;
+      function updateShadows() {
+        const sl = scroller.scrollLeft;
+        const maxScroll = scroller.scrollWidth - scroller.clientWidth;
+        wrap.classList.toggle('scrolled-start', sl > 4);
+        wrap.classList.toggle('scrolled-end', sl >= maxScroll - 4);
+      }
+      scroller.addEventListener('scroll', updateShadows, { passive: true });
+      // Check on load if table is wider than viewport
+      requestAnimationFrame(() => {
+        const maxScroll = scroller.scrollWidth - scroller.clientWidth;
+        if (maxScroll <= 4) {
+          wrap.classList.add('scrolled-end');
+          const hint = wrap.querySelector('.table-scroll-hint');
+          if (hint) hint.style.display = 'none';
+        }
+      });
+    });
+  </script>
+
+
+<script data-od-snapshot-bridge="">(function(){
+  function copyComputedStyle(source, target){
+    if (!source || !target || source.nodeType !== 1 || target.nodeType !== 1) return;
+    var computed = window.getComputedStyle(source);
+    var style = target.getAttribute('style') || '';
+    for (var i = 0; i < computed.length; i++){
+      var prop = computed[i];
+      style += prop + ':' + computed.getPropertyValue(prop) + ';';
+    }
+    target.setAttribute('style', style);
+  }
+  function syncElementState(source, target){
+    var tag = source.tagName ? source.tagName.toLowerCase() : '';
+    if (tag === 'img' && source.currentSrc) target.setAttribute('src', source.currentSrc);
+    if (tag === 'input' || tag === 'textarea') target.setAttribute('value', source.value || '');
+    if (tag === 'canvas') {
+      try {
+        var img = document.createElement('img');
+        img.setAttribute('src', source.toDataURL('image/png'));
+        img.setAttribute('style', target.getAttribute('style') || '');
+        target.parentNode && target.parentNode.replaceChild(img, target);
+      } catch (_) {}
+    }
+  }
+  function inlineSnapshotStyles(originalRoot, cloneRoot){
+    copyComputedStyle(originalRoot, cloneRoot);
+    syncElementState(originalRoot, cloneRoot);
+    var originals = originalRoot.querySelectorAll('*');
+    var clones = cloneRoot.querySelectorAll('*');
+    var count = Math.min(originals.length, clones.length);
+    for (var i = 0; i < count; i++){
+      copyComputedStyle(originals[i], clones[i]);
+      syncElementState(originals[i], clones[i]);
+    }
+    var scripts = cloneRoot.querySelectorAll('script');
+    for (var s = scripts.length - 1; s >= 0; s--) scripts[s].remove();
+  }
+  function waitForImages(){
+    var imgs = Array.prototype.slice.call(document.images || []);
+    return Promise.all(imgs.map(function(img){
+      if (img.complete) return Promise.resolve();
+      return new Promise(function(resolve){
+        img.addEventListener('load', resolve, { once: true });
+        img.addEventListener('error', resolve, { once: true });
+      });
+    }));
+  }
+  function renderSnapshot(id){
+    var w = Math.max(1, window.innerWidth || document.documentElement.clientWidth || 1);
+    var h = Math.max(1, window.innerHeight || document.documentElement.clientHeight || 1);
+    var dpr = window.devicePixelRatio || 1;
+    var docW = Math.max(w, document.documentElement.scrollWidth || 0, document.body ? document.body.scrollWidth : 0);
+    var docH = Math.max(h, document.documentElement.scrollHeight || 0, document.body ? document.body.scrollHeight : 0);
+    var clone = document.documentElement.cloneNode(true);
+    clone.setAttribute('xmlns', 'http://www.w3.org/1999/xhtml');
+    inlineSnapshotStyles(document.documentElement, clone);
+    var serializer = new XMLSerializer();
+    var html = serializer.serializeToString(clone);
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '">' +
+      '<foreignObject x="' + (-window.scrollX || 0) + '" y="' + (-window.scrollY || 0) + '" width="' + docW + '" height="' + docH + '">' +
+      html +
+      '</foreignObject></svg>';
+    var img = new Image();
+    img.onload = function(){
+      try {
+        var canvas = document.createElement('canvas');
+        canvas.width = Math.max(1, Math.floor(w * dpr));
+        canvas.height = Math.max(1, Math.floor(h * dpr));
+        var ctx = canvas.getContext('2d');
+        if (!ctx) throw new Error('no 2d context');
+        ctx.scale(dpr, dpr);
+        ctx.drawImage(img, 0, 0, w, h);
+        window.parent.postMessage({ type: 'od:snapshot:result', id: id, dataUrl: canvas.toDataURL('image/png'), w: canvas.width, h: canvas.height }, '*');
+      } catch (err) {
+        window.parent.postMessage({ type: 'od:snapshot:result', id: id, error: String(err && err.message || err) }, '*');
+      }
+    };
+    img.onerror = function(){
+      window.parent.postMessage({ type: 'od:snapshot:result', id: id, error: 'snapshot image failed' }, '*');
+    };
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  }
+  window.addEventListener('message', function(ev){
+    var data = ev && ev.data;
+    if (!data || data.type !== 'od:snapshot' || !data.id) return;
+    waitForImages().then(function(){ renderSnapshot(String(data.id)); });
+  });
+})();</script></body></html>

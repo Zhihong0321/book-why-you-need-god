@@ -2,7 +2,7 @@
 combine_manuscript.py
 ---------------------
 Combines all chapters into one manuscript in reading order.
-- Uses _R.md from /restructured/ when available, falls back to original.
+- Reads PART1_*/PART2_*/P0_*/APP_* .md files from /restructured/.
 - Strips tool-output blocks (header, RESTRUCTURE SUMMARY, REFERENCE BLOCK).
 - Auto-increments version: combined_manuscript_r001.md → r002.md → ...
 - Inserts Part 1 / Part 2 dividers in the output.
@@ -47,50 +47,54 @@ APPENDIX_HEADER = """
 #   part_marker_before = None | "PART1" | "PART2"
 CHAPTERS = [
     # ─── 卷首 ───
-    ("TOCNT", "table_content.md",                      None),
-    ("CAST",  "00_cast_of_contributors.md",            None),
-    ("INTRO", "front_note.md",                         None),
-    ("LNSML", "lens_manual.md",                        None),
+    ("TOCNT", "P0_01_table_content.md",             None),
+    ("CAST",  "P0_02_cast_of_contributors.md",      None),
+    ("INTRO", "P0_03_front_note.md",                 None),
+    ("LNSML", "P0_04_lens_manual.md",                None),
 
     # ─── 第一部：理性对话 ───
-    ("NDEXP", "nde_research_report.md",                "PART1"),
-    ("ONEGD", "onegod.md",                             None),
-    ("MFPRT", "messianic-fingerprint-audit-report.md", None),
-    ("RSDLT", "08a_resurrection_delta.md",             None),
-    ("CMD10", "10a_ten_commandments.md",               None),
-    ("GDSIG", "10a2_god_signature.md",                 None),
-    ("ROADS", "10_all_roads_same_address.md",          None),
-    ("UNVRS", "03b_universe_is_yours.md",              None),
-    ("FNLQA", "part1_final_resistance_QA.md",          None),
-    ("P1END", "part1_ending.md",                       None),
+    ("NDEXP", "PART1_01_nde_research_report.md",     "PART1"),
+    ("ONEGD", "PART1_02_onegod.md",                   None),
+    ("MFPRT", "PART1_03_messianic_fingerprint.md",   None),
+    ("RSDLT", "PART1_04_resurrection_delta.md",       None),
+    ("CMD10", "PART1_05_ten_commandments.md",         None),
+    ("GDSIG", "PART1_06_god_signature.md",             None),
+    ("BPRSC", "PART1_07_bible_prescience.md",         None),
+    ("ROADS", "PART1_08_all_roads_same_address.md",   None),
+    ("UNVRS", "PART1_09_universe_is_yours.md",        None),
+    ("FNLQA", "PART1_10_final_resistance_QA.md",     None),
+    ("P1END", "PART1_11_ending.md",                   None),
 
     # ─── 第二部：灵魂对话 ───
-    ("FQSTN", "final_question_to_answer.md",           "PART2"),
-    ("FRGIV", "01_why_not_just_forgive.md",            None),
-    ("SNNER", "02_i-am-not-a-sinner.md",              None),
-    ("SELRD", "03_why_i_cant_redeem_myself.md",        None),
-    ("SLJES", "04_soul_and_jesus.md",                  None),
-    ("JSAVE", "05_why_jesus_can_save_all.md",          None),
-    ("COGST", "06_good-still-sinned-but-evil-redeemed.md", None),
-    ("ETERN", "07_eternal_punishment.md",              None),
-    ("RSRCT", "08_jesus_resurrection.md",              None),
-    ("RSPND", "09_why_must_i_face_final_judgement.md", None),
+    ("FQSTN", "PART2_01_final_question.md",           "PART2"),
+    ("FRGIV", "PART2_02_why_not_just_forgive.md",     None),
+    ("SNNER", "PART2_03_not_a_sinner.md",             None),
+    ("SELRD", "PART2_04_why_i_cant_redeem_myself.md", None),
+    ("SLJES", "PART2_05_soul_and_jesus.md",           None),
+    ("JSAVE", "PART2_06_why_jesus_can_save_all.md",   None),
+    ("COGST", "PART2_07_good_still_sinned.md",        None),
+    ("ETERN", "PART2_08_eternal_punishment.md",       None),
+    ("RSRCT", "PART2_09_jesus_resurrection.md",       None),
+    ("RSPND", "PART2_10_final_judgement.md",          None),
 
     # ─── 彩蛋 | 附录（不承担论证重量） ───
-    ("BLDNA", "10b_bible_dna.md",                      "APPENDIX"),
-    ("GODMG", "message_to_non_believer.md",            None),
+    ("BLDNA", "APP_01_bible_dna.md",                  "APPENDIX"),
+    ("GODMG", "APP_02_message_to_non_believer.md",    None),
 ]
 
 
 # ── Version auto-increment ─────────────────────────────────────────────
 def next_version() -> Path:
-    n = 1
-    while (BASE_DIR / f"combined_manuscript_r{n:03d}.md").exists():
-        n += 1
+    nums = []
+    for p in BASE_DIR.glob("combined_manuscript_r*.md"):
+        m = re.search(r"_r(\d+)\.md$", p.name)
+        if m:
+            nums.append(int(m.group(1)))
+    n = (max(nums) + 1) if nums else 1
     return BASE_DIR / f"combined_manuscript_r{n:03d}.md"
 
 
-# ── Strip tool-output blocks from _R.md files ─────────────────────────
+# ── Strip tool-output blocks from chapter files ──────────────────────
 def clean(text: str) -> str:
     SEP = r'[═]{10,}'          # matches ════...════ lines
 
@@ -124,14 +128,10 @@ def resolve(uid: str, filename: str) -> tuple[str, str, str]:
     label  = display path shown in the build log
     tag    = ✅ / ⚠️  / ❌ for the summary table
     """
-    stem = Path(filename).stem
-    r_path = RESTRUCTURED / f"{stem}_R.md"
-    o_path = BASE_DIR / filename
+    path = RESTRUCTURED / filename
 
-    if r_path.exists():
-        return str(r_path.name), "✅ restructured", clean(r_path.read_text(encoding="utf-8"))
-    elif o_path.exists():
-        return filename, "⚠️  original (not restructured)", o_path.read_text(encoding="utf-8")
+    if path.exists():
+        return filename, "✅", clean(path.read_text(encoding="utf-8"))
     else:
         return filename, "❌ MISSING", f"> ⚠️ FILE NOT FOUND: {filename}\n"
 
@@ -183,9 +183,9 @@ def main():
     print(f"  {'─'*3}  {'─'*6}  {'─'*48}  {'─'*20}")
     for n, uid, filename, tag in rows:
         part_note = ""
-        if n == 5:
+        if n == 6:
             part_note = "  ◀ PART 1 START"
-        elif n == 15:
+        elif n == 16:
             part_note = "  ◀ PART 2 START"
         print(f"  {n:>3}. [{uid}]  {filename:<48}  {tag}{part_note}")
     print(f"\n{sep}\n")

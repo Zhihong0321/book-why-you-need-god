@@ -2633,3 +2633,291 @@ YEAR: c. AD 90-100
 USED_FOR: Records Thomas's public doubt — "Unless I see the nail marks in his hands and put my finger where the nails were, and put my hand into his side, I will not believe" — an anti-fabrication detail no propagandist would include about a core team member.
 URL: NONE
 ---
+
+## PRSCN — 11_bible_prescience_R.md
+
+[PRSCN-001]
+CHAPTER: PRSCN
+TYPE: BOOK
+AUTHOR: Isaac Newton
+TITLE: Philosophiæ Naturalis Principia Mathematica
+SOURCE: Royal Society
+YEAR: 1687
+USED_FOR: 证实万有引力定律，表明地球在太空中不受任何物理实体支撑 (对应约伯记 26:7)。
+URL: NONE
+---
+
+[PRSCN-002]
+CHAPTER: PRSCN
+TYPE: BOOK
+AUTHOR: Matthew Fontaine Maury
+TITLE: The Physical Geography of the Sea
+SOURCE: Harper & Brothers
+YEAR: 1855
+USED_FOR: 被誉为现代海洋学之父，根据"海道"的启示测绘了全球洋流系统 (对应诗篇 8:8)。
+URL: NONE
+---
+
+[PRSCN-003]
+CHAPTER: PRSCN
+TYPE: JOURNAL
+AUTHOR: Corliss, J. B. et al. / Robert Ballard
+TITLE: Submarine Thermal Springs on the Galápagos Rift
+SOURCE: Science
+YEAR: 1979 (Discovery 1977)
+USED_FOR: ALVIN号潜水器首次在海底发现深海热泉，证实"海源"的存在 (对应约伯记 38:16)。
+URL: NONE
+---
+
+[PRSCN-004]
+CHAPTER: PRSCN
+TYPE: BOOK
+AUTHOR: Pierre Perrault & Edme Mariotte
+TITLE: De l'origine des fontaines
+SOURCE: Paris
+YEAR: 1674 (Perrault) / 1686 (Mariotte)
+USED_FOR: 定量验证了降水、径流和蒸发的完整闭环水循环 (对应传道书 1:7 与 约伯记 36:27-28)。
+URL: NONE
+---
+
+[PRSCN-005]
+CHAPTER: PRSCN
+TYPE: JOURNAL
+AUTHOR: Edwin Hubble
+TITLE: A Relation between Distance and Radial Velocity among Extra-Galactic Nebulae
+SOURCE: Proceedings of the National Academy of Sciences (PNAS)
+YEAR: 1929
+USED_FOR: 证实了宇宙膨胀（空间拉伸），并且揭示了星系极多、恒星无法用肉眼数算 (对应以赛亚书 40:22b 与 耶利米书 33:22)。
+URL: NONE
+---
+
+[PRSCN-006]
+CHAPTER: PRSCN
+TYPE: BOOK
+AUTHOR: William Harvey
+TITLE: Exercitatio Anatomica de Motu Cordis et Sanguinis in Animalibus
+SOURCE: Frankfurt
+YEAR: 1628
+USED_FOR: 确立血液循环理论，证实血液是维持细胞生命的绝对基础 (对应利未记 17:11)。
+URL: NONE
+---
+
+[PRSCN-007]
+CHAPTER: PRSCN
+TYPE: LEGAL
+AUTHOR: Great Council of Ragusa (Venetian Republic influenced)
+TITLE: Trentino / Quarantena Legislation
+SOURCE: Ragusa (Dubrovnik) Archives
+YEAR: 1377
+USED_FOR: 人类历史上最早的官方防疫隔离法案，隔离传染源 (对应利未记 13:46)。
+URL: NONE
+---
+
+[PRSCN-008]
+CHAPTER: PRSCN
+TYPE: BOOK
+AUTHOR: Ignaz Semmelweis
+TITLE: Die Ätiologie, der Begriff und die Prophylaxe des Kindbettfiebers (The Etiology, Concept, and Prophylaxis of Childbed Fever)
+SOURCE: Pest, Wien und Leipzig
+YEAR: 1861 (Discovery 1847)
+USED_FOR: 发现并证实流动水洗手能洗去病原体，降低死亡率 (对应利未记 15:13)。
+URL: NONE
+---
+
+[PRSCN-009]
+CHAPTER: PRSCN
+TYPE: JOURNAL
+AUTHOR: Henrik Dam & Edward A. Doisy
+TITLE: The Antihaemorrhagic Vitamin of the Chick / Vitamin K
+SOURCE: Nature
+YEAR: 1935 (Dam) / Nobel 1943
+USED_FOR: 发现维生素K及新生儿凝血酶原在出生后第8天达到一生峰值的生化机制 (对应创世记 17:12)。
+URL: NONE
+---
+
+[PRSCN-010]
+CHAPTER: PRSCN
+TYPE: BOOK
+AUTHOR: Charles Wyville Thomson
+TITLE: Report of the Scientific Results of the Voyage of H.M.S. Challenger
+SOURCE: Her Majesty's Stationery Office
+YEAR: 1880s (Expedition 1872-1876)
+USED_FOR: HMS挑战者号利用重锤测深法首次发现海底存在巨大的洋脊山脉 (对应约拿书 2:6)。
+URL: NONE
+---
+
+[PRSCN-011]
+CHAPTER: PRSCN
+TYPE: JOURNAL
+AUTHOR: Rudolf Clausius
+TITLE: Ueber die bewegende Kraft der Wärme (On the Moving Force of Heat)
+SOURCE: Annalen der Physik
+YEAR: 1850
+USED_FOR: 提出热力学第二定律(熵增)，证实宇宙正在"渐渐旧了"，走向无序的热寂 (对应诗篇 102:25-26)。
+URL: NONE
+---
+
+[PRSCN-012]
+CHAPTER: PRSCN
+TYPE: JOURNAL
+AUTHOR: Arno Penzias & Robert Wilson
+TITLE: A Measurement of Excess Antenna Temperature at 4080 Mc/s
+SOURCE: Astrophysical Journal
+YEAR: 1965 (Discovery 1964)
+USED_FOR: 发现宇宙微波背景辐射(CMB)，证实大爆炸模型及宇宙具有物理起点 (对应创世记 1:1)。
+URL: NONE
+---
+
+[PRSCN-013]
+CHAPTER: PRSCN
+TYPE: OTHER
+AUTHOR: Evangelista Torricelli
+TITLE: Letters to Michelangelo Ricci
+SOURCE: Florence
+YEAR: 1644 (Invention 1643)
+USED_FOR: 发明水银气压计，证实空气具有物理质量与重量 (对应约伯记 28:25)。
+URL: NONE
+---
+
+[PRSCN-014]
+CHAPTER: PRSCN
+TYPE: BOOK
+AUTHOR: John Snow
+TITLE: On the Mode of Communication of Cholera
+SOURCE: John Churchill
+YEAR: 1854 (2nd Ed. 1855)
+USED_FOR: 证实霍乱通过受粪便污染的水源传播，确立排泄物需隔离深埋的公共卫生原则 (对应申命记 23:12-13)。
+URL: NONE
+---
+
+[PRSCN-015]
+CHAPTER: PRSCN
+TYPE: BOOK
+AUTHOR: John Dalton
+TITLE: A New System of Chemical Philosophy
+SOURCE: R. Bickerstaff
+YEAR: 1808
+USED_FOR: 提出近代原子理论，证实肉眼可见的宏观物质由不可见的微观粒子组成 (对应希伯来书 11:3)。
+URL: NONE
+---
+
+[PRSCN-016]
+CHAPTER: PRSCN
+TYPE: JOURNAL
+AUTHOR: George Hadley
+TITLE: Concerning the Cause of the General Trade-Winds
+SOURCE: Philosophical Transactions of the Royal Society
+YEAR: 1735
+USED_FOR: 首次科学描述大气环流的闭环模型，即哈德利环流圈 (对应传道书 1:6)。
+URL: NONE
+---
+
+[PRSCN-017]
+CHAPTER: PRSCN
+TYPE: JOURNAL
+AUTHOR: Gaia Collaboration (ESA)
+TITLE: Gaia Early Data Release 3: Summary of the contents and survey properties
+SOURCE: Astronomy & Astrophysics
+YEAR: 2021
+USED_FOR: 通过天文观测精准测量，证实昴星团为引力束缚星团，猎户座为非引力束缚的散开星群 (对应约伯记 38:31)。
+URL: NONE
+---
+
+[PRSCN-018]
+CHAPTER: PRSCN
+TYPE: PRIMARY
+AUTHOR: Antonio Pigafetta
+TITLE: Relazione del primo viaggio intorno al mondo (Report on the First Voyage Around the World)
+SOURCE: Venice
+YEAR: 1524 (Voyage 1519-1522)
+USED_FOR: 记录麦哲伦船队的环球航行，用人类肉身证实了地球是球形且昼夜分界线为大圆 (对应约伯记 26:10 与 以赛亚书 40:22a)。
+URL: NONE
+---
+
+[PRSCN-019]
+CHAPTER: PRSCN
+TYPE: BOOK
+AUTHOR: Bernard Palissy
+TITLE: Discours admirables de la nature des eaux et fontaines
+SOURCE: Paris
+YEAR: 1580
+USED_FOR: 首次正确描述了水循环的蒸发机制，推翻了亚里士多德的地下水理论 (对应约伯记 36:27-28)。
+URL: NONE
+---
+
+[PRSCN-020]
+CHAPTER: PRSCN
+TYPE: BOOK
+AUTHOR: Robert K. Murray et al.
+TITLE: Harper's Illustrated Biochemistry
+SOURCE: McGraw-Hill Education
+YEAR: Various Editions (20th Century)
+USED_FOR: 现代生物化学证实，构成人体的数十种基本化学元素与地壳土壤中的元素完全一致 (对应创世记 2:7)。
+URL: NONE
+---
+
+[PRSCN-021]
+CHAPTER: PRSCN
+TYPE: JOURNAL
+AUTHOR: S.W. Hong et al. (KRISO)
+TITLE: Safety Investigation of Noah's Ark in a Seaway
+SOURCE: Creation Ex Nihilo Technical Journal
+YEAR: 1994 (Research 1993)
+USED_FOR: 韩国船舶与海洋工程研究所(KRISO)通过流体力学证实，方舟的 6:1 长宽比具有极佳的抗浪稳定性和抗倾覆能力 (对应创世记 6:15)。
+URL: NONE
+---
+
+[PRSCN-022]
+CHAPTER: PRSCN
+TYPE: JOURNAL
+AUTHOR: Robert Ader & Nicholas Cohen
+TITLE: Behaviorally Conditioned Immunosuppression
+SOURCE: Psychosomatic Medicine
+YEAR: 1975
+USED_FOR: 心理神经免疫学的奠基性实验，证实心理状态（如慢性压力、平静心态）对免疫系统和肉体疾病具有直接的因果作用 (对应箴言 14:30)。
+URL: NONE
+---
+
+[PRSCN-023]
+CHAPTER: PRSCN
+TYPE: JOURNAL
+AUTHOR: James Paget & Richard Owen
+TITLE: Description of a Microscopic Entozoon infesting the Muscles of the Human Body
+SOURCE: Transactions of the Zoological Society of London
+YEAR: 1835
+USED_FOR: 首次在人体肌肉中发现旋毛虫 (Trichinella spiralis)，随后证实未煮熟的猪肉是这种致命寄生虫的主要宿主 (对应利未记 11:7-8)。
+URL: NONE
+---
+
+[PRSCN-024]
+CHAPTER: PRSCN
+TYPE: JOURNAL
+AUTHOR: Joseph von Fraunhofer
+TITLE: Bestimmung des Brechungs- und des Farbenzerstreuungs-Vermögens verschiedener Glasarten
+SOURCE: Denkschriften der Münchener Akademie
+YEAR: 1814-1815
+USED_FOR: 发现太阳与恒星光谱中的暗线，开创恒星光谱学，证实每颗恒星具有独特的光谱指纹和化学质量 (对应哥林多前书 15:41)。
+URL: NONE
+---
+
+[PRSCN-025]
+CHAPTER: PRSCN
+TYPE: JOURNAL
+AUTHOR: E. J. Schantz et al.
+TITLE: Paralytic Shellfish Poisoning
+SOURCE: General biochemistry/toxicology literature
+YEAR: 1950s (Isolation of saxitoxin 1957)
+USED_FOR: 证实无磷无翅的滤食性双壳类海产容易富集致命毒素（如麻痹性贝毒），在缺乏现代冷链和检测的古代具有极高危险性 (对应利未记 11:9-12)。
+URL: NONE
+---
+
+[PRSCN-026]
+CHAPTER: PRSCN
+TYPE: OTHER
+AUTHOR: J. Robert Oppenheimer & Manhattan Project Team
+TITLE: Trinity Test Data / Atomic Bombings
+SOURCE: Los Alamos National Laboratory
+YEAR: 1945
+USED_FOR: 首次通过核试验及原子弹爆炸证实，物质的基本元素（有形质的）能够在极度的高温（烈火）中被瞬间销化（裂变解体） (对应彼得后书 3:10)。
+URL: NONE
+---
