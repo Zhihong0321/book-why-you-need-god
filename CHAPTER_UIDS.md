@@ -22,6 +22,7 @@
 | ETERN | 07_eternal_punishment.md | Eternal Punishment |
 | RSRCT | 08_jesus_resurrection.md | Jesus Resurrection — Evidence |
 | RSPND | 09_why_must_i_face_final_judgement.md | Why Must I Face Final Judgement |
+| FNLQA | part1_final_resistance_QA.md | Final Resistance Q&A — Seven Knives Broken |
 
 ---
 

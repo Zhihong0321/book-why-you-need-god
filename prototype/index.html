@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>濒死体验科学审计 — NDEXP</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Starfield canvas (behind aurora, always moving) -->
+    <canvas class="starfield" id="starfield"></canvas>
+
+    <!-- Aurora animated background (fixed, non-scrollable) -->
+    <div class="aurora-bg">
+        <div class="aurora-set aurora-calm active" id="aurora-calm">
+            <div class="aurora-layer a1"></div>
+            <div class="aurora-layer a2"></div>
+            <div class="aurora-layer a3"></div>
+        </div>
+        <div class="aurora-set aurora-wonder" id="aurora-wonder">
+            <div class="aurora-layer a1"></div>
+            <div class="aurora-layer a2"></div>
+            <div class="aurora-layer a3"></div>
+        </div>
+        <div class="aurora-set aurora-awe" id="aurora-awe">
+            <div class="aurora-layer a1"></div>
+            <div class="aurora-layer a2"></div>
+            <div class="aurora-layer a3"></div>
+        </div>
+        <div class="aurora-set aurora-weight" id="aurora-weight">
+            <div class="aurora-layer a1"></div>
+            <div class="aurora-layer a2"></div>
+            <div class="aurora-layer a3"></div>
+        </div>
+        <div class="aurora-set aurora-lightspeed" id="aurora-lightspeed">
+            <div class="aurora-layer a1"></div>
+            <div class="aurora-layer a2"></div>
+            <div class="aurora-layer a3"></div>
+        </div>
+    </div>
+
+    <!-- Audio elements with crossfade support -->
+    <audio id="track-calm" loop preload="auto">
+        <source src="../music_asset/Scott Buckley - Snowfall.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="track-wonder" loop preload="auto">
+        <source src="../music_asset/Scott Buckley - Filaments.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="track-awe" loop preload="auto">
+        <source src="../music_asset/Scott Buckley - Horizons.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="track-weight" loop preload="auto">
+        <source src="../music_asset/Sappheiros - Escape.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Music notification toast -->
+    <div class="music-toast" id="musicToast">
+        <span class="music-toast-icon">♪</span>
+        <span class="music-toast-text" id="musicToastText"></span>
+    </div>
+
+    <!-- Music control -->
+    <button class="music-toggle" id="musicToggle">♪</button>
+
+    <!-- Start overlay (needed for autoplay policy) -->
+    <div class="start-overlay" id="startOverlay">
+        <div class="start-content">
+            <p class="start-subtitle">第一部 · 理性对话</p>
+            <h1 class="start-title">濒死体验科学审计</h1>
+            <p class="start-hint">建议佩戴耳机</p>
+            <button class="start-btn" id="startBtn">开始阅读</button>
+        </div>
+    </div>
+
+    <!-- Main scrollable content -->
+    <main class="content" id="mainContent">
+
+        <!-- ZONE 1: 结论 — mood: calm, color: cool grey-blue -->
+        <section class="zone" data-mood="calm">
+            <div class="chapter-label">结论</div>
+            <div class="text-block">
+                <p class="lead">意识不是大脑的"涌现属性"。</p>
+                <p>意识是一个独立运行的外部系统，大脑是其在物质维度的降维接口。</p>
+                <p>当接口断电，意识不会消亡——它回家。</p>
+            </div>
+        </section>
+
+        <!-- ZONE 2: 逻辑 — mood: calm → wonder -->
+        <section class="zone" data-mood="wonder">
+            <div class="chapter-label">逻辑</div>
+            <div class="text-block">
+                <p>意识从未运行在大脑硬件上。大脑是带宽限制器（Bandwidth Limiter），不是处理器（Processor）。当限制器断电，意识恢复其原生全频运行状态。</p>
+                <p>这如同拔掉一台电视机的电源——电视屏幕熄灭，但广播信号从未中断。</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="text-block lens-block">
+                <p class="lens-label">【生活化 Lens】</p>
+                <p>你站在父亲的遗体旁边。亲戚们轮流过来跟你说节哀。有人握你的手，有人跟你说他去了更好的地方。你点头，但你其实没在听那些话。</p>
+                <p>你一直在看他的手——那双修过水管、打过你、后来抱着你儿子不肯放的手。现在它就在那里，但你比任何时候都清楚：他已经不在里面了。不是"睡着了"，不是"走了"——是那个"他"，不在了。</p>
+                <p>你已经知道这个道理了——一个人，和他的身体，不是同一件事。</p>
+                <p><strong>这章要问的是：如果身体不是那个人——那"他"去了哪里？</strong></p>
+            </div>
+        </section>
+
+        <!-- LIGHTSPEED TRANSITION: wonder → awe -->
+        <section class="zone-transition" data-transition="lightspeed">
+            <div class="transition-space"></div>
+        </section>
+
+        <!-- ZONE 3: 论证 — mood: awe -->
+        <section class="zone" data-mood="awe">
+            <div class="chapter-label">论证</div>
+
+            <div class="text-block">
+                <h3>架构级推论：解除带宽限制</h3>
+                <p>若意识是大脑的"派生软件"，则硬件断电必然导致软件崩溃。但观测数据显示：硬件断电后，"软件"不仅未崩溃，反而进入了一种<strong>解除带宽限制</strong>的高性能模式。</p>
+                <blockquote class="fx-quote">意识从未运行在大脑硬件上。大脑是带宽限制器，不是处理器。当限制器断电，意识恢复其原生全频运行状态。</blockquote>
+            </div>
+
+            <div class="text-block">
+                <h3>架构级推论：分布式意识节点</h3>
+                <p>"真实离体感知"构成了最强硬的物理层证据。其逻辑链条为：</p>
+                <ol>
+                    <li>观测者获取了<strong>物理上真实</strong>的信息</li>
+                    <li>该信息<strong>不可能</strong>通过身体感官获取（空间隔离 + 感官屏蔽 + 脑功能停止）</li>
+                    <li>因此，观测者的<strong>感知节点</strong>已脱离身体硬件外壳</li>
+                </ol>
+                <blockquote class="fx-quote">这不是"幻觉的巧合"，而是"分布式意识节点"在硬件外壳之外进行实时数据采集的直接证据。</blockquote>
+            </div>
+
+            <div class="text-block">
+                <h3>架构级推论：出厂固件</h3>
+                <p>NDE 的核心元素不是"文化皮肤"（Cultural Skin），而是"出厂固件"（Factory Firmware）。</p>
+                <p>如同全球所有安卓手机无论品牌、语言、地区，底层都运行相同的 Linux 内核——NDE 的核心协议栈独立于文化操作系统而存在。</p>
+                <ul>
+                    <li>该协议<strong>不是</strong>大脑在缺氧时随机生成的噪声（噪声不会跨样本一致）</li>
+                    <li>该协议<strong>不是</strong>文化学习的产物（未受教育的儿童同样运行该协议）</li>
+                    <li>该协议<strong>是</strong>意识本身的固有运行规则——一种"出厂预装"的导航系统</li>
+                </ul>
+            </div>
+
+            <div class="text-block">
+                <h3>架构级推论：原生感知能力</h3>
+                <p>这是整个审计中最具"物理层杀伤力"的证据模块：</p>
+                <ol>
+                    <li>视网膜从未发育 → 视神经从未传导过光信号</li>
+                    <li>视觉皮层从未被训练 → 大脑中不存在视觉处理的神经回路</li>
+                    <li>在 NDE 中产生了精确的视觉感知 → 视觉的来源不是视网膜-大脑链路</li>
+                </ol>
+                <blockquote class="fx-quote">视觉不是视网膜的产物，而是意识的固有属性。当脱离物质身体时，这种原生感知能力不再受限于特定感官硬件的有无。</blockquote>
+                <p>这如同一个人一直通过一扇小窗户看世界，当墙壁消失时，他发现自己本来就站在旷野中——视野从未真正被限制，只是被窗框遮挡。</p>
+            </div>
+
+            <div class="text-block">
+                <h3>综合审计结论</h3>
+                <table>
+                    <thead>
+                        <tr><th>模块</th><th>致命级 Bug</th><th>严重级 Bug</th><th>唯物主义存活率</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>模块1：平直脑电图期间超觉清醒</td><td>3</td><td>1</td><td>0%</td></tr>
+                        <tr><td>模块2：可验证的离体感知</td><td>3</td><td>1</td><td>0%</td></tr>
+                        <tr><td>模块3：跨文化协议一致性</td><td>2</td><td>2</td><td>0%</td></tr>
+                        <tr><td>模块4：先天失明者视觉</td><td>4</td><td>0</td><td>0%</td></tr>
+                        <tr><td><strong>总计</strong></td><td><strong>12</strong></td><td><strong>4</strong></td><td><strong>0%</strong></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ZONE 4: 证据 — mood: awe (continues) -->
+        <section class="zone" data-mood="awe">
+            <div class="chapter-label">证据</div>
+            <div class="text-block">
+                <p class="evidence-note">下表不解释。下表陈列。</p>
+                <h3>样本覆盖矩阵</h3>
+                <table>
+                    <thead>
+                        <tr><th>研究 / 案例</th><th>样本类型</th><th>N</th><th>关键发现</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>van Lommel</td><td>心脏骤停幸存者</td><td>344</td><td>脑缺氧越重 → 认知越清晰</td></tr>
+                        <tr><td>AWARE (Parnia)</td><td>心脏骤停患者</td><td>2,060</td><td>平直 EEG 期间超觉清醒</td></tr>
+                        <tr><td>Ring & Cooper</td><td>先天完全失明者</td><td>31</td><td>无视觉硬件 → 产生精确视觉</td></tr>
+                        <tr><td>Morse</td><td>3–12 岁儿童</td><td>—</td><td>完整协议栈，含未见过祖辈信息</td></tr>
+                        <tr><td>刘建勋等</td><td>唐山地震幸存者</td><td>81</td><td>核心元素与西方完全同构</td></tr>
+                        <tr><td>Al Sullivan</td><td>心脏手术患者</td><td>1</td><td>术后描述主刀医生独特习惯动作</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- LIGHTSPEED TRANSITION: awe → weight -->
+        <section class="zone-transition" data-transition="lightspeed">
+            <div class="transition-space"></div>
+        </section>
+
+        <!-- ZONE 5: 结尾 — mood: weight (existential) -->
+        <section class="zone" data-mood="weight">
+            <div class="text-block closing">
+                <p><strong>你刚刚看完的，不只是一组科学数据。</strong></p>
+                <p>你看见的是：死亡，不是结束。</p>
+                <p>在你读这本书之前，死亡是一道墙。墙那边什么都没有，所以"神是谁"最多是一个周末下午可以想想的问题——想清楚了也好，想不清楚也罢，反正墙那边是黑的，无所谓。</p>
+                <p>但现在你知道了，墙那边不是黑的。</p>
+                <p class="highlight fx-glow">墙那边，是永恒。</p>
+                <p>你的灵魂，会在那里继续存在——不是几十年，不是几百年，是在时间本身结束之后，依然存在。</p>
+                <p class="fx-fade-up">这件事改变了一切。</p>
+                <p class="highlight fx-typewriter" data-text="死亡不再是"一切的结束"。死亡是"你进入永恒的第一天"。">死亡不再是"一切的结束"。死亡是"你进入永恒的第一天"。</p>
+                <p class="fx-fade-up">而你，还没有准备好。</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="text-block closing">
+                <p class="fx-fade-up"><strong>你的灵魂，在永恒里，处于什么状态？</strong></p>
+                <p class="fx-fade-up">这不是哲学问题。这是你将要面对的现实——而且是在时间用完之后，你没有机会重新选择的现实。</p>
+                <p class="fx-fade-up">你开始知道，你需要一个答案。</p>
+                <p class="fx-fade-up">但答案在哪里？</p>
+                <p class="fx-glow"><strong>谁，有永恒里的答案？</strong></p>
+                <p class="fx-fade-up">只有一种存在者，能对永恒负责任地说话——那就是，站在时间之外的那一位。</p>
+                <p class="fx-reveal">我们把祂叫做：真神。</p>
+                <p class="fx-fade-up">那么，真神是谁？</p>
+                <p class="next-chapter fx-fade-up">下一章，我们以最严谨的方式，开始寻找。</p>
+            </div>
+        </section>
+
+        <!-- Credits -->
+        <footer class="credits">
+            <p>Music: Scott Buckley, Sappheiros — Licensed under CC BY 3.0</p>
+            <p>Powered by BreakingCopyright.com</p>
+        </footer>
+
+    </main>
+
+    <script src="starfield.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

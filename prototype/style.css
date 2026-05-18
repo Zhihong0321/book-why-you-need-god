@@ -1,0 +1,635 @@
+/* ===== RESET & BASE ===== */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Noto Serif SC", "Source Han Serif CN", Georgia, serif;
+    line-height: 1.9;
+    color: #e8e8e8;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    background: #050508;
+}
+
+/* ===== STARFIELD CANVAS ===== */
+.starfield {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -2;
+}
+
+/* ===== AURORA BACKGROUND ===== */
+/* Strategy: 4 aurora sets (one per mood), crossfade via opacity */
+.aurora-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+}
+
+/* Vignette overlay — protects text readability without killing nebula */
+.aurora-bg::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: radial-gradient(ellipse at center,
+        rgba(3, 3, 8, 0.15) 0%,
+        rgba(3, 3, 8, 0.0) 35%,
+        rgba(3, 3, 8, 0.35) 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.aurora-set {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 5s ease;
+}
+
+.aurora-set.active {
+    opacity: 1;
+}
+
+.aurora-layer {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+}
+
+/* --- CALM: faint cold nebula wisp — barely visible against black --- */
+.aurora-calm .a1 {
+    width: 130vw; height: 130vh;
+    top: -35%; left: -20%;
+    background: radial-gradient(ellipse at 40% 45%,
+        rgba(20, 50, 110, 0.55) 0%,
+        rgba(12, 30, 70, 0.25) 25%,
+        rgba(6, 18, 45, 0.08) 45%,
+        transparent 65%);
+    animation: auroraFloat1 30s ease-in-out infinite;
+}
+.aurora-calm .a2 {
+    width: 90vw; height: 90vh;
+    top: 5%; right: -25%;
+    background: radial-gradient(ellipse at 60% 50%,
+        rgba(25, 60, 120, 0.4) 0%,
+        rgba(14, 38, 75, 0.15) 30%,
+        transparent 55%);
+    animation: auroraFloat2 30s ease-in-out infinite;
+    animation-delay: -10s;
+}
+.aurora-calm .a3 {
+    width: 70vw; height: 60vh;
+    bottom: -15%; left: 5%;
+    background: radial-gradient(ellipse at 35% 60%,
+        rgba(15, 35, 80, 0.3) 0%,
+        rgba(8, 20, 50, 0.1) 35%,
+        transparent 55%);
+    animation: auroraFloat3 30s ease-in-out infinite;
+    animation-delay: -20s;
+}
+
+/* --- WONDER: nebula emerging — purple/magenta wisps visible --- */
+.aurora-wonder .a1 {
+    width: 130vw; height: 130vh;
+    top: -30%; left: -15%;
+    background: radial-gradient(ellipse at 35% 40%,
+        rgba(55, 35, 120, 0.55) 0%,
+        rgba(30, 20, 75, 0.25) 22%,
+        rgba(15, 10, 45, 0.08) 45%,
+        transparent 65%);
+    animation: auroraFloat1 22s ease-in-out infinite;
+}
+.aurora-wonder .a2 {
+    width: 85vw; height: 80vh;
+    top: 10%; right: -20%;
+    background: radial-gradient(ellipse at 65% 45%,
+        rgba(70, 30, 130, 0.45) 0%,
+        rgba(40, 18, 80, 0.18) 28%,
+        rgba(20, 10, 50, 0.05) 48%,
+        transparent 65%);
+    animation: auroraFloat2 22s ease-in-out infinite;
+    animation-delay: -7s;
+}
+.aurora-wonder .a3 {
+    width: 65vw; height: 55vh;
+    bottom: -10%; left: 20%;
+    background: radial-gradient(ellipse at 50% 55%,
+        rgba(50, 25, 100, 0.38) 0%,
+        rgba(28, 14, 60, 0.14) 30%,
+        transparent 55%);
+    animation: auroraFloat3 22s ease-in-out infinite;
+    animation-delay: -14s;
+}
+
+/* --- AWE: JWST deep field — VIBRANT, hopeful, warm+cool mix --- */
+.aurora-awe .a1 {
+    width: 140vw; height: 140vh;
+    top: -35%; left: -25%;
+    background: 
+        radial-gradient(ellipse at 28% 32%,
+            rgba(120, 40, 160, 0.85) 0%,
+            rgba(70, 22, 110, 0.4) 18%,
+            rgba(30, 10, 60, 0.12) 38%,
+            transparent 55%),
+        radial-gradient(ellipse at 78% 68%,
+            rgba(25, 80, 170, 0.65) 0%,
+            rgba(12, 45, 100, 0.28) 20%,
+            rgba(6, 22, 55, 0.06) 38%,
+            transparent 52%),
+        radial-gradient(ellipse at 65% 25%,
+            rgba(200, 120, 40, 0.35) 0%,
+            rgba(140, 70, 20, 0.12) 18%,
+            transparent 35%);
+    animation: auroraFloat1 20s ease-in-out infinite;
+}
+.aurora-awe .a2 {
+    width: 100vw; height: 90vh;
+    top: 5%; right: -15%;
+    background: 
+        radial-gradient(ellipse at 50% 38%,
+            rgba(140, 50, 150, 0.75) 0%,
+            rgba(80, 28, 95, 0.32) 18%,
+            rgba(35, 12, 50, 0.08) 36%,
+            transparent 52%),
+        radial-gradient(ellipse at 18% 72%,
+            rgba(35, 90, 170, 0.55) 0%,
+            rgba(18, 50, 100, 0.22) 20%,
+            rgba(8, 25, 55, 0.05) 36%,
+            transparent 50%),
+        radial-gradient(ellipse at 75% 80%,
+            rgba(180, 80, 30, 0.3) 0%,
+            rgba(120, 50, 15, 0.1) 16%,
+            transparent 32%);
+    animation: auroraFloat2 20s ease-in-out infinite;
+    animation-delay: -6s;
+}
+.aurora-awe .a3 {
+    width: 75vw; height: 65vh;
+    bottom: -10%; left: 10%;
+    background: 
+        radial-gradient(ellipse at 42% 48%,
+            rgba(100, 55, 140, 0.65) 0%,
+            rgba(55, 30, 85, 0.28) 18%,
+            rgba(25, 15, 45, 0.06) 35%,
+            transparent 50%),
+        radial-gradient(ellipse at 82% 28%,
+            rgba(30, 70, 130, 0.45) 0%,
+            rgba(15, 38, 75, 0.15) 20%,
+            transparent 38%),
+        radial-gradient(ellipse at 20% 20%,
+            rgba(220, 150, 50, 0.25) 0%,
+            rgba(160, 90, 25, 0.08) 15%,
+            transparent 28%);
+    animation: auroraFloat3 20s ease-in-out infinite;
+    animation-delay: -13s;
+}
+
+/* --- WEIGHT: void — nebula almost gone, deep black --- */
+.aurora-weight .a1 {
+    width: 120vw; height: 120vh;
+    top: -30%; left: -15%;
+    background: radial-gradient(ellipse at 45% 50%,
+        rgba(18, 14, 45, 0.3) 0%,
+        rgba(8, 6, 25, 0.1) 30%,
+        transparent 50%);
+    animation: auroraFloat1 40s ease-in-out infinite;
+}
+.aurora-weight .a2 {
+    width: 80vw; height: 70vh;
+    top: 15%; right: -20%;
+    background: radial-gradient(ellipse at 55% 45%,
+        rgba(20, 12, 50, 0.25) 0%,
+        rgba(10, 7, 28, 0.08) 30%,
+        transparent 48%);
+    animation: auroraFloat2 40s ease-in-out infinite;
+    animation-delay: -12s;
+}
+.aurora-weight .a3 {
+    width: 60vw; height: 50vh;
+    bottom: -5%; left: 15%;
+    background: radial-gradient(ellipse at 40% 55%,
+        rgba(14, 8, 35, 0.2) 0%,
+        rgba(6, 4, 18, 0.06) 30%,
+        transparent 48%);
+    animation: auroraFloat3 40s ease-in-out infinite;
+    animation-delay: -25s;
+}
+
+/* --- LIGHTSPEED: vibrant, alive, hopeful — the cosmos at full glory --- */
+.aurora-lightspeed .a1 {
+    width: 140vw; height: 140vh;
+    top: -30%; left: -20%;
+    background: 
+        radial-gradient(ellipse at 35% 40%,
+            rgba(130, 60, 200, 0.85) 0%,
+            rgba(80, 35, 140, 0.4) 18%,
+            rgba(40, 18, 80, 0.1) 38%,
+            transparent 55%),
+        radial-gradient(ellipse at 72% 65%,
+            rgba(40, 100, 200, 0.65) 0%,
+            rgba(20, 55, 120, 0.25) 20%,
+            transparent 42%),
+        radial-gradient(ellipse at 60% 20%,
+            rgba(240, 150, 50, 0.45) 0%,
+            rgba(180, 90, 25, 0.15) 15%,
+            transparent 30%);
+    animation: auroraFloat1 14s ease-in-out infinite;
+}
+.aurora-lightspeed .a2 {
+    width: 100vw; height: 95vh;
+    top: 0%; right: -15%;
+    background: 
+        radial-gradient(ellipse at 50% 45%,
+            rgba(160, 60, 180, 0.75) 0%,
+            rgba(90, 30, 110, 0.3) 18%,
+            transparent 42%),
+        radial-gradient(ellipse at 20% 70%,
+            rgba(50, 120, 200, 0.55) 0%,
+            rgba(25, 65, 120, 0.2) 20%,
+            transparent 40%),
+        radial-gradient(ellipse at 80% 75%,
+            rgba(220, 120, 40, 0.4) 0%,
+            rgba(160, 70, 20, 0.12) 14%,
+            transparent 28%);
+    animation: auroraFloat2 14s ease-in-out infinite;
+    animation-delay: -5s;
+}
+.aurora-lightspeed .a3 {
+    width: 80vw; height: 70vh;
+    bottom: -5%; left: 10%;
+    background: 
+        radial-gradient(ellipse at 45% 50%,
+            rgba(100, 50, 160, 0.6) 0%,
+            rgba(55, 28, 95, 0.22) 18%,
+            transparent 40%),
+        radial-gradient(ellipse at 75% 25%,
+            rgba(255, 180, 60, 0.35) 0%,
+            rgba(200, 110, 30, 0.1) 14%,
+            transparent 26%);
+    animation: auroraFloat3 14s ease-in-out infinite;
+    animation-delay: -9s;
+}
+
+/* Aurora float keyframes — always moving, slow and organic */
+@keyframes auroraFloat1 {
+    0% { transform: translate(0%, 0%) scale(1) rotate(0deg); }
+    20% { transform: translate(8%, 5%) scale(1.08) rotate(1.5deg); }
+    40% { transform: translate(-5%, 10%) scale(0.95) rotate(-1deg); }
+    60% { transform: translate(10%, -5%) scale(1.05) rotate(2deg); }
+    80% { transform: translate(-3%, -8%) scale(1.02) rotate(-0.5deg); }
+    100% { transform: translate(0%, 0%) scale(1) rotate(0deg); }
+}
+
+@keyframes auroraFloat2 {
+    0% { transform: translate(0%, 0%) scale(1) rotate(0deg); }
+    20% { transform: translate(-7%, 8%) scale(1.06) rotate(-2deg); }
+    40% { transform: translate(10%, -4%) scale(0.94) rotate(1.5deg); }
+    60% { transform: translate(-4%, 6%) scale(1.08) rotate(-1deg); }
+    80% { transform: translate(6%, -7%) scale(0.97) rotate(2deg); }
+    100% { transform: translate(0%, 0%) scale(1) rotate(0deg); }
+}
+
+@keyframes auroraFloat3 {
+    0% { transform: translate(0%, 0%) scale(1) rotate(0deg); }
+    20% { transform: translate(5%, -6%) scale(1.1) rotate(2deg); }
+    40% { transform: translate(-8%, 4%) scale(0.92) rotate(-2.5deg); }
+    60% { transform: translate(7%, 8%) scale(1.04) rotate(1deg); }
+    80% { transform: translate(-6%, -4%) scale(1.07) rotate(-1.5deg); }
+    100% { transform: translate(0%, 0%) scale(1) rotate(0deg); }
+}
+
+/* ===== START OVERLAY ===== */
+.start-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(3, 3, 8, 0.98);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: opacity 2s ease;
+}
+.start-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+.start-content { text-align: center; }
+.start-subtitle {
+    font-size: 0.8rem;
+    letter-spacing: 0.35em;
+    color: #556;
+    margin-bottom: 1.2rem;
+    text-transform: uppercase;
+}
+.start-title {
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: #bbc;
+    margin-bottom: 2.5rem;
+    letter-spacing: 0.06em;
+}
+.start-hint {
+    font-size: 0.75rem;
+    color: #445;
+    margin-bottom: 2.5rem;
+    letter-spacing: 0.1em;
+}
+.start-btn {
+    background: none;
+    border: 1px solid #334;
+    color: #99a;
+    padding: 0.9rem 3rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    letter-spacing: 0.2em;
+    transition: all 0.5s ease;
+    font-family: inherit;
+}
+.start-btn:hover {
+    border-color: #667;
+    color: #ccd;
+}
+
+/* ===== MUSIC TOGGLE ===== */
+.music-toggle {
+    position: fixed;
+    top: 1.5rem; right: 1.5rem;
+    z-index: 900;
+    background: rgba(10, 10, 18, 0.5);
+    border: 1px solid rgba(80, 80, 100, 0.25);
+    color: #778;
+    width: 2.4rem; height: 2.4rem;
+    border-radius: 50%;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    backdrop-filter: blur(6px);
+}
+.music-toggle:hover { color: #aab; border-color: rgba(120, 120, 150, 0.4); }
+.music-toggle.muted { color: #334; text-decoration: line-through; }
+
+/* ===== MUSIC TOAST NOTIFICATION ===== */
+.music-toast {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    transform: translateX(20px);
+    background: rgba(10, 10, 18, 0.7);
+    border: 1px solid rgba(80, 80, 110, 0.2);
+    backdrop-filter: blur(8px);
+    padding: 0.5rem 1.1rem;
+    border-radius: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    transition: opacity 1.2s ease, transform 1.2s ease, box-shadow 0.8s ease;
+    pointer-events: none;
+    z-index: 800;
+    box-shadow: 0 0 0px rgba(180, 200, 255, 0);
+}
+.music-toast.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+.music-toast.glow {
+    box-shadow: 0 0 18px rgba(160, 180, 255, 0.35), 0 0 40px rgba(130, 160, 255, 0.12);
+    border-color: rgba(140, 160, 220, 0.4);
+}
+.music-toast-icon {
+    font-size: 0.7rem;
+    color: #667;
+    transition: color 0.8s ease;
+}
+.music-toast.glow .music-toast-icon {
+    color: #aac;
+}
+.music-toast-text {
+    font-size: 0.7rem;
+    color: #889;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    transition: color 0.8s ease;
+}
+.music-toast.glow .music-toast-text {
+    color: #bbc;
+}
+
+/* ===== MAIN CONTENT ===== */
+.content {
+    max-width: 660px;
+    margin: 0 auto;
+    padding: 8rem 2rem 5rem;
+    opacity: 0;
+    transition: opacity 2s ease 0.8s;
+}
+.content.visible { opacity: 1; }
+
+/* ===== ZONES ===== */
+.zone { margin-bottom: 8rem; padding-top: 2rem; }
+
+/* ===== LIGHTSPEED TRANSITION ZONE ===== */
+.zone-transition {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: transparent;
+}
+.transition-space {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+}
+.chapter-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: #445;
+    margin-bottom: 2.5rem;
+    border-left: 2px solid #223;
+    padding-left: 0.8rem;
+}
+
+/* ===== TEXT ===== */
+.text-block { margin-bottom: 3.5rem; }
+.text-block p { margin-bottom: 1.3rem; font-size: 1.05rem; color: rgba(215, 215, 225, 0.9); }
+.text-block .lead { font-size: 1.3rem; color: #dde; margin-bottom: 1.2rem; }
+.text-block .highlight { font-size: 1.2rem; color: #e0dcd0; margin: 2.5rem 0; }
+.text-block strong { color: #eee; font-weight: 600; }
+.text-block h3 { font-size: 0.95rem; font-weight: 500; color: #aab; margin-bottom: 1.2rem; letter-spacing: 0.03em; }
+
+blockquote {
+    border-left: 2px solid #2a2a3a;
+    padding: 1rem 1.5rem;
+    margin: 1.8rem 0;
+    color: rgba(195, 195, 210, 0.88);
+    font-style: italic;
+    background: rgba(255, 255, 255, 0.015);
+}
+
+/* --- Cinematic blockquote: the KEY statement of a section --- */
+blockquote.fx-quote {
+    border-left: 2px solid rgba(100, 120, 180, 0.3);
+    padding: 1.5rem 2rem;
+    margin: 2.5rem 0;
+    background: rgba(80, 100, 160, 0.03);
+    border-radius: 4px;
+    opacity: 0;
+    transform: scale(0.97);
+    transition: 
+        opacity 1.8s ease,
+        transform 1.8s ease,
+        border-color 2s ease 0.5s,
+        box-shadow 2s ease 0.5s,
+        background 2s ease 0.5s;
+}
+blockquote.fx-quote.visible {
+    opacity: 1;
+    transform: scale(1);
+    border-left-color: rgba(140, 160, 220, 0.6);
+    box-shadow: 
+        -4px 0 20px rgba(100, 130, 200, 0.1),
+        0 0 30px rgba(100, 130, 200, 0.04),
+        inset 0 0 40px rgba(80, 110, 180, 0.03);
+    background: rgba(80, 110, 180, 0.05);
+}
+blockquote.fx-quote.visible::before {
+    opacity: 1;
+}
+blockquote.fx-quote::before {
+    content: '';
+    position: absolute;
+    left: -1px;
+    top: 10%;
+    height: 80%;
+    width: 2px;
+    background: linear-gradient(to bottom, 
+        transparent, 
+        rgba(150, 180, 255, 0.5), 
+        transparent);
+    opacity: 0;
+    transition: opacity 2s ease 1s;
+}
+blockquote.fx-quote {
+    position: relative;
+}
+
+.text-block ol, .text-block ul { padding-left: 1.5rem; margin-bottom: 1.3rem; }
+.text-block li { margin-bottom: 0.7rem; font-size: 1rem; color: rgba(205, 205, 218, 0.88); }
+
+table { width: 100%; border-collapse: collapse; margin: 1.8rem 0; font-size: 0.82rem; }
+th, td { padding: 0.6rem 0.8rem; text-align: left; border-bottom: 1px solid rgba(60, 60, 80, 0.25); color: rgba(195, 195, 210, 0.82); }
+th { color: #889; font-weight: 500; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; }
+
+.lens-block { border-left: 2px solid rgba(80, 70, 55, 0.35); padding-left: 1.5rem; margin-top: 2.5rem; }
+.lens-label { font-size: 0.72rem; letter-spacing: 0.25em; color: #665; margin-bottom: 1.2rem !important; }
+
+.divider { width: 2.5rem; height: 1px; background: rgba(80, 80, 100, 0.25); margin: 4rem 0; }
+.evidence-note { font-style: italic; color: #556 !important; font-size: 0.88rem !important; margin-bottom: 2rem !important; }
+.closing p { font-size: 1.08rem; }
+.next-chapter { margin-top: 3.5rem !important; color: #556 !important; font-style: italic; }
+
+.credits { margin-top: 8rem; padding: 2rem 0; border-top: 1px solid rgba(50, 50, 65, 0.25); text-align: center; }
+.credits p { font-size: 0.65rem; color: #334; margin-bottom: 0.3rem; }
+
+/* ===== TEXT EFFECTS ===== */
+
+/* --- Effect 1: GLOW — text pulses with soft light when visible --- */
+.fx-glow {
+    opacity: 0;
+    transition: opacity 1.5s ease;
+    text-shadow: none;
+}
+.fx-glow.visible {
+    opacity: 1;
+    animation: textGlow 3s ease-in-out 1;
+}
+@keyframes textGlow {
+    0% { text-shadow: 0 0 0px rgba(200, 210, 255, 0); }
+    30% { text-shadow: 0 0 20px rgba(180, 195, 255, 0.4), 0 0 40px rgba(150, 170, 255, 0.15); }
+    60% { text-shadow: 0 0 12px rgba(180, 195, 255, 0.25), 0 0 25px rgba(150, 170, 255, 0.08); }
+    100% { text-shadow: 0 0 0px rgba(200, 210, 255, 0); }
+}
+
+/* --- Effect 2: FADE UP — slides up from below with fade --- */
+.fx-fade-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1.2s ease, transform 1.2s ease;
+}
+.fx-fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Effect 3: TYPEWRITER — text reveals character by character --- */
+.fx-typewriter {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+.fx-typewriter.visible {
+    opacity: 1;
+}
+.fx-typewriter .tw-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.1em;
+    background: rgba(200, 210, 240, 0.7);
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    animation: cursorBlink 0.8s step-end infinite;
+}
+@keyframes cursorBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* --- Effect 4: REVEAL — text fades in word by word --- */
+.fx-reveal {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+.fx-reveal.visible {
+    opacity: 1;
+}
+.fx-reveal .reveal-word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fx-reveal .reveal-word.shown {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+    .content { padding: 5rem 1.2rem 3rem; }
+    .text-block p { font-size: 1rem; }
+    .text-block .lead { font-size: 1.15rem; }
+    table { font-size: 0.72rem; }
+    th, td { padding: 0.4rem 0.5rem; }
+    .aurora-layer { filter: blur(60px); }
+}

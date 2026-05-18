@@ -61,6 +61,7 @@ CHAPTERS = [
     ("GDSIG", "10a2_god_signature.md",                 None),
     ("ROADS", "10_all_roads_same_address.md",          None),
     ("UNVRS", "03b_universe_is_yours.md",              None),
+    ("FNLQA", "part1_final_resistance_QA.md",          None),
     ("P1END", "part1_ending.md",                       None),
 
     # ─── 第二部：灵魂对话 ───
@@ -184,7 +185,7 @@ def main():
         part_note = ""
         if n == 5:
             part_note = "  ◀ PART 1 START"
-        elif n == 14:
+        elif n == 15:
             part_note = "  ◀ PART 2 START"
         print(f"  {n:>3}. [{uid}]  {filename:<48}  {tag}{part_note}")
     print(f"\n{sep}\n")
