@@ -10,6 +10,7 @@
 | ONEGD | PART1_02_onegod.md | One God — There Can Only Be One |
 | MFPRT | PART1_03_messianic_fingerprint.md | Messianic Fingerprint — God Identified |
 | RSDLT | PART1_04_resurrection_delta.md | Resurrection Delta — Only the Resurrection Explains the Gap |
+| JESDC | PART1_04b_jesus_divine_claim.md | Jesus Divine Claim — He Said He IS God |
 | CMD10 | PART1_05_ten_commandments.md | Ten Commandments — Mother of All Laws / Father of Prophecy |
 | GDSIG | PART1_06_god_signature.md | God's Signature — Three Promises Fulfilled Across Millennia |
 | BPRSC | PART1_07_bible_prescience.md | Bible Prescience — Scripture Foretold the Future |
