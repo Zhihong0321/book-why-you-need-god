@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinematic Space Background — V3 Phase 2 Preview</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- SVG Filters for nebula distortion (Phase 2) -->
+    <svg class="svg-filters" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <!-- Turbulence filter for organic nebula shapes -->
+            <filter id="nebula-warp-1" x="-20%" y="-20%" width="140%" height="140%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="4" seed="1" result="noise"/>
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="45" xChannelSelector="R" yChannelSelector="G"/>
+            </filter>
+            <filter id="nebula-warp-2" x="-20%" y="-20%" width="140%" height="140%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="3" seed="42" result="noise"/>
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="35" xChannelSelector="R" yChannelSelector="B"/>
+            </filter>
+            <filter id="nebula-warp-3" x="-20%" y="-20%" width="140%" height="140%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.009" numOctaves="5" seed="7" result="noise"/>
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="55" xChannelSelector="G" yChannelSelector="R"/>
+            </filter>
+            <!-- Filament texture filter for wispy nebula structure -->
+            <filter id="nebula-filament" x="-10%" y="-10%" width="120%" height="120%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.025 0.008" numOctaves="6" seed="13" result="noise"/>
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="30" xChannelSelector="R" yChannelSelector="G"/>
+            </filter>
+        </defs>
+    </svg>
+
+    <!-- Background noise texture overlay -->
+    <div class="space-noise"></div>
+
+    <!-- Starfield canvas (enhanced with halos + spikes + parallax dust) -->
+    <canvas class="starfield" id="starfield"></canvas>
+
+    <!-- Aurora/Nebula system (Phase 2: 6 layers per mood + SVG distortion) -->
+    <div class="aurora-bg">
+        <div class="aurora-set aurora-calm active" id="aurora-calm">
+            <div class="aurora-layer a1"></div>
+            <div class="aurora-layer a2"></div>
+            <div class="aurora-layer a3"></div>
+            <div class="aurora-layer a4"></div>
+            <div class="aurora-layer a5"></div>
+            <div class="aurora-layer a6"></div>
+        </div>
+        <div class="aurora-set aurora-wonder" id="aurora-wonder">
+            <div class="aurora-layer a1"></div>
+            <div class="aurora-layer a2"></div>
+            <div class="aurora-layer a3"></div>
+            <div class="aurora-layer a4"></div>
+            <div class="aurora-layer a5"></div>
+            <div class="aurora-layer a6"></div>
+        </div>
+        <div class="aurora-set aurora-awe" id="aurora-awe">
+            <div class="aurora-layer a1"></div>
+            <div class="aurora-layer a2"></div>
+            <div class="aurora-layer a3"></div>
+            <div class="aurora-layer a4"></div>
+            <div class="aurora-layer a5"></div>
+            <div class="aurora-layer a6"></div>
+        </div>
+        <div class="aurora-set aurora-weight" id="aurora-weight">
+            <div class="aurora-layer a1"></div>
+            <div class="aurora-layer a2"></div>
+            <div class="aurora-layer a3"></div>
+            <div class="aurora-layer a4"></div>
+            <div class="aurora-layer a5"></div>
+            <div class="aurora-layer a6"></div>
+        </div>
+        <div class="aurora-set aurora-lightspeed" id="aurora-lightspeed">
+            <div class="aurora-layer a1"></div>
+            <div class="aurora-layer a2"></div>
+            <div class="aurora-layer a3"></div>
+            <div class="aurora-layer a4"></div>
+            <div class="aurora-layer a5"></div>
+            <div class="aurora-layer a6"></div>
+        </div>
+    </div>
+
+    <!-- Big Bang Reverse transition overlay (chapter opening animation) -->
+    <div class="bigbang-overlay" id="bigbangOverlay">
+        <div class="bigbang-flash"></div>
+        <div class="bigbang-title" id="bigbangTitle">
+            <p class="bigbang-subtitle">第二章</p>
+            <h1 class="bigbang-heading">我不是罪人</h1>
+        </div>
+    </div>
+
+    <!-- Mountain silhouette (no earth-sky backdrop — fully transparent above mountain) -->
+    <div class="mountain-layer" id="mountainLayer">
+        <img src="mountain.png" class="mountain-img" alt="">
+    </div>
+
+    <!-- Demo controls for preview -->
+    <div class="demo-controls">
+        <h3>V3 Phase 1+2 Preview — Mood Switcher</h3>
+        <div class="demo-buttons">
+            <button onclick="switchMood('calm')" class="active">Calm</button>
+            <button onclick="switchMood('wonder')">Wonder</button>
+            <button onclick="switchMood('awe')">Awe</button>
+            <button onclick="switchMood('weight')">Weight</button>
+            <button onclick="switchMood('lightspeed')">Lightspeed</button>
+            <button onclick="triggerBigBang()" class="btn-special">Big Bang ↺</button>
+            <button onclick="triggerDownToEarth()" class="btn-earth">↓ Earth</button>
+            <button onclick="triggerFlyToSpace()" class="btn-space">↑ Space</button>
+        </div>
+        <p class="demo-hint">↓ Earth = descend to mountain | ↑ Space = launch from mountain</p>
+    </div>
+
+    <!-- Demo content to show text readability -->
+    <main class="content visible">
+        <section class="zone" data-mood="calm">
+            <div class="text-block">
+                <p class="lead">V3 Phase 2 Enhancements</p>
+                <p>1. SVG feTurbulence + feDisplacementMap — organic nebula shapes (no more perfect ellipses)</p>
+                <p>2. Varied blur per layer (40px–120px) — some areas sharp, some diffuse</p>
+                <p>3. 6 nebula layers per mood — filament ribbons + core + edge wisps</p>
+                <p>4. Parallax dust layer — background dust drifts slowly with mood direction</p>
+                <p>5. Enhanced irregular twinkle — Perlin-like noise via multi-octave sine sum</p>
+                <p>6. Color-separated nebula layers — purple core, blue edge, dark red filaments</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="starfield-v3.js"></script>
+    <script src="demo.js"></script>
+</body>
+</html>

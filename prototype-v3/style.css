@@ -1,0 +1,778 @@
+/* ===== V3 Phase 1+2 — Enhanced Cinematic Space ===== */
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html { scroll-behavior: smooth; }
+
+/* ===== BODY: Deep space gradient ===== */
+body {
+    font-family: "Noto Serif SC", "Source Han Serif CN", Georgia, serif;
+    line-height: 1.9;
+    color: #e8e8e8;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    background: 
+        radial-gradient(ellipse at 20% 30%, rgba(8, 6, 18, 1) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, rgba(6, 10, 16, 1) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(5, 5, 12, 1) 0%, transparent 70%),
+        linear-gradient(180deg, #040408 0%, #060510 30%, #050508 60%, #080610 100%);
+    background-color: #050508;
+    min-height: 100vh;
+}
+
+/* ===== SVG FILTERS (hidden) ===== */
+.svg-filters {
+    position: absolute;
+    width: 0; height: 0;
+    overflow: hidden;
+}
+
+/* ===== SPACE NOISE TEXTURE ===== */
+.space-noise {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: -3;
+    opacity: 0.035;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+}
+
+/* ===== STARFIELD CANVAS (ABOVE aurora — stars are in front of nebula) ===== */
+.starfield {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 300vh; /* TALL canvas — 3x viewport, stars fill entire height */
+    z-index: 0;
+    pointer-events: none;
+    transform: translateY(-100vh); /* start centered (middle third visible) */
+    /* NO CSS transition — JS handles animation for better easing control */
+}
+
+/* ===== AURORA BACKGROUND (BEHIND stars) ===== */
+.aurora-bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+}
+
+/* Asymmetric vignette — BELOW stars, just darkens nebula edges */
+.aurora-bg::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: 
+        radial-gradient(ellipse at 40% 35%,
+            rgba(3, 3, 8, 0.1) 0%,
+            rgba(3, 3, 8, 0.0) 30%,
+            rgba(3, 3, 8, 0.4) 100%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.aurora-set {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    opacity: 0;
+    transition: opacity 5s ease;
+}
+.aurora-set.active { opacity: 1; }
+
+/* Phase 2: Base aurora layer — NO border-radius, use SVG filter for organic shape */
+.aurora-layer {
+    position: absolute;
+    border-radius: 45% 55% 60% 40% / 50% 45% 55% 50%;
+}
+
+/* ===== CALM: 6 layers — faint cold nebula ===== */
+/* a1: main body (warped, medium blur) */
+.aurora-calm .a1 {
+    width: 130vw; height: 130vh;
+    top: -35%; left: -20%;
+    filter: blur(70px) url(#nebula-warp-1);
+    background: radial-gradient(ellipse at 40% 45%,
+        rgba(20, 50, 110, 0.55) 0%,
+        rgba(12, 30, 70, 0.25) 25%,
+        rgba(6, 18, 45, 0.08) 45%,
+        transparent 65%);
+    animation: auroraFloat1 30s ease-in-out infinite, auroraBreathe 10s ease-in-out infinite;
+}
+/* a2: secondary (different warp, lighter blur) */
+.aurora-calm .a2 {
+    width: 90vw; height: 90vh;
+    top: 5%; right: -25%;
+    filter: blur(55px) url(#nebula-warp-2);
+    background: radial-gradient(ellipse at 60% 50%,
+        rgba(25, 60, 120, 0.4) 0%,
+        rgba(14, 38, 75, 0.15) 30%,
+        transparent 55%);
+    animation: auroraFloat2 30s ease-in-out infinite, auroraBreathe 12s ease-in-out infinite;
+    animation-delay: -10s, -4s;
+}
+/* a3: edge wisp (heavy blur, subtle) */
+.aurora-calm .a3 {
+    width: 70vw; height: 60vh;
+    bottom: -15%; left: 5%;
+    filter: blur(90px) url(#nebula-warp-3);
+    background: radial-gradient(ellipse at 35% 60%,
+        rgba(15, 35, 80, 0.3) 0%,
+        rgba(8, 20, 50, 0.1) 35%,
+        transparent 55%);
+    animation: auroraFloat3 30s ease-in-out infinite, auroraBreathe 14s ease-in-out infinite;
+    animation-delay: -20s, -7s;
+}
+/* a4: deep background glow (very heavy blur) */
+.aurora-calm .a4 {
+    width: 160vw; height: 160vh;
+    top: -40%; left: -30%;
+    filter: blur(120px);
+    background: radial-gradient(ellipse at 55% 55%,
+        rgba(10, 25, 60, 0.2) 0%,
+        rgba(5, 12, 35, 0.08) 30%,
+        transparent 50%);
+    animation: auroraFloat2 45s ease-in-out infinite, auroraBreathe 16s ease-in-out infinite;
+    animation-delay: -15s, -10s;
+}
+/* a5: Phase 2 — filament ribbon (narrow, warped, sharp) */
+.aurora-calm .a5 {
+    width: 100vw; height: 30vh;
+    top: 20%; left: -10%;
+    filter: blur(40px) url(#nebula-filament);
+    background: linear-gradient(135deg,
+        rgba(15, 40, 90, 0.2) 0%,
+        rgba(20, 55, 110, 0.12) 40%,
+        transparent 70%);
+    animation: auroraFloat3 38s ease-in-out infinite, auroraBreathe 18s ease-in-out infinite;
+    animation-delay: -8s, -12s;
+    border-radius: 30% 70% 60% 40% / 80% 20% 80% 20%;
+}
+/* a6: Phase 2 — color-separated edge (slightly different hue) */
+.aurora-calm .a6 {
+    width: 80vw; height: 70vh;
+    top: -10%; right: -15%;
+    filter: blur(95px) url(#nebula-warp-2);
+    background: radial-gradient(ellipse at 70% 40%,
+        rgba(12, 30, 75, 0.18) 0%,
+        rgba(8, 18, 50, 0.06) 30%,
+        transparent 48%);
+    animation: auroraFloat1 42s ease-in-out infinite, auroraBreathe 20s ease-in-out infinite;
+    animation-delay: -22s, -14s;
+}
+
+/* ===== WONDER: 6 layers — purple/magenta emerging ===== */
+.aurora-wonder .a1 {
+    width: 130vw; height: 130vh;
+    top: -30%; left: -15%;
+    filter: blur(65px) url(#nebula-warp-1);
+    background: radial-gradient(ellipse at 35% 40%,
+        rgba(55, 35, 120, 0.55) 0%,
+        rgba(30, 20, 75, 0.25) 22%,
+        rgba(15, 10, 45, 0.08) 45%,
+        transparent 65%);
+    animation: auroraFloat1 22s ease-in-out infinite, auroraBreathe 9s ease-in-out infinite;
+}
+.aurora-wonder .a2 {
+    width: 85vw; height: 80vh;
+    top: 10%; right: -20%;
+    filter: blur(50px) url(#nebula-warp-2);
+    background: radial-gradient(ellipse at 65% 45%,
+        rgba(70, 30, 130, 0.45) 0%,
+        rgba(40, 18, 80, 0.18) 28%,
+        transparent 60%);
+    animation: auroraFloat2 22s ease-in-out infinite, auroraBreathe 11s ease-in-out infinite;
+    animation-delay: -7s, -3s;
+}
+.aurora-wonder .a3 {
+    width: 65vw; height: 55vh;
+    bottom: -10%; left: 20%;
+    filter: blur(80px) url(#nebula-warp-3);
+    background: radial-gradient(ellipse at 50% 55%,
+        rgba(50, 25, 100, 0.38) 0%,
+        rgba(28, 14, 60, 0.14) 30%,
+        transparent 55%);
+    animation: auroraFloat3 22s ease-in-out infinite, auroraBreathe 13s ease-in-out infinite;
+    animation-delay: -14s, -6s;
+}
+.aurora-wonder .a4 {
+    width: 150vw; height: 140vh;
+    top: -35%; right: -30%;
+    filter: blur(110px);
+    background: radial-gradient(ellipse at 60% 40%,
+        rgba(40, 20, 90, 0.22) 0%,
+        rgba(20, 10, 50, 0.08) 28%,
+        transparent 48%);
+    animation: auroraFloat1 35s ease-in-out infinite, auroraBreathe 15s ease-in-out infinite;
+    animation-delay: -12s, -8s;
+}
+/* a5: filament — magenta ribbon */
+.aurora-wonder .a5 {
+    width: 110vw; height: 35vh;
+    top: 30%; left: -15%;
+    filter: blur(35px) url(#nebula-filament);
+    background: linear-gradient(160deg,
+        rgba(80, 25, 120, 0.25) 0%,
+        rgba(55, 15, 90, 0.12) 35%,
+        transparent 65%);
+    animation: auroraFloat2 28s ease-in-out infinite, auroraBreathe 10s ease-in-out infinite;
+    animation-delay: -5s, -2s;
+    border-radius: 25% 75% 55% 45% / 75% 25% 75% 25%;
+}
+/* a6: blue edge separation */
+.aurora-wonder .a6 {
+    width: 90vw; height: 75vh;
+    bottom: -20%; right: -10%;
+    filter: blur(85px) url(#nebula-warp-1);
+    background: radial-gradient(ellipse at 55% 60%,
+        rgba(25, 45, 110, 0.2) 0%,
+        rgba(12, 25, 65, 0.08) 28%,
+        transparent 45%);
+    animation: auroraFloat3 32s ease-in-out infinite, auroraBreathe 14s ease-in-out infinite;
+    animation-delay: -18s, -9s;
+}
+
+/* ===== AWE: 6 layers — JWST deep field, vibrant multi-color ===== */
+.aurora-awe .a1 {
+    width: 140vw; height: 140vh;
+    top: -35%; left: -25%;
+    filter: blur(60px) url(#nebula-warp-1);
+    background: 
+        radial-gradient(ellipse at 28% 32%,
+            rgba(120, 40, 160, 0.85) 0%,
+            rgba(70, 22, 110, 0.4) 18%,
+            rgba(30, 10, 60, 0.12) 38%,
+            transparent 55%),
+        radial-gradient(ellipse at 78% 68%,
+            rgba(25, 80, 170, 0.65) 0%,
+            rgba(12, 45, 100, 0.28) 20%,
+            transparent 52%);
+    animation: auroraFloat1 20s ease-in-out infinite, auroraBreathe 8s ease-in-out infinite;
+}
+.aurora-awe .a2 {
+    width: 100vw; height: 90vh;
+    top: 5%; right: -15%;
+    filter: blur(50px) url(#nebula-warp-2);
+    background: 
+        radial-gradient(ellipse at 50% 38%,
+            rgba(140, 50, 150, 0.75) 0%,
+            rgba(80, 28, 95, 0.32) 18%,
+            transparent 48%),
+        radial-gradient(ellipse at 18% 72%,
+            rgba(35, 90, 170, 0.55) 0%,
+            rgba(18, 50, 100, 0.22) 20%,
+            transparent 45%);
+    animation: auroraFloat2 20s ease-in-out infinite, auroraBreathe 10s ease-in-out infinite;
+    animation-delay: -6s, -3s;
+}
+.aurora-awe .a3 {
+    width: 75vw; height: 65vh;
+    bottom: -10%; left: 10%;
+    filter: blur(75px) url(#nebula-warp-3);
+    background: 
+        radial-gradient(ellipse at 42% 48%,
+            rgba(100, 55, 140, 0.65) 0%,
+            rgba(55, 30, 85, 0.28) 18%,
+            transparent 45%),
+        radial-gradient(ellipse at 82% 28%,
+            rgba(30, 70, 130, 0.45) 0%,
+            rgba(15, 38, 75, 0.15) 20%,
+            transparent 38%);
+    animation: auroraFloat3 20s ease-in-out infinite, auroraBreathe 12s ease-in-out infinite;
+    animation-delay: -13s, -5s;
+}
+/* a4: warm gold pocket (JWST signature) */
+.aurora-awe .a4 {
+    width: 80vw; height: 70vh;
+    top: -5%; left: 15%;
+    filter: blur(45px) url(#nebula-warp-2);
+    background: 
+        radial-gradient(ellipse at 65% 25%,
+            rgba(200, 120, 40, 0.4) 0%,
+            rgba(140, 70, 20, 0.15) 18%,
+            transparent 38%),
+        radial-gradient(ellipse at 30% 70%,
+            rgba(180, 80, 30, 0.3) 0%,
+            rgba(120, 50, 15, 0.1) 16%,
+            transparent 32%);
+    animation: auroraFloat2 25s ease-in-out infinite, auroraBreathe 9s ease-in-out infinite;
+    animation-delay: -8s, -4s;
+}
+/* a5: dark red filament ribbon */
+.aurora-awe .a5 {
+    width: 120vw; height: 25vh;
+    top: 40%; left: -20%;
+    filter: blur(30px) url(#nebula-filament);
+    background: linear-gradient(145deg,
+        rgba(140, 30, 50, 0.3) 0%,
+        rgba(100, 20, 40, 0.15) 30%,
+        rgba(60, 10, 30, 0.05) 55%,
+        transparent 75%);
+    animation: auroraFloat3 24s ease-in-out infinite, auroraBreathe 7s ease-in-out infinite;
+    animation-delay: -4s, -1s;
+    border-radius: 20% 80% 65% 35% / 85% 15% 85% 15%;
+}
+/* a6: deep background envelope */
+.aurora-awe .a6 {
+    width: 170vw; height: 160vh;
+    top: -45%; left: -35%;
+    filter: blur(130px);
+    background: 
+        radial-gradient(ellipse at 45% 50%,
+            rgba(80, 30, 120, 0.25) 0%,
+            rgba(40, 15, 70, 0.1) 22%,
+            transparent 42%),
+        radial-gradient(ellipse at 70% 30%,
+            rgba(20, 60, 130, 0.2) 0%,
+            rgba(10, 30, 70, 0.06) 20%,
+            transparent 38%);
+    animation: auroraFloat1 32s ease-in-out infinite, auroraBreathe 14s ease-in-out infinite;
+    animation-delay: -16s, -10s;
+}
+
+/* ===== WEIGHT: 6 layers — void, nebula dissolving ===== */
+.aurora-weight .a1 {
+    width: 120vw; height: 120vh;
+    top: -30%; left: -15%;
+    filter: blur(90px) url(#nebula-warp-1);
+    background: radial-gradient(ellipse at 45% 50%,
+        rgba(18, 14, 45, 0.3) 0%,
+        rgba(8, 6, 25, 0.1) 30%,
+        transparent 50%);
+    animation: auroraFloat1 40s ease-in-out infinite, auroraBreathe 18s ease-in-out infinite;
+}
+.aurora-weight .a2 {
+    width: 80vw; height: 70vh;
+    top: 15%; right: -20%;
+    filter: blur(100px) url(#nebula-warp-2);
+    background: radial-gradient(ellipse at 55% 45%,
+        rgba(20, 12, 50, 0.25) 0%,
+        rgba(10, 7, 28, 0.08) 30%,
+        transparent 48%);
+    animation: auroraFloat2 40s ease-in-out infinite, auroraBreathe 20s ease-in-out infinite;
+    animation-delay: -12s, -8s;
+}
+.aurora-weight .a3 {
+    width: 60vw; height: 50vh;
+    bottom: -5%; left: 15%;
+    filter: blur(80px) url(#nebula-warp-3);
+    background: radial-gradient(ellipse at 40% 55%,
+        rgba(14, 8, 35, 0.2) 0%,
+        rgba(6, 4, 18, 0.06) 30%,
+        transparent 48%);
+    animation: auroraFloat3 40s ease-in-out infinite, auroraBreathe 22s ease-in-out infinite;
+    animation-delay: -25s, -12s;
+}
+.aurora-weight .a4 {
+    width: 140vw; height: 130vh;
+    top: -30%; left: -20%;
+    filter: blur(120px);
+    background: radial-gradient(ellipse at 50% 50%,
+        rgba(10, 6, 28, 0.15) 0%,
+        rgba(5, 3, 14, 0.05) 30%,
+        transparent 45%);
+    animation: auroraFloat1 55s ease-in-out infinite, auroraBreathe 25s ease-in-out infinite;
+    animation-delay: -20s, -15s;
+}
+.aurora-weight .a5 {
+    width: 90vw; height: 20vh;
+    top: 50%; left: 0%;
+    filter: blur(60px) url(#nebula-filament);
+    background: linear-gradient(170deg,
+        rgba(12, 8, 30, 0.15) 0%,
+        rgba(8, 5, 20, 0.06) 40%,
+        transparent 65%);
+    animation: auroraFloat2 50s ease-in-out infinite, auroraBreathe 28s ease-in-out infinite;
+    animation-delay: -30s, -18s;
+    border-radius: 35% 65% 50% 50% / 70% 30% 70% 30%;
+}
+.aurora-weight .a6 {
+    width: 100vw; height: 80vh;
+    top: -15%; right: -10%;
+    filter: blur(110px);
+    background: radial-gradient(ellipse at 60% 45%,
+        rgba(8, 5, 22, 0.12) 0%,
+        rgba(4, 3, 12, 0.04) 30%,
+        transparent 45%);
+    animation: auroraFloat3 48s ease-in-out infinite, auroraBreathe 30s ease-in-out infinite;
+    animation-delay: -35s, -20s;
+}
+
+/* ===== LIGHTSPEED: 6 layers — full cosmic glory ===== */
+.aurora-lightspeed .a1 {
+    width: 140vw; height: 140vh;
+    top: -30%; left: -20%;
+    filter: blur(55px) url(#nebula-warp-1);
+    background: 
+        radial-gradient(ellipse at 35% 40%,
+            rgba(130, 60, 200, 0.85) 0%,
+            rgba(80, 35, 140, 0.4) 18%,
+            transparent 50%),
+        radial-gradient(ellipse at 72% 65%,
+            rgba(40, 100, 200, 0.65) 0%,
+            rgba(20, 55, 120, 0.25) 20%,
+            transparent 42%);
+    animation: auroraFloat1 14s ease-in-out infinite, auroraBreathe 5s ease-in-out infinite;
+}
+.aurora-lightspeed .a2 {
+    width: 100vw; height: 95vh;
+    top: 0%; right: -15%;
+    filter: blur(45px) url(#nebula-warp-2);
+    background: 
+        radial-gradient(ellipse at 50% 45%,
+            rgba(160, 60, 180, 0.75) 0%,
+            rgba(90, 30, 110, 0.3) 18%,
+            transparent 42%),
+        radial-gradient(ellipse at 20% 70%,
+            rgba(50, 120, 200, 0.55) 0%,
+            rgba(25, 65, 120, 0.2) 20%,
+            transparent 40%);
+    animation: auroraFloat2 14s ease-in-out infinite, auroraBreathe 6s ease-in-out infinite;
+    animation-delay: -5s, -2s;
+}
+.aurora-lightspeed .a3 {
+    width: 80vw; height: 70vh;
+    bottom: -5%; left: 10%;
+    filter: blur(70px) url(#nebula-warp-3);
+    background: 
+        radial-gradient(ellipse at 45% 50%,
+            rgba(100, 50, 160, 0.6) 0%,
+            rgba(55, 28, 95, 0.22) 18%,
+            transparent 40%),
+        radial-gradient(ellipse at 75% 25%,
+            rgba(255, 180, 60, 0.35) 0%,
+            rgba(200, 110, 30, 0.1) 14%,
+            transparent 26%);
+    animation: auroraFloat3 14s ease-in-out infinite, auroraBreathe 7s ease-in-out infinite;
+    animation-delay: -9s, -4s;
+}
+/* a4: golden burst */
+.aurora-lightspeed .a4 {
+    width: 90vw; height: 80vh;
+    top: -10%; left: 20%;
+    filter: blur(40px) url(#nebula-warp-2);
+    background: 
+        radial-gradient(ellipse at 60% 20%,
+            rgba(240, 150, 50, 0.5) 0%,
+            rgba(180, 90, 25, 0.2) 15%,
+            transparent 35%),
+        radial-gradient(ellipse at 30% 80%,
+            rgba(220, 120, 40, 0.35) 0%,
+            rgba(160, 70, 20, 0.1) 14%,
+            transparent 28%);
+    animation: auroraFloat2 16s ease-in-out infinite, auroraBreathe 4s ease-in-out infinite;
+    animation-delay: -3s, -1s;
+}
+/* a5: bright filament streaks */
+.aurora-lightspeed .a5 {
+    width: 130vw; height: 30vh;
+    top: 25%; left: -20%;
+    filter: blur(25px) url(#nebula-filament);
+    background: linear-gradient(130deg,
+        rgba(160, 60, 200, 0.4) 0%,
+        rgba(100, 40, 160, 0.2) 25%,
+        rgba(40, 100, 200, 0.15) 50%,
+        rgba(240, 150, 50, 0.1) 75%,
+        transparent 90%);
+    animation: auroraFloat3 12s ease-in-out infinite, auroraBreathe 3.5s ease-in-out infinite;
+    animation-delay: -2s, -1s;
+    border-radius: 15% 85% 70% 30% / 90% 10% 90% 10%;
+}
+/* a6: deep envelope */
+.aurora-lightspeed .a6 {
+    width: 180vw; height: 170vh;
+    top: -50%; left: -40%;
+    filter: blur(140px);
+    background: 
+        radial-gradient(ellipse at 50% 50%,
+            rgba(100, 40, 160, 0.3) 0%,
+            rgba(50, 20, 90, 0.12) 20%,
+            transparent 40%),
+        radial-gradient(ellipse at 30% 70%,
+            rgba(30, 80, 160, 0.25) 0%,
+            rgba(15, 40, 90, 0.08) 18%,
+            transparent 35%);
+    animation: auroraFloat1 18s ease-in-out infinite, auroraBreathe 4s ease-in-out infinite;
+    animation-delay: -6s, -1s;
+}
+
+/* ===== AURORA KEYFRAMES ===== */
+@keyframes auroraFloat1 {
+    0% { transform: translate(0%, 0%) scale(1) rotate(0deg); }
+    20% { transform: translate(8%, 5%) scale(1.08) rotate(1.5deg); }
+    40% { transform: translate(-5%, 10%) scale(0.95) rotate(-1deg); }
+    60% { transform: translate(10%, -5%) scale(1.05) rotate(2deg); }
+    80% { transform: translate(-3%, -8%) scale(1.02) rotate(-0.5deg); }
+    100% { transform: translate(0%, 0%) scale(1) rotate(0deg); }
+}
+
+@keyframes auroraFloat2 {
+    0% { transform: translate(0%, 0%) scale(1) rotate(0deg); }
+    20% { transform: translate(-7%, 8%) scale(1.06) rotate(-2deg); }
+    40% { transform: translate(10%, -4%) scale(0.94) rotate(1.5deg); }
+    60% { transform: translate(-4%, 6%) scale(1.08) rotate(-1deg); }
+    80% { transform: translate(6%, -7%) scale(0.97) rotate(2deg); }
+    100% { transform: translate(0%, 0%) scale(1) rotate(0deg); }
+}
+
+@keyframes auroraFloat3 {
+    0% { transform: translate(0%, 0%) scale(1) rotate(0deg); }
+    20% { transform: translate(5%, -6%) scale(1.1) rotate(2deg); }
+    40% { transform: translate(-8%, 4%) scale(0.92) rotate(-2.5deg); }
+    60% { transform: translate(7%, 8%) scale(1.04) rotate(1deg); }
+    80% { transform: translate(-6%, -4%) scale(1.07) rotate(-1.5deg); }
+    100% { transform: translate(0%, 0%) scale(1) rotate(0deg); }
+}
+
+/* Breathing — subtle opacity pulse */
+@keyframes auroraBreathe {
+    0%   { opacity: 1; }
+    50%  { opacity: 0.88; }
+    100% { opacity: 1; }
+}
+
+/* ===== DEMO CONTROLS ===== */
+.demo-controls {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    text-align: center;
+    background: rgba(5, 5, 12, 0.85);
+    border: 1px solid rgba(80, 80, 110, 0.3);
+    backdrop-filter: blur(10px);
+    padding: 1.2rem 2rem;
+    border-radius: 12px;
+}
+.demo-controls h3 {
+    font-size: 0.75rem;
+    color: #889;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.8rem;
+    font-weight: 400;
+}
+.demo-buttons {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.demo-buttons button {
+    background: rgba(30, 30, 50, 0.6);
+    border: 1px solid rgba(80, 80, 120, 0.3);
+    color: #99a;
+    padding: 0.5rem 1.2rem;
+    font-size: 0.75rem;
+    cursor: pointer;
+    border-radius: 6px;
+    letter-spacing: 0.08em;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+.demo-buttons button:hover {
+    border-color: rgba(130, 140, 200, 0.5);
+    color: #ccd;
+    background: rgba(50, 50, 80, 0.5);
+}
+.demo-buttons button.active {
+    border-color: rgba(140, 160, 220, 0.7);
+    color: #dde;
+    background: rgba(60, 60, 100, 0.4);
+    box-shadow: 0 0 12px rgba(100, 120, 200, 0.15);
+}
+.demo-hint {
+    font-size: 0.65rem;
+    color: #556;
+    margin-top: 0.6rem;
+    letter-spacing: 0.05em;
+}
+
+/* ===== CONTENT ===== */
+.content {
+    max-width: 660px;
+    margin: 0 auto;
+    padding: 4rem 2rem 12rem;
+    opacity: 0;
+    transition: opacity 2s ease;
+    position: relative;
+    z-index: 10; /* ABOVE mountain, above starfield — text never gets covered */
+}
+.content.visible { opacity: 1; }
+
+.zone { margin-bottom: 4rem; }
+.text-block { margin-bottom: 2rem; }
+.text-block p { margin-bottom: 0.8rem; font-size: 1rem; color: rgba(215, 215, 225, 0.9); }
+.text-block .lead { font-size: 1.3rem; color: #dde; margin-bottom: 1.2rem; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+    .content { padding: 3rem 1.2rem 10rem; }
+    .text-block p { font-size: 0.95rem; }
+    .aurora-layer { filter: blur(50px) !important; }
+    .demo-controls { padding: 1rem 1.2rem; }
+    .demo-buttons button { padding: 0.4rem 0.8rem; font-size: 0.7rem; }
+}
+
+/* ===== BIG BANG REVERSE — Chapter Opening Overlay ===== */
+.bigbang-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: 200;
+    pointer-events: none;
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.bigbang-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Flash: solid warm grey (NOT semi-transparent white — that shows content behind) */
+.bigbang-flash {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #e8e5e0; /* solid warm grey — opaque, gentle on eyes */
+    opacity: 0;
+}
+
+/* Title: appears after flash — typewriter effect */
+.bigbang-title {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.bigbang-overlay.show-title .bigbang-flash {
+    opacity: 1; /* fully opaque grey — no content bleed-through */
+}
+.bigbang-overlay.show-title .bigbang-title {
+    opacity: 1;
+    transform: scale(1);
+}
+.bigbang-subtitle {
+    font-size: 0.75rem;
+    letter-spacing: 0.4em;
+    color: #444;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    min-height: 1.2em;
+}
+.bigbang-heading {
+    font-size: 2rem;
+    font-weight: 400;
+    color: #111;
+    letter-spacing: 0.08em;
+    min-height: 1.2em;
+}
+/* Typewriter cursor for big bang title */
+.bb-cursor {
+    display: inline-block;
+    color: #666;
+    font-weight: 300;
+    animation: bbCursorBlink 0.7s step-end infinite;
+}
+@keyframes bbCursorBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Fade out: entire overlay fades to transparent */
+.bigbang-overlay.fade-out {
+    transition: opacity 2s ease;
+    opacity: 0;
+}
+
+/* Special button style */
+.btn-special {
+    background: rgba(60, 30, 80, 0.4) !important;
+    border-color: rgba(160, 100, 200, 0.4) !important;
+    color: #c9b !important;
+}
+.btn-special:hover {
+    background: rgba(80, 40, 110, 0.5) !important;
+    border-color: rgba(180, 120, 220, 0.6) !important;
+    color: #ecd !important;
+}
+
+/* ===== MOUNTAIN LAYER — Horizon/Earth Scene ===== */
+/*
+ * Full-viewport container that holds BOTH the earth sky gradient AND the mountain.
+ * Slides up/down as one unit — sky always moves with mountain.
+ */
+.mountain-layer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2;
+    pointer-events: none;
+    transform: translateY(100%);
+    transition: transform 6s cubic-bezier(0.5, 0, 0.1, 1), visibility 0s linear 6s;
+    visibility: hidden;
+}
+
+.mountain-layer.visible {
+    transform: translateY(0%);
+    visibility: visible;
+    transition: transform 6s cubic-bezier(0.5, 0, 0.1, 1), visibility 0s linear 0s;
+}
+
+.mountain-layer.fly-away {
+    transform: translateY(110%);
+    transition: transform 6s cubic-bezier(0.5, 0, 0.1, 1), visibility 0s linear 6s;
+    visibility: hidden;
+}
+
+/* === EARTH SKY: removed — mountain PNG transparency shows space directly === */
+
+.mountain-img {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 45%;
+    object-fit: cover;
+    object-position: bottom center;
+    z-index: 1;
+}
+
+/* No mist layer — it was causing the glow artifact */
+
+/* Demo button styles */
+.btn-earth {
+    background: rgba(30, 50, 40, 0.5) !important;
+    border-color: rgba(80, 140, 100, 0.4) !important;
+    color: #8b9 !important;
+}
+.btn-earth:hover {
+    background: rgba(40, 70, 50, 0.6) !important;
+    border-color: rgba(100, 170, 120, 0.6) !important;
+    color: #adb !important;
+}
+.btn-space {
+    background: rgba(30, 30, 60, 0.5) !important;
+    border-color: rgba(100, 100, 180, 0.4) !important;
+    color: #99b !important;
+}
+.btn-space:hover {
+    background: rgba(40, 40, 80, 0.6) !important;
+    border-color: rgba(130, 130, 210, 0.6) !important;
+    color: #bbd !important;
+}

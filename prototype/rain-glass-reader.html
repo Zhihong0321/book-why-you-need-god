@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rain Glass Reader</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Georgia', serif;
+  color: #e8e8e8;
+}
+
+/* Fixed video background */
+#bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* Glass panel - the window we sit behind */
+#glass-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: rgba(10, 10, 10, 0.2);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+/* Splash canvas - raindrop hits ON the glass */
+#splash-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Content layer - scrollable text */
+#content {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  overflow-y: auto;
+  padding: 60px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+#content::-webkit-scrollbar {
+  width: 4px;
+}
+#content::-webkit-scrollbar-track {
+  background: transparent;
+}
+#content::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+  border-radius: 2px;
+}
+
+#reader {
+  max-width: 680px;
+  width: 100%;
+  padding-bottom: 100px;
+}
+
+/* Text sections */
+.section {
+  margin-bottom: 80px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section h2 {
+  font-size: 1.6rem;
+  font-weight: 400;
+  margin-bottom: 20px;
+  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: 0.5px;
+}
+
+.section p {
+  font-size: 1.1rem;
+  line-height: 1.9;
+  color: rgba(230, 230, 230, 0.9);
+  margin-bottom: 16px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+/* Rain intensity control UI */
+#controls {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 10;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: sans-serif;
+  font-size: 12px;
+  color: rgba(255,255,255,0.7);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+#rain-slider {
+  width: 100px;
+  accent-color: #88b4d4;
+  cursor: pointer;
+}
+
+#rain-label {
+  min-width: 20px;
+  text-align: center;
+}
+
+/* Mood indicator */
+#mood-indicator {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+  font-family: sans-serif;
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  background: rgba(0,0,0,0.3);
+  padding: 6px 12px;
+  border-radius: 20px;
+  backdrop-filter: blur(6px);
+  transition: all 0.5s;
+}
+</style>
+</head>
+<body>
+
+<!-- Layer 0: Video background (rain is already in the video) -->
+<video id="bg-video" autoplay muted loop playsinline>
+  <source src="forest-rain.mp4" type="video/mp4">
+</video>
+
+<!-- Layer 1: Glass panel -->
+<div id="glass-panel"></div>
+
+<!-- Layer 2: Raindrop splashes hitting the glass -->
+<canvas id="splash-canvas"></canvas>
+
+<!-- Layer 3: Readable content -->
+<div id="content">
+  <div id="reader">
+    <div class="section" data-rain="30" data-mood="calm">
+      <h2>I. Stillness Before the Storm</h2>
+      <p>There is a moment — just before the rain begins — when the world holds its breath. The leaves stop rustling. The birds go quiet. And in that silence, something ancient stirs.</p>
+      <p>You've felt it before. That pause between one thought and the next, where everything you thought you knew dissolves into mist.</p>
+    </div>
+
+    <div class="section" data-rain="60" data-mood="building">
+      <h2>II. The Weight of Water</h2>
+      <p>The rain comes now. Not gently — but with purpose. Each drop carries the weight of a sky that could no longer hold itself together. It falls because it must.</p>
+      <p>And isn't that how truth arrives? Not when we're ready, but when the pressure becomes too great for silence to contain it.</p>
+    </div>
+
+    <div class="section" data-rain="90" data-mood="intense">
+      <h2>III. Downpour</h2>
+      <p>The glass shakes. The world outside becomes a blur of green and grey. You can barely see the trees now — just shapes, moving like memories half-forgotten.</p>
+      <p>This is where most people look away. The intensity is too much. But stay. Stay behind the glass. You are safe here. Watch what the storm reveals.</p>
+    </div>
+
+    <div class="section" data-rain="50" data-mood="reflective">
+      <h2>IV. Patterns in the Glass</h2>
+      <p>The water traces paths down the window. No two streams are alike, yet they all find their way down. Gravity doesn't negotiate. It simply is.</p>
+      <p>Some truths are like that. They don't argue. They don't persuade. They simply exist, waiting for you to stop resisting them.</p>
+    </div>
+
+    <div class="section" data-rain="20" data-mood="peace">
+      <h2>V. After</h2>
+      <p>The rain softens. The forest breathes again. Light finds its way through — not the harsh light of certainty, but the gentle glow of dawn after a long night.</p>
+      <p>You're still here. Behind the glass. But something has shifted. The question is no longer whether the storm was real. The question is what you'll do now that you've seen it.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Controls -->
+<div id="mood-indicator">mood: calm</div>
+<div id="controls">
+  <span>🌧</span>
+  <input type="range" id="rain-slider" min="0" max="100" value="30">
+  <span id="rain-label">30</span>
+</div>
+
+<script>
+// === SPLASH ENGINE — raindrops hitting the glass surface ===
+const splashCanvas = document.getElementById('splash-canvas');
+const sCtx = splashCanvas.getContext('2d');
+let splashes = [];
+let rainIntensity = 30;
+let targetIntensity = 30;
+
+function resizeCanvas() {
+  splashCanvas.width = window.innerWidth;
+  splashCanvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+// A single raindrop hit on the glass
+class Splash {
+  constructor() {
+    this.x = Math.random() * splashCanvas.width;
+    this.y = Math.random() * (splashCanvas.height * 0.4); // hits upper portion
+    this.maxRadius = 8 + Math.random() * 18;
+    this.radius = 0;
+    this.opacity = 0.4 + Math.random() * 0.3;
+    this.life = 0;
+    this.maxLife = 200 + Math.random() * 150; // much longer life
+    this.hasStreak = Math.random() > 0.3; // 70% chance of a drip trail
+
+    // Water flow physics
+    this.streakY = 0; // current drip position (relative to hit point)
+    this.velocity = 0; // current speed
+    this.gravity = 0.008 + Math.random() * 0.005; // gravity pull
+    this.friction = 0.985 + Math.random() * 0.01; // surface friction slows it
+    this.mass = 0.5 + Math.random() * 1.0; // heavier drops flow faster
+    this.surfaceTension = 0.02 + Math.random() * 0.03; // resists movement until enough weight
+    this.accumulated = 0; // water accumulates before it moves
+    this.accumulateThreshold = 0.3 + Math.random() * 0.5; // how much before it starts flowing
+    this.flowing = false;
+    this.trail = []; // stores path points for a solid straight trail
+  }
+
+  update() {
+    this.life++;
+    const progress = this.life / this.maxLife;
+
+    // Expand impact ring quickly
+    if (progress < 0.15) {
+      this.radius = this.maxRadius * (progress / 0.15);
+    } else {
+      this.radius = this.maxRadius;
+    }
+
+    // Fade out over life
+    this.opacity = (1 - progress) * 0.5;
+
+    // Water flow simulation
+    if (this.hasStreak) {
+      if (!this.flowing) {
+        // Accumulate water weight before flowing
+        this.accumulated += 0.005 * this.mass;
+        if (this.accumulated >= this.accumulateThreshold) {
+          this.flowing = true;
+        }
+      }
+
+      if (this.flowing) {
+        // Gravity accelerates, friction decelerates
+        this.velocity += this.gravity * this.mass;
+        this.velocity *= this.friction;
+
+        // Surface tension creates stop-start behavior
+        if (this.velocity < this.surfaceTension) {
+          this.velocity = 0;
+          // Re-accumulate
+          this.accumulated += 0.003;
+          if (this.accumulated > this.accumulateThreshold * 0.5) {
+            this.velocity = this.gravity * this.mass * 2;
+            this.accumulated = 0;
+          }
+        }
+
+        this.streakY += this.velocity;
+
+        // Record trail point (straight down, no horizontal wobble)
+        this.trail.push(this.streakY);
+      }
+    }
+  }
+
+  draw() {
+    // Impact ring
+    if (this.life < this.maxLife * 0.4) {
+      sCtx.beginPath();
+      sCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      sCtx.strokeStyle = `rgba(200, 220, 240, ${this.opacity})`;
+      sCtx.lineWidth = 1.2;
+      sCtx.stroke();
+
+      // Inner dot
+      sCtx.beginPath();
+      sCtx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+      sCtx.fillStyle = `rgba(220, 235, 250, ${this.opacity * 1.5})`;
+      sCtx.fill();
+    }
+
+    // Water streak flowing straight down
+    if (this.hasStreak && this.streakY > 0) {
+      // Draw the trail as a straight vertical line
+      const trailTop = this.y;
+      const trailBottom = this.y + this.streakY;
+      const trailLength = this.streakY;
+
+      // Thin trail line (water path left behind)
+      if (trailLength > 5) {
+        sCtx.beginPath();
+        sCtx.moveTo(this.x, trailTop);
+        sCtx.lineTo(this.x, trailBottom);
+        // Trail fades from top to bottom
+        const gradient = sCtx.createLinearGradient(this.x, trailTop, this.x, trailBottom);
+        gradient.addColorStop(0, `rgba(200, 220, 240, ${this.opacity * 0.15})`);
+        gradient.addColorStop(0.7, `rgba(200, 220, 240, ${this.opacity * 0.4})`);
+        gradient.addColorStop(1, `rgba(210, 230, 245, ${this.opacity * 0.6})`);
+        sCtx.strokeStyle = gradient;
+        sCtx.lineWidth = 1.5;
+        sCtx.lineCap = 'round';
+        sCtx.stroke();
+      }
+
+      // Water bead at the bottom (the flowing drop)
+      const beadSize = 2.5 + this.mass;
+      sCtx.beginPath();
+      sCtx.ellipse(this.x, trailBottom, beadSize * 0.6, beadSize, 0, 0, Math.PI * 2);
+      sCtx.fillStyle = `rgba(210, 230, 245, ${this.opacity * 1.2})`;
+      sCtx.fill();
+
+      // Tiny highlight on bead
+      sCtx.beginPath();
+      sCtx.arc(this.x - 1, trailBottom - 1, beadSize * 0.3, 0, Math.PI * 2);
+      sCtx.fillStyle = `rgba(255, 255, 255, ${this.opacity * 0.5})`;
+      sCtx.fill();
+    }
+  }
+
+  isDead() {
+    return this.life >= this.maxLife;
+  }
+}
+
+// How many new splashes per frame based on intensity
+function splashRate() {
+  // At intensity 100: ~0.5 new splashes/frame. At 0: ~0.01 (much fewer)
+  return (rainIntensity / 100) * 0.5 + 0.01;
+}
+
+let splashAccumulator = 0;
+
+function animate() {
+  sCtx.clearRect(0, 0, splashCanvas.width, splashCanvas.height);
+
+  // Smooth intensity transition
+  rainIntensity += (targetIntensity - rainIntensity) * 0.02;
+
+  // Update glass blur/darkness based on intensity
+  const blurAmount = 2 + (rainIntensity / 100) * 5;
+  const darkAmount = 0.15 + (rainIntensity / 100) * 0.2;
+  const glassPanel = document.getElementById('glass-panel');
+  glassPanel.style.backdropFilter = `blur(${blurAmount}px)`;
+  glassPanel.style.webkitBackdropFilter = `blur(${blurAmount}px)`;
+  glassPanel.style.background = `rgba(10, 10, 10, ${darkAmount})`;
+
+  // Spawn new splashes
+  splashAccumulator += splashRate();
+  while (splashAccumulator >= 1) {
+    splashes.push(new Splash());
+    splashAccumulator--;
+  }
+
+  // Update and draw
+  for (let i = splashes.length - 1; i >= 0; i--) {
+    splashes[i].update();
+    splashes[i].draw();
+    if (splashes[i].isDead()) {
+      splashes.splice(i, 1);
+    }
+  }
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+
+// === SCROLL-BASED INTENSITY CONTROL ===
+const contentEl = document.getElementById('content');
+const sections = document.querySelectorAll('.section');
+const moodIndicator = document.getElementById('mood-indicator');
+const slider = document.getElementById('rain-slider');
+const rainLabel = document.getElementById('rain-label');
+let manualOverride = false;
+let manualTimeout;
+
+// Intersection observer for fade-in + mood switching
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+
+      if (!manualOverride) {
+        const rain = parseInt(entry.target.dataset.rain) || 30;
+        const mood = entry.target.dataset.mood || 'calm';
+        targetIntensity = rain;
+        slider.value = rain;
+        rainLabel.textContent = rain;
+        moodIndicator.textContent = `mood: ${mood}`;
+      }
+    }
+  });
+}, {
+  root: contentEl,
+  threshold: 0.5
+});
+
+sections.forEach(s => observer.observe(s));
+
+// Manual slider
+slider.addEventListener('input', (e) => {
+  const val = parseInt(e.target.value);
+  targetIntensity = val;
+  rainLabel.textContent = val;
+  manualOverride = true;
+  moodIndicator.textContent = 'mood: manual';
+
+  clearTimeout(manualTimeout);
+  manualTimeout = setTimeout(() => {
+    manualOverride = false;
+  }, 10000);
+});
+
+// Show first section
+setTimeout(() => {
+  sections[0]?.classList.add('visible');
+}, 300);
+</script>
+</body>
+</html>
