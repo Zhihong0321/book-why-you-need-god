@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cinematic Space Background — V3 Phase 2 Preview</title>
+    <title>第一部：理性对话 &middot; 濒死体验科学审计</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,20 +12,20 @@
         <defs>
             <!-- Turbulence filter for organic nebula shapes -->
             <filter id="nebula-warp-1" x="-20%" y="-20%" width="140%" height="140%">
-                <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="4" seed="1" result="noise"/>
+                <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" seed="1" result="noise"/>
                 <feDisplacementMap in="SourceGraphic" in2="noise" scale="45" xChannelSelector="R" yChannelSelector="G"/>
             </filter>
             <filter id="nebula-warp-2" x="-20%" y="-20%" width="140%" height="140%">
-                <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="3" seed="42" result="noise"/>
+                <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="2" seed="42" result="noise"/>
                 <feDisplacementMap in="SourceGraphic" in2="noise" scale="35" xChannelSelector="R" yChannelSelector="B"/>
             </filter>
             <filter id="nebula-warp-3" x="-20%" y="-20%" width="140%" height="140%">
-                <feTurbulence type="fractalNoise" baseFrequency="0.009" numOctaves="5" seed="7" result="noise"/>
+                <feTurbulence type="fractalNoise" baseFrequency="0.009" numOctaves="2" seed="7" result="noise"/>
                 <feDisplacementMap in="SourceGraphic" in2="noise" scale="55" xChannelSelector="G" yChannelSelector="R"/>
             </filter>
             <!-- Filament texture filter for wispy nebula structure -->
             <filter id="nebula-filament" x="-10%" y="-10%" width="120%" height="120%">
-                <feTurbulence type="fractalNoise" baseFrequency="0.025 0.008" numOctaves="6" seed="13" result="noise"/>
+                <feTurbulence type="fractalNoise" baseFrequency="0.025 0.008" numOctaves="3" seed="13" result="noise"/>
                 <feDisplacementMap in="SourceGraphic" in2="noise" scale="30" xChannelSelector="R" yChannelSelector="G"/>
             </filter>
         </defs>
@@ -81,52 +81,741 @@
         </div>
     </div>
 
+    <!-- Audio Player Elements -->
+    <audio id="track-calm" loop preload="auto">
+        <source src="../music_asset/Scott Buckley - Snowfall.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="track-wonder" loop preload="auto">
+        <source src="../music_asset/Scott Buckley - Filaments.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="track-awe" loop preload="auto">
+        <source src="../music_asset/Scott Buckley - Horizons.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="track-weight" loop preload="auto">
+        <source src="../music_asset/Sappheiros - Escape.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Music Status Toast Notification -->
+    <div class="music-toast" id="musicToast">
+        <span class="music-toast-icon">&#9835;</span>
+        <span class="music-toast-text" id="musicToastText"></span>
+    </div>
+    <button class="music-toggle" id="musicToggle">&#9835;</button>
+
+    <!-- Start Overlay (Autoplay unlock) -->
+    <div class="start-overlay" id="startOverlay">
+        <div class="start-content">
+            <p class="start-subtitle">第一部 &middot; 理性对话</p>
+            <h1 class="start-title">濒死体验科学审计</h1>
+            <p class="start-hint">建议佩戴耳机获得浸润式体验</p>
+            <button class="start-btn" id="startBtn">开始阅读</button>
+        </div>
+    </div>
+
     <!-- Big Bang Reverse transition overlay (chapter opening animation) -->
     <div class="bigbang-overlay" id="bigbangOverlay">
         <div class="bigbang-flash"></div>
         <div class="bigbang-title" id="bigbangTitle">
-            <p class="bigbang-subtitle">第二章</p>
-            <h1 class="bigbang-heading">我不是罪人</h1>
+            <p class="bigbang-subtitle">第一章</p>
+            <h1 class="bigbang-heading">濒死体验科学审计</h1>
         </div>
     </div>
 
-    <!-- Mountain silhouette (no earth-sky backdrop — fully transparent above mountain) -->
+    <!-- Mountain silhouette (horizon scene) -->
     <div class="mountain-layer" id="mountainLayer">
         <img src="mountain.png" class="mountain-img" alt="">
     </div>
 
-    <!-- Demo controls for preview -->
+    <!-- Director's Controls (Mood Switcher for preview & presentation override) -->
     <div class="demo-controls">
-        <h3>V3 Phase 1+2 Preview — Mood Switcher</h3>
+        <h3>Director's Console</h3>
         <div class="demo-buttons">
             <button onclick="switchMood('calm')" class="active">Calm</button>
             <button onclick="switchMood('wonder')">Wonder</button>
             <button onclick="switchMood('awe')">Awe</button>
             <button onclick="switchMood('weight')">Weight</button>
+            <button onclick="switchMood('clockwise')">Clockwise ↻</button>
+            <button onclick="switchMood('anticlockwise')">Anticlockwise ↺</button>
             <button onclick="switchMood('lightspeed')">Lightspeed</button>
             <button onclick="triggerBigBang()" class="btn-special">Big Bang ↺</button>
             <button onclick="triggerDownToEarth()" class="btn-earth">↓ Earth</button>
             <button onclick="triggerFlyToSpace()" class="btn-space">↑ Space</button>
         </div>
-        <p class="demo-hint">↓ Earth = descend to mountain | ↑ Space = launch from mountain</p>
+        <p class="demo-hint">↓ Earth = descend to mountain | ↑ Space = launch to space</p>
     </div>
 
-    <!-- Demo content to show text readability -->
-    <main class="content visible">
+    <!-- Chapter Content Container -->
+    <main class="content" id="mainContent">
+
+        <!-- ZONE 1: Calm Mode -->
         <section class="zone" data-mood="calm">
+            <div class="chapter-label">结论</div>
             <div class="text-block">
-                <p class="lead">V3 Phase 2 Enhancements</p>
-                <p>1. SVG feTurbulence + feDisplacementMap — organic nebula shapes (no more perfect ellipses)</p>
-                <p>2. Varied blur per layer (40px–120px) — some areas sharp, some diffuse</p>
-                <p>3. 6 nebula layers per mood — filament ribbons + core + edge wisps</p>
-                <p>4. Parallax dust layer — background dust drifts slowly with mood direction</p>
-                <p>5. Enhanced irregular twinkle — Perlin-like noise via multi-octave sine sum</p>
-                <p>6. Color-separated nebula layers — purple core, blue edge, dark red filaments</p>
+                <h2>到底灵魂是否存在？如果有，如何证明？</h2>
+                <p class="lead fx-fade-up">如果有灵魂，对我来说代表什么？</p>
+                <div class="divider"></div>
+                <h2 class="fx-fade-up">结论</h2>
+                <p class="fx-fade-up">意识不是大脑制造的东西。意识是独立存在的，大脑只是它在这个世界里的窗口。当窗口关上，意识没有消失——它回到了窗外那个更大的世界。</p>
+                <p class="next-chapter fx-fade-up">*[继续深入 &rarr;]*</p>
             </div>
         </section>
+
+        <!-- ZONE 2: Wonder Mode -->
+        <section class="zone" data-mood="wonder">
+            <div class="chapter-label">逻辑</div>
+            <div class="text-block">
+                <h2 class="fx-fade-up">逻辑</h2>
+                <p class="lead fx-fade-up">意识从来不是大脑"生产"出来的。</p>
+                <p class="fx-fade-up">大脑的作用，是把意识缩小——让它刚好能通过身体这个狭窄的通道来运作。就像你透过一扇小窗户看外面的风景：你以为世界只有窗框那么大，但那只是因为窗户限制了你的视野。</p>
+                <p class="fx-fade-up">当大脑停止工作，窗户消失了。</p>
+                <p class="fx-glow">你以为一切会变黑。但实际发生的是——视野突然变得无限大。</p>
+            </div>
+
+            <!-- Perspectives/Lenses -->
+            <div class="lens-block fx-fade-up">
+                <p class="lens-label">【生活化 Lens】</p>
+                <p>你站在父亲的遗体旁边。亲戚们轮流过来跟你说节哀。有人握你的手，有人跟你说他去了更好的地方。你点头，但你其实没在听那些话。你一直在看他的手——那双修过水管、打过你、后来抱着你儿子不肯放的手。现在它就在那里，但你比任何时候都清楚：他已经不在里面了。不是"睡着了"，不是"走了"——是那个"他"，不在了。</p>
+                <p><strong>你已经知道这个道理了——一个人，和他的身体，不是同一件事。</strong></p>
+                <p>这章要问的是：如果身体不是那个人——那"他"去了哪里？</p>
+            </div>
+
+            <div class="lens-block fx-fade-up">
+                <p class="lens-label">【年轻人视角】</p>
+                <p>你有没有过那种感觉——凌晨三点还醒着，刷完所有社交媒体，放下手机，盯着天花板。不是焦虑，不是难过，就是一种很安静的"不对劲"。好像你的意识比你的身体更大，被困在一个太小的容器里。</p>
+                <p>你可能用过冥想 app，试过正念呼吸，甚至读过一些关于"意识是什么"的科普。但每次读到"意识是大脑神经元放电的副产品"，你心里有个声音说：不对。如果我只是一堆化学反应，为什么"我"能意识到自己是一堆化学反应？</p>
+                <p>这个"观察者"是谁？</p>
+                <p>这一章看的东西很硬核：当大脑完全停止运作的时候——脑电图一条直线，心跳归零——有些人的意识不但没有消失，反而变得比活着的时候更清醒。先天失明的人在那个状态下第一次"看见"了东西。这不是鸡汤，是经过同行评审的临床数据。</p>
+                <p><strong>如果你的大脑只是一个接收器，而不是发射塔——那"你"到底是什么？</strong></p>
+                <p>我们来看数据怎么说。</p>
+            </div>
+            
+            <div class="text-block">
+                <p class="next-chapter fx-fade-up">*[继续深入 &rarr;]*</p>
+            </div>
+        </section>
+
+        <!-- ZONE TRANSITION: Lightspeed -->
+        <section class="zone-transition" data-transition="lightspeed">
+            <div class="transition-space"></div>
+        </section>
+
+        <!-- ZONE 3: Awe Mode -->
+        <section class="zone" data-mood="awe">
+            <div class="chapter-label">论证</div>
+            <div class="text-block">
+                <h2>论证</h2>
+                <h3>在开始之前：这一章的逻辑规则</h3>
+                <p class="fx-fade-up">我们先把规则讲清楚。不是我的规则——是逻辑本身的规则。</p>
+                <p class="fx-fade-up">你现在持有一个信念：</p>
+                <blockquote class="fx-quote">“意识是大脑产生的。大脑死了，意识就没了。”</blockquote>
+                <p class="fx-fade-up">这是一个全称命题。它说的是：在所有情况下，意识都不可能脱离大脑而存在。</p>
+                <p class="fx-fade-up">全称命题有一个致命弱点：</p>
+                <blockquote class="fx-quote">“只需要一个有效的反例，它就彻底破产。”</blockquote>
+                <p class="fx-fade-up">不需要一千个案例。不需要科学界投票。不需要可重复性。一个就够了。</p>
+                <p class="fx-fade-up">就像“所有天鹅都是白的”——你不需要找到一万只黑天鹅。你只需要找到一只。一只，这个命题就死了。</p>
+                <p class="fx-fade-up">所以这一章的任务非常简单：</p>
+                <p class="fx-fade-up">给你看一个案例——一个人的大脑已经停止工作（脑电图平直线），但他的意识仍然存在，而且感知到了可验证的真实信息。</p>
+                <p class="fx-glow">如果这个案例成立，“意识是大脑产生的”就被证伪了。游戏结束。</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="text-block">
+                <h3>你现在心里在想什么？</h3>
+                <p class="fx-fade-up">你可能已经开始找理由了。让我猜猜：</p>
+                <blockquote>“科学界还没有普遍接受 NDE 作为证据。”</blockquote>
+                <blockquote>“样本量太小，不具有统计意义。”</blockquote>
+                <blockquote>“也许有别的解释我们还没想到。”</blockquote>
+                <p class="fx-fade-up">停一下。我要你看清楚自己正在做什么。</p>
+                <p class="fx-fade-up">你正在用<strong>归纳法的标准</strong>来拒绝一个**演绎证伪**。</p>
+                <p class="fx-fade-up">这两件事不是同一件事。</p>
+                <p class="fx-fade-up">归纳法说：我要看到大量样本、可重复实验、科学界共识，我才接受一个新理论。</p>
+                <p class="fx-fade-up">演绎证伪说：一个全称命题，只要有一个反例，就死了。不需要大量样本。不需要共识。不需要可重复。</p>
+                <p class="fx-fade-up">你把归纳法的高门槛，搬过来挡在证伪面前——这不是严谨。这是偷换规则。</p>
+                <p class="fx-fade-up">比方说，你说你射箭很准，那么你需要大量的证明，比如过去三个月，射了800次，命中率有多高（你需要大量证据）。</p>
+                <p class="fx-fade-up">但是，如果你说你射箭“绝不会偏移红心”，那么只要你射偏一次，就足够证明你说谎了。</p>
+                <p class="fx-fade-up">如果你坚信灵魂根本不存在，我不需要给你大量证据。只要证明一次就够了。</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="text-block">
+                <h3>你对别的事情，从来不用这个标准</h3>
+                <p class="fx-fade-up">你相信黑洞存在吗？你亲眼看过吗？你等全世界物理学家 100% 同意了才信的吗？</p>
+                <p class="fx-fade-up">没有。你看了几张图，读了几篇科普，觉得“说得通”，就信了。</p>
+                <p class="fx-fade-up">你相信量子纠缠是真的吗？你做过实验吗？你能解释它的机制吗？</p>
+                <p class="fx-fade-up">不能。但你不会说“科学界还有争议，所以我拒绝接受”。</p>
+                <p class="fx-fade-up">但到了“意识可能脱离大脑”这件事上——突然，你的标准变了。</p>
+                <p class="fx-fade-up">突然，你需要“像太阳一样确定”才肯接受。</p>
+                <p class="fx-fade-up"><strong>为什么？</strong></p>
+                <p class="fx-fade-up">不是因为你更严谨了。是因为这个结论让你害怕。</p>
+                <p class="fx-fade-up">如果意识能脱离大脑，那死亡就不是结束。如果死亡不是结束，那你怎么活、怎么死、怎么面对永恒——全都变成了真问题。</p>
+                <p class="fx-fade-up">你不是在追求真相。你是在保护自己不用面对真相。这不是客观。这是恐惧伪装成理性。</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="text-block">
+                <h3>所以，规则重申一次</h3>
+                <p class="fx-fade-up">这一章不需要你相信“NDE 是成熟的科学”。不需要你接受“科学界已经达成共识”。</p>
+                <p class="fx-fade-up">只需要你诚实地回答一个问题：</p>
+                <p class="lead fx-fade-up"><strong>下面这个案例，你能不能用“大脑产生意识”来解释？</strong></p>
+                <p class="fx-fade-up">如果不能——不是“也许能”，不是“将来可能有人能”，而是你现在，用你知道的所有物理和神经科学知识，解释不了——</p>
+                <p class="fx-glow">那命题就已经被证伪了。剩下的只是一个问题：你愿不愿意承认。</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="text-block">
+                <h3>那怎么知道是“脱离身体的意识”，而不是别的什么？</h3>
+                <p class="fx-fade-up">这是第二个关键问题。就算承认这些体验是真的，你怎么确定是“意识离开了身体”，而不是大脑在最后时刻产生的某种超常运算？</p>
+                <p class="fx-fade-up">答案在于一个简单的逻辑：</p>
+                <blockquote class="fx-quote">如果意识是大脑产生的，那大脑停了，意识就必须停。</blockquote>
+                <p class="fx-fade-up">这就像说：如果音乐是音箱产生的，那音箱断电了，音乐就必须停。</p>
+                <p class="fx-fade-up">但如果音箱断电之后，音乐不但没停，反而变得更响亮、更清晰——那你就知道了：音乐从来不是音箱产生的。音箱只是在播放一个来自别处的信号。</p>
+                <p class="fx-fade-up">NDE 的数据正是这个情况：</p>
+                <ul class="fx-fade-up">
+                    <li>大脑停了（脑电图平直线）</li>
+                    <li>意识没停（患者报告了超清晰的体验）</li>
+                    <li>而且意识获取了身体不可能获取的信息（离体感知被第三方验证）</li>
+                </ul>
+                <p class="fx-fade-up">这三点合在一起，只有一个逻辑结论：意识不是大脑生成的。意识是独立的，大脑只是它在身体里运作时使用的工具。当工具停了，意识还在。而且不受工具的限制了。</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Evidence Module 1 -->
+            <div class="text-block">
+                <h3>证据模块一：大脑停了，意识反而更清醒</h3>
+                <p class="lead">这意味着什么？</p>
+                <p class="fx-fade-up">想象你一直戴着一副很重的墨镜。你以为世界就是暗的。有一天墨镜掉了——你发现世界原来这么亮。</p>
+                <p class="fx-fade-up">NDE 患者描述的就是这种感觉：大脑停止工作之后，他们的意识体验不是变暗、变模糊，而是变得前所未有地清晰。</p>
+                <p class="fx-fade-up">这完全违反了"大脑产生意识"的预期。如果大脑是意识的发电机，断电就该一片黑。但实际情况是：断电之后，灯反而更亮了。</p>
+                
+                <h4 class="fx-fade-up">数据</h4>
+                <div class="table-container fx-fade-up">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>数据来源</th>
+                                <th>关键发现</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>AWARE 研究 <span class="ref-tag" data-ref="NDEXP-002">[NDEXP-002]</span></strong></td>
+                                <td>2,060 例心脏骤停患者中，约 9% 报告了 NDE。部分体验发生在心跳停止后 20-60 秒内——此时脑电图已经是一条平直线，大脑皮层没有任何可测量的电活动。</td>
+                            </tr>
+                            <tr>
+                                <td><strong>van Lommel 前瞻性研究 <span class="ref-tag" data-ref="NDEXP-001">[NDEXP-001]</span></strong></td>
+                                <td>344 例心脏骤停幸存者中，18% 报告了 NDE。关键发现：大脑缺氧越严重，体验反而越清晰。这完全反直觉——就像说电池越没电，手电筒越亮。</td>
+                            </tr>
+                            <tr>
+                                <td><strong>超觉清醒特征</strong></td>
+                                <td>报告者一致描述：体验比日常清醒状态"更真实"。人生回顾中可以同时感知自己和他人的情绪，呈现 360 度全景式信息处理——这远超正常大脑一次只能处理一件事的能力。</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Greyson NDE 量表 <span class="ref-tag" data-ref="NDEXP-005">[NDEXP-005]</span></strong></td>
+                                <td>NDE 体验的认知清晰度评分系统性高于正常清醒状态，且与心脏骤停持续时间呈正相关。停得越久，越清醒。</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4 class="fx-fade-up">这对"大脑产生意识"意味着什么？</h4>
+                <div class="table-container fx-fade-up">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>如果大脑产生意识，应该发生什么</th>
+                                <th>实际发生了什么</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>脑电图平直 &rarr; 意识归零</td>
+                                <td>意识达到"超清"级别</td>
+                            </tr>
+                            <tr>
+                                <td>缺氧越严重 &rarr; 认知越混乱</td>
+                                <td>缺氧越严重 &rarr; 认知越清晰</td>
+                            </tr>
+                            <tr>
+                                <td>无皮层电活动 &rarr; 不可能形成记忆</td>
+                                <td>患者形成了终身不褪色的超高清记忆</td>
+                            </tr>
+                            <tr>
+                                <td>大脑一次处理一件事 &rarr; 不可能同时处理数十年信息</td>
+                                <td>人生回顾中同时处理数十年信息流</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="fx-fade-up">每一行都是一个矛盾。四个矛盾同时出现，不是巧合——是模型错了。</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Evidence Module 2 -->
+            <div class="text-block">
+                <h3>证据模块二：人在"死亡"期间看到的东西，被证实是真的</h3>
+                <p class="lead">这意味着什么？</p>
+                <p class="fx-fade-up">这是最硬的证据。不是"我感觉到了什么"，而是"我看到了一个具体的事实，事后被第三方确认了"。</p>
+                <p class="fx-fade-up">如果一个人的大脑已经停了，眼睛闭着，身体躺在手术台上——他怎么可能知道隔壁房间发生了什么？</p>
+                <p class="fx-fade-up">他不可能知道。除非他的意识真的离开了身体，去到了那个位置。</p>
+
+                <h4 class="fx-fade-up">案例</h4>
+                <div class="table-container fx-fade-up">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>案例</th>
+                                <th>发生了什么</th>
+                                <th>验证</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>假牙案例 <span class="ref-tag" data-ref="NDEXP-010">[NDEXP-010]</span></strong></td>
+                                <td>一名深度昏迷患者（瞳孔散大，完全无意识）复苏后告诉护士："你把我的假牙放在了那个带滑轮的小推车的抽屉里。"这件事发生在他完全"死亡"的期间。而且那个护士之后好几天都没再出现在那个病房——患者不可能事后从别人那里听说。</td>
+                                <td><strong>✅ 当事护士确认</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Al Sullivan 案例 <span class="ref-tag" data-ref="NDEXP-011">[NDEXP-011]</span></strong></td>
+                                <td>心脏手术患者 Sullivan 术后准确描述了主刀医生的一个独特习惯：用肘部指挥助手（因为手已消毒不能碰非无菌物）。Sullivan 术前从未见过这个医生，手术中全身麻醉、眼睛被贴住。</td>
+                                <td><strong>✅ 医生本人确认</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>AWARE II 实验 <span class="ref-tag" data-ref="NDEXP-009">[NDEXP-009]</span></strong></td>
+                                <td>研究者在手术室天花板附近放置了只能从上方看到的随机图像，测试是否有患者能在离体状态下看到。虽然样本量有限，但已有个别案例报告了手术室内其他可验证的细节。</td>
+                                <td><strong>🔄 方法论验证进行中</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4 class="fx-fade-up">这对"大脑产生意识"意味着什么？</h4>
+                <div class="table-container fx-fade-up">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>如果意识只存在于大脑中，应该发生什么</th>
+                                <th>实际发生了什么</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>大脑停了 &rarr; 不可能有任何感知</td>
+                                <td>患者获取了精确的环境信息</td>
+                            </tr>
+                            <tr>
+                                <td>眼睛闭着 &rarr; 不可能看到任何东西</td>
+                                <td>患者"看到"了具体的物体和动作</td>
+                            </tr>
+                            <tr>
+                                <td>身体在这里 &rarr; 只能感知身体所在位置的信息</td>
+                                <td>患者感知了身体周围甚至其他房间的信息</td>
+                            </tr>
+                            <tr>
+                                <td>如果是幻觉 &rarr; 应该包含错误</td>
+                                <td>所有信息经第三方验证完全准确</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="fx-fade-up">幻觉不会是对的。梦不会被护士确认。</p>
+                <p class="fx-fade-up">如果一个"死人"告诉你一件他不可能知道的事，而那件事是真的——那他的意识在"死亡"期间，确实在某个地方运作着。</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Evidence Module 3 -->
+            <div class="text-block">
+                <h3>证据模块三：全世界的人，报告了几乎相同的经历</h3>
+                <p class="lead">这意味着什么？</p>
+                <p class="fx-fade-up">如果 NDE 只是大脑缺氧产生的随机幻觉，那每个人的幻觉应该都不一样——就像每个人做的梦都不一样。</p>
+                <p class="fx-fade-up">如果 NDE 是文化影响的产物（比如因为看过电影、听过故事），那不同文化的人应该报告完全不同的体验——中国人应该看到阎王，美国人应该看到天使，印度人应该看到湿婆。</p>
+                <p class="fx-fade-up">但实际情况是：不管你是谁、在哪里、信什么、几岁——核心经历几乎一模一样。</p>
+                <p class="fx-fade-up">这就像全世界的人，从来没有互相联系过，却画出了同一张地图。这说明他们去的是同一个地方。</p>
+
+                <h4 class="fx-fade-up">数据</h4>
+                <div class="table-container fx-fade-up">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>谁经历了</th>
+                                <th>他们报告了什么</th>
+                                <th>为什么这很重要</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>1976 唐山大地震幸存者 <span class="ref-tag" data-ref="NDEXP-006">[NDEXP-006]</span></strong>（81例）</td>
+                                <td>隧道、光、已故亲人、边界、人生回顾</td>
+                                <td>这些人在彻底的唯物主义教育环境中长大。没有人教过他们"死后会看到光"。但他们报告的内容，和美国心脏病患者说的一模一样。</td>
+                            </tr>
+                            <tr>
+                                <td><strong>印度 NDE 研究 <span class="ref-tag" data-ref="NDEXP-007">[NDEXP-007]</span></strong></td>
+                                <td>出体、光、边界、被告知"还没到时候"</td>
+                                <td>虽然有些文化细节不同（比如"信使"代替了"隧道"），但核心结构完全一致。就像同一首歌的不同语言版本——旋律是一样的。</td>
+                            </tr>
+                            <tr>
+                                <td><strong>3-12 岁儿童 <span class="ref-tag" data-ref="NDEXP-004">[NDEXP-004]</span></strong>（无宗教教育）</td>
+                                <td>光、隧道、已故亲人（包括从未见过照片的祖辈）、边界</td>
+                                <td>这些孩子太小了，没看过相关电影，没听过相关故事，没受过任何宗教教育。他们不可能是"学来的"。而且他们认出了从未见过的已故亲人。</td>
+                            </tr>
+                            <tr>
+                                <td><strong>自杀未遂者 <span class="ref-tag" data-ref="NDEXP-008">[NDEXP-008]</span></strong></td>
+                                <td>核心元素与其他 NDE 一致，但更多出现对他人痛苦的感知</td>
+                                <td>如果 NDE 是心理防御机制（大脑在死前给你一个"美好幻觉"来安慰你），那自杀者应该得到一个"逃避性"的体验。但实际上，他们的体验是"教育性"的——让他们看到自己的死会给别人带来什么。这不是安慰，这是真相。</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4 class="fx-fade-up">核心经历的一致性</h4>
+                <div class="table-container fx-fade-up">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>经历层次</th>
+                                <th>内容</th>
+                                <th>西方</th>
+                                <th>中国</th>
+                                <th>印度</th>
+                                <th>儿童</th>
+                                <th>先天失明者</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>第一层</td>
+                                <td>平安、无痛</td>
+                                <td>✓</td>
+                                <td>✓</td>
+                                <td>✓</td>
+                                <td>✓</td>
+                                <td>✓</td>
+                            </tr>
+                            <tr>
+                                <td>第二层</td>
+                                <td>离开身体</td>
+                                <td>✓</td>
+                                <td>✓</td>
+                                <td>✓</td>
+                                <td>✓</td>
+                                <td>✓</td>
+                            </tr>
+                            <tr>
+                                <td>第三层</td>
+                                <td>通过某种通道</td>
+                                <td>✓</td>
+                                <td>✓</td>
+                                <td>变体</td>
+                                <td>✓</td>
+                                <td>✓</td>
+                            </tr>
+                            <tr>
+                                <td>第四层</td>
+                                <td>遇见已故的人</td>
+                                <td>✓</td>
+                                <td>✓</td>
+                                <td>✓</td>
+                                <td>✓</td>
+                                <td>—</td>
+                            </tr>
+                            <tr>
+                                <td>第五层</td>
+                                <td>遇见一个光的存在</td>
+                                <td>✓</td>
+                                <td>✓</td>
+                                <td>✓</td>
+                                <td>✓</td>
+                                <td>✓</td>
+                            </tr>
+                            <tr>
+                                <td>第六层</td>
+                                <td>到达一个边界，被告知要回去</td>
+                                <td>✓</td>
+                                <td>✓</td>
+                                <td>✓</td>
+                                <td>✓</td>
+                                <td>✓</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="fx-fade-up">六层经历，跨越五个完全不同的群体，高度一致。</p>
+                <p class="fx-fade-up">随机幻觉不会这样。文化学习不会这样。唯一的解释：他们经历的是同一个真实的过程。</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Evidence Module 4 -->
+            <div class="text-block">
+                <h3>证据模块四：从出生就失明的人，在"死亡"期间第一次看见了</h3>
+                <p class="lead">这意味着什么？</p>
+                <p class="fx-fade-up">这是整个证据链中最无法解释的一环。</p>
+                <p class="fx-fade-up">一个从出生就完全失明的人——视网膜没有发育，视神经从未传导过光信号，大脑中从未建立过处理视觉的回路——在 NDE 期间，第一次"看见"了东西。而且看到的是对的。</p>
+                <p class="fx-fade-up">这意味着什么？</p>
+                <p class="fx-fade-up">意味着"看见"这件事，不需要眼睛。</p>
+                <p class="fx-fade-up">眼睛只是意识在身体里时用来接收光线的工具。但意识本身，具备独立的感知能力。当身体这个限制消失了，意识不需要眼睛也能"看"。</p>
+                <p class="fx-fade-up">就像一个人一辈子都通过一扇小窗户看世界。他以为世界只有窗框那么大。有一天墙倒了——他发现自己一直站在旷野中。视野从来没有被真正限制过，只是被窗框挡住了。</p>
+
+                <h4 class="fx-fade-up">数据</h4>
+                <div class="table-container fx-fade-up">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>数据来源</th>
+                                <th>关键发现</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Ring & Cooper 研究 <span class="ref-tag" data-ref="NDEXP-003">[NDEXP-003]</span></strong></td>
+                                <td>31 名视障/失明者的 NDE 研究。其中 14 名从出生就完全失明（从未有过任何视觉经验）。结果：他们在 NDE 中报告了清晰的视觉——颜色、形状、光线、人的长相。</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Vicki Umipeg 案例</strong></td>
+                                <td>先天完全失明（早产导致视网膜病变，视神经从未发育）。22 岁车祸导致 NDE。她说："我第一次知道自己长什么样。"她看到了自己的身体、手术室的灯光、医护人员的动作，然后是隧道和光。</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Brad Barrows 案例</strong></td>
+                                <td>先天完全失明。8 岁溺水 NDE。他看到了自己在水中的身体、救援人员的动作、周围环境 of 颜色和布局。</td>
+                            </tr>
+                            <tr>
+                                <td><strong>准确性验证</strong></td>
+                                <td>这些失明者描述的视觉内容——颜色、空间关系、人物特征——经第三方核实，与物理现实一致。</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4 class="fx-fade-up">这对"大脑产生意识"意味着什么？</h4>
+                <div class="table-container fx-fade-up">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>如果视觉是眼睛和大脑的产物，应该发生什么</th>
+                                <th>实际发生了什么</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>没有视网膜 + 没有视觉回路 &rarr; 不可能产生视觉</td>
+                                <td>先天失明者产生了精确的视觉</td>
+                            </tr>
+                            <tr>
+                                <td>视觉需要完整的硬件链路（光&rarr;眼睛&rarr;神经&rarr;大脑）&rarr; 链路从未建立就不可能有视觉</td>
+                                <td>链路完全缺失，视觉依然存在</td>
+                            </tr>
+                            <tr>
+                                <td>盲人如果"看到"什么，应该只是其他感官的模糊想象 &rarr; 不应包含真实的颜色和空间信息</td>
+                                <td>包含了可验证的颜色、空间、细节</td>
+                            </tr>
+                            <tr>
+                                <td>大脑是视觉的唯一来源 &rarr; 没有视觉硬件就没有视觉</td>
+                                <td>视觉独立于硬件而存在</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="fx-fade-up">一个从未见过任何东西的人，在大脑停止工作的时候，第一次看见了——而且看到的是真的。</p>
+                <p class="fx-glow">这一条，没有任何已知的物理机制可以解释。</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="text-block">
+                <h3>四条证据线，一个结论</h3>
+                <p class="fx-fade-up">让我们把四个模块放在一起看：</p>
+                <ol class="fx-fade-up">
+                    <li>大脑停了，意识更清醒 &rarr; 意识不依赖大脑运行</li>
+                    <li>"死人"看到了真实的事情 &rarr; 意识可以脱离身体独立感知</li>
+                    <li>全世界的人报告相同经历 &rarr; 这不是幻觉，是一个真实的过程</li>
+                    <li>先天失明者第一次看见 &rarr; 意识的感知能力不依赖身体的感官</li>
+                </ol>
+                <blockquote class="fx-quote">意识不是大脑制造的。大脑只是意识在这个世界里使用的一个工具。当工具停了，意识不会消失——它只是不再受工具的限制。</blockquote>
+                <p class="fx-fade-up">旧的理解：大脑 &rarr; 产生意识。大脑死了，意识就没了。</p>
+                <p class="fx-fade-up">新的理解：意识是独立的。大脑是它在身体里运作时的窗口。窗口关了，意识回到窗外——那个更大的、不受限制的状态。</p>
+                <p class="fx-glow">这不是信仰。这是数据指向的唯一逻辑结论。</p>
+                <p class="next-chapter fx-fade-up">*[继续深入 &rarr;]*</p>
+            </div>
+        </section>
+
+        <!-- ZONE TRANSITION: Lightspeed -->
+        <section class="zone-transition" data-transition="lightspeed">
+            <div class="transition-space"></div>
+        </section>
+
+        <!-- ZONE 4: Weight Mode (Audit and final statements) -->
+        <section class="zone" data-mood="weight">
+            <div class="chapter-label">证据</div>
+            <div class="text-block">
+                <h2>证据</h2>
+                <p class="evidence-note">下表不解释。下表陈列。</p>
+                <h3>样本覆盖矩阵</h3>
+                
+                <div class="table-container fx-fade-up">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>研究 / 案例</th>
+                                <th>样本类型</th>
+                                <th>N</th>
+                                <th>关键发现</th>
+                                <th>发表平台</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>van Lommel <span class="ref-tag" data-ref="NDEXP-001">[NDEXP-001]</span></td>
+                                <td>心脏骤停幸存者</td>
+                                <td>344</td>
+                                <td>脑缺氧越重 &rarr; 认知越清晰</td>
+                                <td><em>The Lancet</em></td>
+                            </tr>
+                            <tr>
+                                <td>AWARE (Parnia) <span class="ref-tag" data-ref="NDEXP-002">[NDEXP-002]</span></td>
+                                <td>心脏骤停患者</td>
+                                <td>2,060</td>
+                                <td>平直 EEG 期间超觉清醒</td>
+                                <td><em>Resuscitation</em></td>
+                            </tr>
+                            <tr>
+                                <td>Ring & Cooper <span class="ref-tag" data-ref="NDEXP-003">[NDEXP-003]</span></td>
+                                <td>先天完全失明者</td>
+                                <td>31 (14先天)</td>
+                                <td>无视觉硬件 &rarr; 产生精确视觉</td>
+                                <td><em>Mindsight</em></td>
+                            </tr>
+                            <tr>
+                                <td>Morse <span class="ref-tag" data-ref="NDEXP-004">[NDEXP-004]</span></td>
+                                <td>3–12 岁儿童（无宗教教育）</td>
+                                <td>—</td>
+                                <td>完整经历，含未见过祖辈信息</td>
+                                <td><em>Closer to the Light</em></td>
+                            </tr>
+                            <tr>
+                                <td>刘建勋等 <span class="ref-tag" data-ref="NDEXP-006">[NDEXP-006]</span></td>
+                                <td>唐山地震幸存者（唯物主义环境）</td>
+                                <td>81</td>
+                                <td>核心元素与西方完全同构</td>
+                                <td>中国内部报告</td>
+                            </tr>
+                            <tr>
+                                <td>Pasricha & Stevenson <span class="ref-tag" data-ref="NDEXP-007">[NDEXP-007]</span></td>
+                                <td>印度教徒</td>
+                                <td>—</td>
+                                <td>文化细节不同，核心结构一致</td>
+                                <td>学术论文</td>
+                            </tr>
+                            <tr>
+                                <td>Greyson <span class="ref-tag" data-ref="NDEXP-008">[NDEXP-008]</span></td>
+                                <td>自杀未遂者</td>
+                                <td>—</td>
+                                <td>非逃避性，具教育性</td>
+                                <td><em>JAMA</em></td>
+                            </tr>
+                            <tr>
+                                <td>AWARE II (Parnia) <span class="ref-tag" data-ref="NDEXP-009">[NDEXP-009]</span></td>
+                                <td>心脏骤停患者（隐藏目标）</td>
+                                <td>—</td>
+                                <td>可验证离体感知</td>
+                                <td><em>Circulation</em></td>
+                            </tr>
+                            <tr>
+                                <td>假牙案例 <span class="ref-tag" data-ref="NDEXP-010">[NDEXP-010]</span></td>
+                                <td>深度昏迷患者</td>
+                                <td>1</td>
+                                <td>瞳孔散大期间精确感知护士操作</td>
+                                <td>van Lommel 记录</td>
+                            </tr>
+                            <tr>
+                                <td>Al Sullivan <span class="ref-tag" data-ref="NDEXP-011">[NDEXP-011]</span></td>
+                                <td>心脏手术患者</td>
+                                <td>1</td>
+                                <td>术后描述主刀医生独特习惯动作</td>
+                                <td>IANDS 档案</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="text-block">
+                <h3>审计摘要</h3>
+                <p class="fx-fade-up">本章对濒死体验（NDE）中出现的四类异常现象进行了系统性审查。每一模块都以"如果大脑产生意识，应该发生什么"为基准，将实际观测数据与之对比。最终结论：大脑不是意识的来源，而是意识在身体中运作时的窗口。当大脑停止工作，意识不仅没有消失，反而呈现出不受限制的、更清晰的运行状态。</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="text-block">
+                <h3>审计员终审声明</h3>
+                <p class="fx-fade-up">本报告基于以下已发表的同行评审研究及临床数据：</p>
+                <ul class="fx-fade-up">
+                    <li><span class="ref-tag" data-ref="NDEXP-001">[NDEXP-001]</span> van Lommel et al., <em>The Lancet</em>, 2001</li>
+                    <li><span class="ref-tag" data-ref="NDEXP-002">[NDEXP-002]</span> Parnia et al. (AWARE), <em>Resuscitation</em>, 2014</li>
+                    <li><span class="ref-tag" data-ref="NDEXP-003">[NDEXP-003]</span> Ring & Cooper, <em>Mindsight</em>, 1999</li>
+                    <li><span class="ref-tag" data-ref="NDEXP-004">[NDEXP-004]</span> Morse, <em>Closer to the Light</em>, 1990</li>
+                    <li><span class="ref-tag" data-ref="NDEXP-005">[NDEXP-005]</span> Greyson NDE Scale</li>
+                    <li><span class="ref-tag" data-ref="NDEXP-006">[NDEXP-006]</span> 刘建勋等，唐山地震 NDE 研究</li>
+                </ul>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Closing Dialogue -->
+            <div class="text-block closing">
+                <p class="highlight fx-glow">你刚刚看完的，不只是一组科学数据。</p>
+                <p class="fx-fade-up">你看见的是：死亡，不是结束。</p>
+                <p class="fx-fade-up">在你读这本书之前，死亡是一道墙。墙那边什么都没有，所以"神是谁"最多是一个周末下午可以想想的问题——想清楚了也好，想不清楚也罢，反正墙那边是黑的，无所谓。</p>
+                <p class="fx-fade-up">但现在你知道了，墙那边不是黑的。</p>
+                <p class="highlight fx-glow">墙那边，是永恒。</p>
+                <p class="fx-fade-up">你的灵魂，会在那里继续存在——不是几十年，不是几百年，是在时间本身结束之后，依然存在。</p>
+                <p class="fx-fade-up"><strong>这件事改变了一切。</strong></p>
+                <p class="highlight fx-typewriter" data-text="死亡不再是“一切的结束”。死亡是“你进入永恒的第一天”。">死亡不再是“一切的结束”。死亡是“你进入永恒的第一天”。</p>
+                <p class="fx-fade-up">而你，还没有准备好。</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="text-block closing">
+                <p class="lead fx-fade-up"><strong>你的灵魂，在永恒里，处于什么状态？</strong></p>
+                <p class="fx-fade-up">这不是哲学问题。这是你将要面对的现实——而且是在时间用完之后，你没有机会重新选择的现实。</p>
+                <p class="fx-fade-up">你开始知道，你需要一个答案。</p>
+                <p class="fx-fade-up">但答案在哪里？</p>
+                <p class="highlight fx-glow">谁，有永恒里的答案？</p>
+                <p class="fx-fade-up">只有一种存在者，能对永恒负责任地说话——那就是，站在时间之外的那一位。</p>
+                <p class="fx-reveal">我们把祂叫做：真神。</p>
+                <p class="fx-fade-up">那么，真神是谁？</p>
+                <p class="next-chapter fx-fade-up">下一章，我们以最严谨的方式，开始寻找。</p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="credits">
+            <p>Music: Scott Buckley, Sappheiros &mdash; Licensed under CC BY 3.0</p>
+            <p>Powered by BreakingCopyright.com</p>
+        </footer>
     </main>
 
+    <!-- Reference Panel slide up -->
+    <div class="ref-panel" id="refPanel">
+        <div class="ref-panel-header">
+            <span class="ref-panel-id" id="refPanelId">[NDEXP-001]</span>
+            <button class="ref-panel-close" id="refPanelClose">&times;</button>
+        </div>
+        <div class="ref-panel-body" id="refPanelBody">
+            <!-- Filled dynamically by JS -->
+        </div>
+    </div>
+
+    <!-- Scripts -->
     <script src="starfield-v3.js"></script>
-    <script src="demo.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>

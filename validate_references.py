@@ -47,7 +47,9 @@ def get_used(restructured_dir: Path) -> tuple[dict, set]:
     if not restructured_dir.exists():
         return by_file, all_used
 
-    for f in sorted(restructured_dir.glob("*_R.md")):
+    for f in sorted(restructured_dir.glob("*.md")):
+        if f.name.endswith(".bak"):
+            continue
         content = strip_ref_block(f.read_text(encoding="utf-8"))
         for ref in REF_ID.findall(content):
             by_file[f.name].add(ref)
@@ -70,7 +72,7 @@ def main():
 
     defined              = get_defined(REFERENCES_FILE)
     used_by_file, all_used = get_used(RESTRUCTURED)
-    files                = list(RESTRUCTURED.glob("*_R.md")) if RESTRUCTURED.exists() else []
+    files                = [f for f in RESTRUCTURED.glob("*.md") if not f.name.endswith(".bak")] if RESTRUCTURED.exists() else []
 
     print(f"  Files scanned          : {len(files)}")
     print(f"  Refs defined           : {len(defined)}")

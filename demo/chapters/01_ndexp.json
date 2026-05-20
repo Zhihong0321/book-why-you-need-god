@@ -1,0 +1,227 @@
+{
+  "id": "NDEXP",
+  "label": "第一章 · NDEXP",
+  "title": "到底灵魂是否存在？",
+  "referenceRegistry": {
+    "NDEXP-001": {
+      "author": "van Lommel, P. et al.",
+      "title": "Near-death experience in survivors of cardiac arrest",
+      "source": "The Lancet",
+      "year": "2001",
+      "type": "JOURNAL",
+      "used_for": "Prospective study of 344 cardiac arrest survivors showing NDE clarity inversely correlated with brain damage."
+    },
+    "NDEXP-002": {
+      "author": "Parnia, S. et al.",
+      "title": "AWARE—AWAreness during REsuscitation",
+      "source": "Resuscitation",
+      "year": "2014",
+      "type": "JOURNAL",
+      "used_for": "AWARE study of 2,060 cardiac arrest patients showing NDE during flat EEG states."
+    },
+    "NDEXP-003": {
+      "author": "Ring, K. & Cooper, S.",
+      "title": "Mindsight: Near-Death and Out-of-Body Experiences in the Blind",
+      "source": "William James Center",
+      "year": "1999",
+      "type": "BOOK",
+      "used_for": "Study of 31 visually impaired/blind NDErs including congenitally blind reporting visual perception."
+    },
+    "NDEXP-004": {
+      "author": "Morse, M.",
+      "title": "Closer to the Light: Learning from the Near-Death Experiences of Children",
+      "source": "Villard Books",
+      "year": "1990",
+      "type": "BOOK",
+      "used_for": "Children aged 3-12 reporting full NDE without religious education or media exposure."
+    },
+    "NDEXP-005": {
+      "author": "Greyson, B.",
+      "title": "Incidence and correlates of near-death experiences in a cardiac care unit",
+      "source": "General Hospital Psychiatry",
+      "year": "2003",
+      "type": "JOURNAL",
+      "used_for": "NDE scale data showing cognitive clarity scores above normal waking baseline."
+    },
+    "NDEXP-006": {
+      "author": "刘建勋等",
+      "title": "唐山大地震濒死体验调查研究",
+      "source": "中国内部报告",
+      "year": "1979",
+      "type": "PRIMARY",
+      "used_for": "81 NDE reports from Tangshan earthquake survivors in a materialist-education environment showing Western-identical core elements."
+    },
+    "NDEXP-007": {
+      "author": "Pasricha, S. & Stevenson, I.",
+      "title": "Near-death experiences in India",
+      "source": "学术期刊",
+      "year": "1986",
+      "type": "JOURNAL",
+      "used_for": "Hindu-culture NDE study showing core protocol consistent despite cultural coloring."
+    },
+    "NDEXP-008": {
+      "author": "Greyson, B.",
+      "title": "Near-death experiences in suicide attempters",
+      "source": "JAMA",
+      "year": "1991",
+      "type": "JOURNAL",
+      "used_for": "Suicide-attempter NDEs are educational, not escapist — consistent with non-suicide NDEs."
+    },
+    "NDEXP-009": {
+      "author": "Parnia, S. et al.",
+      "title": "AWARE II",
+      "source": "Circulation",
+      "year": "2020",
+      "type": "JOURNAL",
+      "used_for": "Hidden-target experiment verifying out-of-body perception during cardiac arrest."
+    },
+    "NDEXP-010": {
+      "author": "van Lommel, P.",
+      "title": "Consciousness Beyond Life",
+      "source": "HarperOne",
+      "year": "2010",
+      "type": "BOOK",
+      "used_for": "Denture case (1979) detailed record — verifiable perception during deep coma."
+    },
+    "NDEXP-011": {
+      "author": "UNKNOWN",
+      "title": "Al Sullivan Case",
+      "source": "IANDS",
+      "year": "1988",
+      "type": "OTHER",
+      "used_for": "Cardiac surgery patient accurately described surgeon's unique elbow gesture post-op."
+    }
+  },
+  "zones": [
+    {
+      "mood": "calm",
+      "blocks": [
+        {"type":"heading","level":2,"text":"到底灵魂是否存在？如果有，如何证明？","fx":"fx-reveal"},
+        {"type":"paragraph","text":"如果有灵魂，对我来说代表什么？","class":"lead","fx":"fx-fade-up"},
+        {"type":"divider"},
+        {"type":"heading","level":3,"text":"结论","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"意识不是大脑制造的东西。意识是独立存在的，大脑只是它在这个世界里的窗口。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"当窗口关上，意识没有消失——它回到了窗外那个更大的世界。","fx":"fx-glow"},
+        {"type":"divider"},
+        {"type":"heading","level":3,"text":"逻辑","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"意识从来不是大脑「生产」出来的。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"大脑的作用，是把意识缩小——让它刚好能通过身体这个狭窄的通道来运作。就像你透过一扇小窗户看外面的风景：你以为世界只有窗框那么大，但那只是因为窗户限制了你的视野。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"当大脑停止工作，窗户消失了。","fx":"fx-fade-up"},
+        {"type":"typewriter","text":"你以为一切会变黑。但实际发生的是——视野突然变得无限大。"},
+        {"type":"divider"},
+        {"type":"lens","label":"【生活化 Lens】","paragraphs":["你站在父亲的遗体旁边。你一直在看他的手——那双修过水管、打过你、后来抱着你儿子不肯放的手。现在它就在那里，但你比任何时候都清楚：他已经不在里面了。","<strong>你已经知道这个道理了——一个人，和他的身体，不是同一件事。</strong>","这章要问的是：如果身体不是那个人——那「他」去了哪里？"]},
+        {"type":"lens","label":"【年轻人视角】","paragraphs":["你有没有过那种感觉——凌晨三点还醒着，刷完所有社交媒体，放下手机，盯着天花板。好像你的意识比你的身体更大，被困在一个太小的容器里。","如果我只是一堆化学反应，为什么「我」能意识到自己是一堆化学反应？这个「观察者」是谁？","<strong>如果你的大脑只是一个接收器，而不是发射塔——那「你」到底是什么？</strong>","我们来看数据怎么说。"]}
+      ]
+    },
+    {
+      "mood": "wonder",
+      "blocks": [
+        {"type":"heading","level":3,"text":"论证：在开始之前，逻辑规则","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"你现在持有一个信念：","fx":"fx-fade-up"},
+        {"type":"quote","text":"「意识是大脑产生的。大脑死了，意识就没了。」","fx":"fx-quote"},
+        {"type":"paragraph","text":"这是一个全称命题。它说的是：在所有情况下，意识都不可能脱离大脑而存在。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"全称命题有一个致命弱点：","fx":"fx-fade-up"},
+        {"type":"quote","text":"「只需要一个有效的反例，它就彻底破产。」","fx":"fx-quote"},
+        {"type":"paragraph","text":"不需要一千个案例。不需要科学界投票。不需要可重复性。一个就够了。就像「所有天鹅都是白的」——你不需要找到一万只黑天鹅。你只需要找到一只。","fx":"fx-fade-up"},
+        {"type":"divider"},
+        {"type":"paragraph","text":"你可能已经开始找理由了。让我猜猜：","fx":"fx-fade-up"},
+        {"type":"quote","text":"「科学界还没有普遍接受 NDE 作为证据。」","fx":"fx-quote"},
+        {"type":"quote","text":"「样本量太小，不具有统计意义。」","fx":"fx-quote"},
+        {"type":"quote","text":"「也许有别的解释我们还没想到。」","fx":"fx-quote"},
+        {"type":"typewriter","text":"停一下。我要你看清楚自己正在做什么。"},
+        {"type":"divider"},
+        {"type":"paragraph","text":"你正在用<strong>归纳法的标准</strong>来拒绝一个<strong>演绎证伪</strong>。这两件事不是同一件事。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"归纳法说：我要看到大量样本、可重复实验、科学界共识，我才接受一个新理论。演绎证伪说：一个全称命题，只要有一个反例，就死了。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"你把归纳法的高门槛，搬过来挡在证伪面前——这不是严谨。这是偷换规则。","fx":"fx-glow"},
+        {"type":"divider"},
+        {"type":"paragraph","text":"你对别的事情，从来不用这个标准。你相信黑洞存在吗？你亲眼看过吗？你相信量子纠缠是真的吗？你做过实验吗？","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"但到了「意识可能脱离大脑」这件事上——突然，你的标准变了。突然，你需要「像太阳一样确定」才肯接受。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"为什么？不是因为你更严谨了。是因为这个结论让你害怕。","fx":"fx-glow"},
+        {"type":"typewriter","text":"这不是客观。这是恐惧伪装成理性。"},
+        {"type":"divider"},
+        {"type":"paragraph","text":"那怎么知道是「脱离身体的意识」，而不是大脑在最后时刻产生的某种超常运算？","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"答案在于一个简单的逻辑：<strong>如果意识是大脑产生的，那大脑停了，意识就必须停。</strong>","fx":"fx-glow"},
+        {"type":"paragraph","text":"就像说：如果音乐是音箱产生的，那音箱断电了，音乐就必须停。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"但如果音箱断电之后，音乐不但没停，反而变得更响亮、更清晰——那你就知道了：音乐从来不是音箱产生的。音箱只是在播放一个来自别处的信号。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"NDE 的数据正是这个情况：大脑停了，意识没停，而且获取了身体不可能获取的信息。三点合在一起，只有一个逻辑结论：","fx":"fx-fade-up"},
+        {"type":"typewriter","text":"意识不是大脑生成的。大脑只是它在身体里运作时使用的工具。"}
+      ]
+    },
+    {
+      "mood": "awe",
+      "blocks": [
+        {"type":"heading","level":3,"text":"证据模块一：大脑停了，意识反而更清醒","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"想象你一直戴着一副很重的墨镜。你以为世界就是暗的。有一天墨镜掉了——你发现世界原来这么亮。NDE 患者描述的就是这种感觉。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"如果大脑是意识的发电机，断电就该一片黑。但实际情况是：断电之后，灯反而更亮了。","fx":"fx-glow"},
+        {"type":"divider"},
+        {"type":"table","headers":["数据来源","关键发现"],"rows":[["AWARE 研究 <span class=\"ref-tag\" data-ref=\"NDEXP-002\">[NDEXP-002]</span>","2,060例心脏骤停患者中约9%报告NDE，部分发生在心跳停止后20-60秒——脑电图已是平直线"],["van Lommel <span class=\"ref-tag\" data-ref=\"NDEXP-001\">[NDEXP-001]</span>","344例中18%报告NDE。缺氧越严重，体验反而越清晰"],["Greyson量表 <span class=\"ref-tag\" data-ref=\"NDEXP-005\">[NDEXP-005]</span>","认知清晰度高于正常清醒状态，与骤停持续时间正相关"]],"fx":"fx-fade-up"},
+        {"type":"table","headers":["如果大脑产生意识","实际发生了什么"],"rows":[["脑电图平直→意识归零","意识达到超清级别"],["缺氧越严重→认知越混乱","缺氧越严重→认知越清晰"],["无皮层电活动→不可能形成记忆","形成了终身不褪色的超高清记忆"]],"fx":"fx-fade-up"},
+        {"type":"paragraph","text":"每一行都是一个矛盾。三个矛盾同时出现，不是巧合——是模型错了。","fx":"fx-glow"},
+        {"type":"divider"},
+
+        {"type":"heading","level":3,"text":"证据模块二：死人看到了真实的事","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"这不是「我感觉到了什么」，而是「我看到了一个具体的事实，事后被第三方确认了」。幻觉不会是对的。梦不会被护士确认。","fx":"fx-fade-up"},
+        {"type":"divider"},
+        {"type":"lens","label":"假牙案例 <span class=\"ref-tag\" data-ref=\"NDEXP-010\">[NDEXP-010]</span>","paragraphs":["一名深度昏迷患者（瞳孔散大，完全无意识）复苏后告诉护士：「你把我的假牙放在了那个带滑轮的小推车的抽屉里。」","这件事发生在他完全「死亡」的期间。而且那个护士之后好几天都没再出现在那个病房——患者不可能事后从别人那里听说。","<strong>✅ 当事护士确认。</strong>"]},
+        {"type":"lens","label":"Al Sullivan 案例 <span class=\"ref-tag\" data-ref=\"NDEXP-011\">[NDEXP-011]</span>","paragraphs":["心脏手术患者 Sullivan 术后准确描述了主刀医生的一个独特习惯：用肘部指挥助手（因为手已消毒不能碰非无菌物）。","Sullivan 术前从未见过这个医生，手术中全身麻醉、眼睛被贴住。","<strong>✅ 医生本人确认。</strong>"]},
+        {"type":"lens","label":"AWARE II <span class=\"ref-tag\" data-ref=\"NDEXP-009\">[NDEXP-009]</span>","paragraphs":["研究者在手术室天花板附近放置了只能从上方看到的随机图像，测试是否有患者能在离体状态下看到。","已有个别案例报告了手术室内其他可验证的细节。","<strong>🔄 方法论验证进行中。</strong>"]},
+        {"type":"divider"},
+
+        {"type":"heading","level":3,"text":"证据模块三：全世界的人，报告了几乎相同的经历","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"如果 NDE 只是大脑缺氧产生的随机幻觉，那每个人的幻觉应该都不一样——就像每个人做的梦都不一样。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"但实际情况是：不管你是谁、在哪里、信什么、几岁——核心经历几乎一模一样。这就像全世界的人，从来没有互相联系过，却画出了同一张地图。","fx":"fx-glow"},
+        {"type":"divider"},
+        {"type":"lens","label":"1976 唐山大地震幸存者 <span class=\"ref-tag\" data-ref=\"NDEXP-006\">[NDEXP-006]</span>（81例）","paragraphs":["这些人在彻底的唯物主义教育环境中长大。没有人教过他们「死后会看到光」。","但他们报告的内容——隧道、光、已故亲人、边界——和美国心脏病患者说的一模一样。","<strong>唯物主义环境无法消除核心经历。</strong>"]},
+        {"type":"lens","label":"印度 NDE 研究 <span class=\"ref-tag\" data-ref=\"NDEXP-007\">[NDEXP-007]</span>","paragraphs":["虽然有些文化细节不同（比如「信使」代替了「隧道」），但核心结构完全一致。","就像同一首歌的不同语言版本——旋律是一样的。","<strong>文化不同，核心同构。</strong>"]},
+        {"type":"lens","label":"3-12岁儿童 <span class=\"ref-tag\" data-ref=\"NDEXP-004\">[NDEXP-004]</span>（无宗教教育）","paragraphs":["这些孩子太小了，没看过相关电影，没听过相关故事，没受过任何宗教教育。他们不可能是「学来的」。","而且他们认出了从未见过的已故亲人——包括从未见过照片的祖辈。","<strong>年龄和文化都无法解释这种一致性。</strong>"]},
+        {"type":"lens","label":"自杀未遂者 <span class=\"ref-tag\" data-ref=\"NDEXP-008\">[NDEXP-008]</span>","paragraphs":["如果 NDE 是心理防御机制，那自杀者应该得到一个「逃避性」的体验。","但实际上，他们的体验是「教育性」的——让他们看到自己的死会给别人带来什么。这不是安慰，这是真相。","<strong>不是大脑在安慰你。是意识在告诉你真相。</strong>"]},
+        {"type":"divider"},
+        {"type":"heading","level":4,"text":"核心经历的一致性","fx":"fx-fade-up"},
+        {"type":"table","headers":["层次","内容","西·中·印·童·盲"],"rows":[["第一层","平安无痛","✓✓✓✓✓"],["第二层","离开身体","✓✓✓✓✓"],["第三层","通过某种通道","✓✓变体✓✓"],["第四层","遇见已故的人","✓✓✓✓—"],["第五层","光的存在","✓✓✓✓✓"],["第六层","边界，被告知要回去","✓✓✓✓✓"]],"fx":"fx-fade-up"},
+        {"type":"paragraph","text":"六层经历，跨越五个完全不同的群体，高度一致。随机幻觉不会这样。文化学习不会这样。唯一的解释：他们经历的是同一个真实的过程。","fx":"fx-glow"},
+        {"type":"divider"},
+
+        {"type":"heading","level":3,"text":"证据模块四：先天失明者第一次看见了","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"这是整个证据链中最无法解释的一环。一个从出生就完全失明的人——视网膜没有发育，视神经从未传导过光信号——在 NDE 期间，第一次「看见」了东西。而且看到的是对的。","fx":"fx-fade-up"},
+        {"type":"typewriter","text":"意味着「看见」这件事，不需要眼睛。"},
+        {"type":"divider"},
+        {"type":"lens","label":"Ring & Cooper 研究 <span class=\"ref-tag\" data-ref=\"NDEXP-003\">[NDEXP-003]</span>","paragraphs":["31名视障/失明者的NDE研究。其中14名从出生就完全失明——从未有过任何视觉经验。","结果：他们在NDE中报告了清晰的视觉——颜色、形状、光线、人的长相。","<strong>没有视觉硬件，却产生了精确视觉。</strong>"]},
+        {"type":"lens","label":"Vicki Umipeg 案例","paragraphs":["先天完全失明（早产导致视网膜病变，视神经从未发育）。22岁车祸导致NDE。","她说：「我第一次知道自己长什么样。」她看到了自己的身体、手术室的灯光、医护人员的动作，然后是隧道和光。","<strong>视觉独立于硬件而存在。</strong>"]},
+        {"type":"table","headers":["如果视觉是眼睛+大脑的产物","实际发生了什么"],"rows":[["没有视网膜+没有视觉回路→不可能产生视觉","先天失明者产生了精确的视觉"],["盲人看到的应该只是模糊想象","包含了可验证的颜色、空间、细节"],["大脑是视觉的唯一来源","视觉独立于硬件而存在"]],"fx":"fx-fade-up"},
+        {"type":"paragraph","text":"一个从未见过任何东西的人，在大脑停止工作的时候，第一次看见了——而且看到的是真的。这一条，没有任何已知的物理机制可以解释。","fx":"fx-glow"}
+      ]
+    },
+    {
+      "mood": "weight",
+      "blocks": [
+        {"type":"heading","level":3,"text":"四条证据线，一个结论","fx":"fx-fade-up"},
+        {"type":"list","ordered":true,"items":["大脑停了，意识更清醒→意识不依赖大脑","死人看到了真实的事→意识可以脱离身体","全世界报告相同经历→不是幻觉，是真实的过程","先天失明者第一次看见→感知不依赖感官"],"fx":"fx-fade-up"},
+        {"type":"divider"},
+        {"type":"paragraph","text":"旧的理解：大脑→产生意识。大脑死了，意识就没了。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"新的理解：意识是独立的。大脑是它在身体里运作时的窗口。窗口关了，意识回到窗外——那个更大的、不受限制的状态。","fx":"fx-glow"},
+        {"type":"paragraph","text":"这不是信仰。这是数据指向的唯一逻辑结论。","fx":"fx-fade-up"},
+        {"type":"divider"},
+        {"type":"heading","level":4,"text":"样本覆盖矩阵","fx":"fx-fade-up"},
+        {"type":"table","headers":["研究","关键发现"],"rows":[["van Lommel <span class=\"ref-tag\" data-ref=\"NDEXP-001\">[NDEXP-001]</span>","344例，脑缺氧越重→认知越清晰，*The Lancet*"],["AWARE <span class=\"ref-tag\" data-ref=\"NDEXP-002\">[NDEXP-002]</span>","2,060例，平直EEG期间超觉清醒，*Resuscitation*"],["Ring & Cooper <span class=\"ref-tag\" data-ref=\"NDEXP-003\">[NDEXP-003]</span>","31例盲人，无视觉硬件→产生精确视觉"],["Morse <span class=\"ref-tag\" data-ref=\"NDEXP-004\">[NDEXP-004]</span>","3-12岁儿童，完整经历含未见祖辈信息"],["刘建勋等 <span class=\"ref-tag\" data-ref=\"NDEXP-006\">[NDEXP-006]</span>","81例唐山幸存者，核心元素与西方完全同构"],["Greyson <span class=\"ref-tag\" data-ref=\"NDEXP-008\">[NDEXP-008]</span>","自杀未遂者NDE具教育性，*JAMA*"]],"fx":"fx-fade-up"},
+        {"type":"divider"},
+        {"type":"paragraph","text":"你刚刚看完的，不只是一组科学数据。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"你看见的是：死亡，不是结束。","fx":"fx-glow"},
+        {"type":"divider"},
+        {"type":"paragraph","text":"在你读这本书之前，死亡是一道墙。墙那边什么都没有，所以「神是谁」最多是一个周末下午可以想想的问题——想清楚了也好，想不清楚也罢，反正墙那边是黑的，无所谓。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"但现在你知道了，墙那边不是黑的。","fx":"fx-fade-up"},
+        {"type":"typewriter","text":"墙那边，是永恒。"},
+        {"type":"paragraph","text":"你的灵魂，会在那里继续存在——不是几十年，不是几百年，是在时间本身结束之后，依然存在。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"这件事改变了一切。","fx":"fx-glow"},
+        {"type":"divider"},
+        {"type":"quote","text":"「死亡不再是『一切的结束』。死亡是『你进入永恒的第一天』。」","fx":"fx-quote"},
+        {"type":"paragraph","text":"而你，还没有准备好。","fx":"fx-fade-up"},
+        {"type":"divider"},
+        {"type":"paragraph","text":"这意味着一件事，必须被认真对待：<strong>你的灵魂，在永恒里，处于什么状态？</strong>","fx":"fx-glow"},
+        {"type":"paragraph","text":"这不是哲学问题。这是你将要面对的现实——而且是在时间用完之后，你没有机会重新选择的现实。","fx":"fx-fade-up"},
+        {"type":"typewriter","text":"谁，有永恒里的答案？"},
+        {"type":"paragraph","text":"只有一种存在者，能对永恒负责任地说话——那就是，站在时间之外的那一位。我们把祂叫做：真神。","fx":"fx-fade-up"},
+        {"type":"next","text":"下一章，我们以最严谨的方式，开始寻找。"}
+      ]
+    }
+  ]
+}

@@ -1284,6 +1284,17 @@ USED_FOR: Supports the claim that the human self-report on its own moral state i
 URL: NONE
 ---
 
+[SNNER-011]
+CHAPTER: SNNER
+TYPE: PRIMARY
+AUTHOR: James (Apostle)
+TITLE: James 4:17 — "So whoever knows the right thing to do and fails to do it, for him it is sin."
+SOURCE: New Testament / Bible
+YEAR: c. 1st century AD
+USED_FOR: Supports the claim that omission of good deeds (knowing good but not doing it) is itself classified as sin.
+URL: NONE
+---
+
 ## CMD10 — 10a_ten_commandments
 
 [CMD10-001]

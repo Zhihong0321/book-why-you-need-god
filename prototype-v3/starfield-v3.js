@@ -29,6 +29,8 @@
  *                 'rise'        = floating upward (hope, ascension)
  *                 'sink'        = falling downward (weight, gravity, despair)
  *                 'drift-left'  = horizontal drift (time passing, journey)
+ *                 'clockwise'   = rotating clockwise (grounding, rotational movement)
+ *                 'anticlockwise'= rotating counter-clockwise (otherworldly, rotational movement)
  * 
  * brightnessRange: [min, max] star opacity (0.0–1.0)
  *                  Low min = many dim stars, feels distant
@@ -108,7 +110,8 @@
 
     const canvas = document.getElementById('starfield');
     const ctx = canvas.getContext('2d');
-    let width, height, stars = [], dustLayer = [], frameCount = 0;
+    let width, height, virtualHeight, starsFar = [], starsMid = [], starsNear = [], frameCount = 0;
+    let spriteCache = [], dustPattern1 = null, dustPattern2 = null;
 
     // ============================================================
     // CAMERA PRESETS — One per mood. Modify these to change the feel.
@@ -174,6 +177,24 @@
             flareChance: 0.0008,      // rare twinkles
             rotationSpeed: 0.00004,   // very slow (~43 min/rev)
             rotationDir: 1            // clockwise (natural, grounded)
+        },
+        clockwise: {
+            starCount: 750,
+            speed: 0.055,
+            direction: 'clockwise',
+            brightnessRange: [0.35, 0.8],
+            flareChance: 0.0025,
+            rotationSpeed: 0.00012,
+            rotationDir: 1
+        },
+        anticlockwise: {
+            starCount: 750,
+            speed: 0.055,
+            direction: 'anticlockwise',
+            brightnessRange: [0.35, 0.8],
+            flareChance: 0.0025,
+            rotationSpeed: 0.00012,
+            rotationDir: -1
         }
     };
 
@@ -206,61 +227,60 @@
     // Dust parallax offset
     let dustOffsetX = 0, dustOffsetY = 0;
 
+    // Cached lightspeed gradient (avoid per-frame allocation)
+    let lsGradient = null, lsLastIntensity = -1;
+
     // ============================================================
     // STAR COLORS — Based on real stellar classification
     // ============================================================
-    // Weighted distribution: mostly blue/white (hot stars), fewer warm/red (cool stars)
-    // This matches real night sky where most visible stars are blue-white.
-    const STAR_COLORS = [
-        { r: 210, g: 225, b: 255 },  // Blue-white (O/B class, hottest)
-        { r: 255, g: 252, b: 240 },  // Pure white (F class)
-        { r: 230, g: 235, b: 255 },  // Pale blue-white
-        { r: 195, g: 215, b: 255 },  // Cool blue (A class)
-        { r: 255, g: 240, b: 220 },  // Warm white (G class, sun-like)
-        { r: 255, g: 220, b: 180 },  // Yellow-orange (K class)
-        { r: 255, g: 195, b: 170 }   // Orange-red (M class, red giants, rare)
+    // Includes standard spectral classes (0-6) and transition/lightspeed colors (7-11)
+    const ALL_COLORS = [
+        { r: 210, g: 225, b: 255 },  // 0: Blue-white (O/B class, hottest)
+        { r: 255, g: 252, b: 240 },  // 1: Pure white (F class)
+        { r: 230, g: 235, b: 255 },  // 2: Pale blue-white
+        { r: 195, g: 215, b: 255 },  // 3: Cool blue (A class)
+        { r: 255, g: 240, b: 220 },  // 4: Warm white (G class, sun-like)
+        { r: 255, g: 220, b: 180 },  // 5: Yellow-orange (K class)
+        { r: 255, g: 195, b: 170 },  // 6: Orange-red (M class, red giants, rare)
+        { r: 255, g: 200, b: 140 },  // 7: Transition warm gold
+        { r: 200, g: 160, b: 255 },  // 8: Transition lavender
+        { r: 140, g: 200, b: 255 },  // 9: Transition ice blue
+        { r: 255, g: 160, b: 120 },  // 10: Transition coral
+        { r: 180, g: 255, b: 200 }   // 11: Transition mint
     ];
 
     function pickStarColor() {
         var roll = Math.random();
-        if (roll < 0.35) return STAR_COLORS[0];  // 35% blue-white
-        if (roll < 0.55) return STAR_COLORS[1];  // 20% pure white
-        if (roll < 0.70) return STAR_COLORS[2];  // 15% pale blue
-        if (roll < 0.82) return STAR_COLORS[3];  // 12% cool blue
-        if (roll < 0.90) return STAR_COLORS[4];  // 8% warm white
-        if (roll < 0.96) return STAR_COLORS[5];  // 6% yellow-orange
-        return STAR_COLORS[6];                    // 4% orange-red (rare)
+        if (roll < 0.35) return 0;  // 35% blue-white
+        if (roll < 0.55) return 1;  // 20% pure white
+        if (roll < 0.70) return 2;  // 15% pale blue
+        if (roll < 0.82) return 3;  // 12% cool blue
+        if (roll < 0.90) return 4;  // 8% warm white
+        if (roll < 0.96) return 5;  // 6% yellow-orange
+        return 6;                   // 4% orange-red (rare)
     }
 
     // ============================================================
     // STAR SIZE — Soft power-law distribution
     // ============================================================
     // Most stars are small, few are large. Mimics real magnitude distribution.
-    // alpha=2.0 is softer than real sky (alpha=3.0) to keep stars visible on screen.
     function starRadius() {
         var u = Math.random();
         var minR = 0.15;   // smallest possible star (still visible)
         var maxR = 2.0;    // largest possible star
-        var alpha = 2.0;   // distribution steepness (higher = more tiny stars)
+        var alpha = 2.0;   // distribution steepness
         return Math.min(maxR, minR * Math.pow(1 - u * (1 - Math.pow(minR / maxR, alpha - 1)), -1 / (alpha - 1)));
     }
 
     // ============================================================
     // DEPTH LAYERS — Creates parallax (3D illusion)
     // ============================================================
-    // The key to realism: far stars are DRAMATICALLY different from near stars.
-    // Speed ratio far:near = 1:25. Size ratio = 1:5.7. This is what makes it feel 3D.
-    //
-    // SUGGESTION: If you want MORE dramatic depth, increase 'near' speed/size.
-    //             If you want a flatter look, bring values closer together.
     var DEPTH = {
         far:  { speed: 0.1,  bright: 0.4, size: 0.35 },  // tiny pinpoints, almost static
         mid:  { speed: 0.6,  bright: 0.85, size: 0.9 },   // normal visible stars
         near: { speed: 2.5,  bright: 1.3, size: 2.0 }     // big, bright, fast
     };
 
-    // Layer assignment probability:
-    // 45% far, 37% mid, 18% near
     function assignLayer() {
         var r = Math.random();
         return r < 0.45 ? 'far' : r < 0.82 ? 'mid' : 'near';
@@ -269,41 +289,156 @@
     // ============================================================
     // SCINTILLATION NOISE — Makes twinkle look natural
     // ============================================================
-    // Uses multi-octave value noise instead of simple sine wave.
-    // Result: irregular, atmospheric-looking flicker.
     var NTABLE = new Float32Array(256);
     for (var ni = 0; ni < 256; ni++) NTABLE[ni] = Math.random();
 
     function noise1D(t) {
-        var i = Math.floor(t) & 255;
-        var f = t - Math.floor(t);
+        var i = (t | 0) & 255;
+        var f = t - (t | 0);
         var s = f * f * (3 - 2 * f); // smoothstep interpolation
         return NTABLE[i] * (1 - s) + NTABLE[(i + 1) & 255] * s;
     }
 
-    // 3-octave noise: base + detail + micro-detail
-    function scintillate(phase, speed) {
-        var t = phase + frameCount * speed;
+    // Precalculate noise table for high performance twinkling
+    const SCINT_TABLE_SIZE = 2048;
+    const SCINTILLATION_TABLE = new Float32Array(SCINT_TABLE_SIZE);
+    for (var si = 0; si < SCINT_TABLE_SIZE; si++) {
+        var t = si * 0.1;
         var octave1 = noise1D(t * 1.0);           // slow base variation
         var octave2 = noise1D(t * 2.3 + 100) * 0.5;  // medium detail
         var octave3 = noise1D(t * 5.1 + 200) * 0.25; // fast micro-flicker
-        return (octave1 + octave2 + octave3) / 1.75;  // normalized 0–1
+        SCINTILLATION_TABLE[si] = (octave1 + octave2 + octave3) / 1.75;
+    }
+
+    // ============================================================
+    // SPRITE CACHE — Pre-rendered canvases for blazing fast drawImage
+    // ============================================================
+    function buildSpriteCache() {
+        spriteCache = [];
+        for (var c = 0; c < ALL_COLORS.length; c++) {
+            var col = ALL_COLORS[c];
+            var r = col.r, g = col.g, b = col.b;
+
+            // 1. Far sprite (extremely soft blur)
+            var farCanvas = document.createElement('canvas');
+            farCanvas.width = farCanvas.height = 32;
+            var fCtx = farCanvas.getContext('2d');
+            var sg = fCtx.createRadialGradient(16, 16, 0, 16, 16, 16);
+            sg.addColorStop(0, 'rgba(' + r + ',' + g + ',' + b + ',0.7)');
+            sg.addColorStop(0.4, 'rgba(' + r + ',' + g + ',' + b + ',0.3)');
+            sg.addColorStop(1, 'rgba(' + r + ',' + g + ',' + b + ',0)');
+            fCtx.fillStyle = sg;
+            fCtx.beginPath(); fCtx.arc(16, 16, 16, 0, Math.PI * 2); fCtx.fill();
+
+            // 2. Mid sprite (slightly soft)
+            var midCanvas = document.createElement('canvas');
+            midCanvas.width = midCanvas.height = 32;
+            var mCtx = midCanvas.getContext('2d');
+            var mg = mCtx.createRadialGradient(16, 16, 0, 16, 16, 16);
+            mg.addColorStop(0, 'rgba(' + r + ',' + g + ',' + b + ',1.0)');
+            mg.addColorStop(0.6, 'rgba(' + r + ',' + g + ',' + b + ',0.4)');
+            mg.addColorStop(1, 'rgba(' + r + ',' + g + ',' + b + ',0)');
+            mCtx.fillStyle = mg;
+            mCtx.beginPath(); mCtx.arc(16, 16, 16, 0, Math.PI * 2); mCtx.fill();
+
+            // 3. Near sprite (sharp)
+            var nearCanvas = document.createElement('canvas');
+            nearCanvas.width = nearCanvas.height = 16;
+            var nCtx = nearCanvas.getContext('2d');
+            nCtx.fillStyle = 'rgb(' + r + ',' + g + ',' + b + ')';
+            nCtx.beginPath(); nCtx.arc(8, 8, 8, 0, Math.PI * 2); nCtx.fill();
+
+            // 4. Halo sprite (sharp star + larger soft glow)
+            var haloCanvas = document.createElement('canvas');
+            haloCanvas.width = haloCanvas.height = 64;
+            var hCtx = haloCanvas.getContext('2d');
+            var hg = hCtx.createRadialGradient(32, 32, 0, 32, 32, 32);
+            hg.addColorStop(0, 'rgba(' + r + ',' + g + ',' + b + ',0.162)');
+            hg.addColorStop(0.25, 'rgba(' + r + ',' + g + ',' + b + ',0.09)');
+            hg.addColorStop(0.6, 'rgba(' + r + ',' + g + ',' + b + ',0.0216)');
+            hg.addColorStop(1, 'rgba(' + r + ',' + g + ',' + b + ',0)');
+            hCtx.fillStyle = hg;
+            hCtx.beginPath(); hCtx.arc(32, 32, 32, 0, Math.PI * 2); hCtx.fill();
+            hCtx.fillStyle = 'rgb(' + r + ',' + g + ',' + b + ')';
+            hCtx.beginPath(); hCtx.arc(32, 32, 8, 0, Math.PI * 2); hCtx.fill();
+
+            // 5. Spikes sprite (JWST diffraction spikes + halo + star)
+            var spikesCanvas = document.createElement('canvas');
+            spikesCanvas.width = spikesCanvas.height = 128;
+            var sCtx = spikesCanvas.getContext('2d');
+            var shg = sCtx.createRadialGradient(64, 64, 0, 64, 64, 16);
+            shg.addColorStop(0, 'rgba(' + r + ',' + g + ',' + b + ',0.162)');
+            shg.addColorStop(0.25, 'rgba(' + r + ',' + g + ',' + b + ',0.09)');
+            shg.addColorStop(0.6, 'rgba(' + r + ',' + g + ',' + b + ',0.0216)');
+            shg.addColorStop(1, 'rgba(' + r + ',' + g + ',' + b + ',0)');
+            sCtx.fillStyle = shg;
+            sCtx.beginPath(); sCtx.arc(64, 64, 16, 0, Math.PI * 2); sCtx.fill();
+
+            sCtx.save();
+            sCtx.globalCompositeOperation = 'screen';
+            var spikeLength = 54;
+            for (var i = 0; i < 3; i++) {
+                var angle = i * Math.PI / 3 + Math.PI / 6;
+
+                var ex = 64 + Math.cos(angle) * spikeLength;
+                var ey = 64 + Math.sin(angle) * spikeLength;
+                var g1 = sCtx.createLinearGradient(64, 64, ex, ey);
+                g1.addColorStop(0, 'rgba(' + r + ',' + g + ',' + b + ',0.3)');
+                g1.addColorStop(0.3, 'rgba(' + r + ',' + g + ',' + b + ',0.12)');
+                g1.addColorStop(1, 'rgba(' + r + ',' + g + ',' + b + ',0)');
+                sCtx.beginPath(); sCtx.moveTo(64, 64); sCtx.lineTo(ex, ey);
+                sCtx.strokeStyle = g1; sCtx.lineWidth = 1.0; sCtx.stroke();
+
+                var ex2 = 64 - Math.cos(angle) * spikeLength;
+                var ey2 = 64 - Math.sin(angle) * spikeLength;
+                var g2 = sCtx.createLinearGradient(64, 64, ex2, ey2);
+                g2.addColorStop(0, 'rgba(' + r + ',' + g + ',' + b + ',0.3)');
+                g2.addColorStop(0.3, 'rgba(' + r + ',' + g + ',' + b + ',0.12)');
+                g2.addColorStop(1, 'rgba(' + r + ',' + g + ',' + b + ',0)');
+                sCtx.beginPath(); sCtx.moveTo(64, 64); sCtx.lineTo(ex2, ey2);
+                sCtx.strokeStyle = g2; sCtx.lineWidth = 1.0; sCtx.stroke();
+            }
+            sCtx.restore();
+
+            sCtx.fillStyle = 'rgb(' + r + ',' + g + ',' + b + ')';
+            sCtx.beginPath(); sCtx.arc(64, 64, 4, 0, Math.PI * 2); sCtx.fill();
+
+            spriteCache.push({
+                far: farCanvas,
+                mid: midCanvas,
+                near: nearCanvas,
+                halo: haloCanvas,
+                spikes: spikesCanvas
+            });
+        }
     }
 
     // ============================================================
     // CREATE STAR — Generates one star with all properties
     // ============================================================
     function createStar(nearCenter) {
-        var cx = width / 2, cy = height / 2, x, y;
+        var cx = width / 2;
+        var cyViewport = (-canvasCurrentY / 100) * window.innerHeight + window.innerHeight / 2;
+        var x, y;
+        var isRotational = (activeDirection === 'clockwise' || activeDirection === 'anticlockwise');
 
         if (nearCenter) {
-            // Spawn spread across screen (for mood transitions / lightspeed)
             var angle = Math.random() * Math.PI * 2;
             var dist = Math.random() * Math.min(width, height) * 0.45 + 15;
             x = cx + Math.cos(angle) * dist;
-            y = cy + Math.sin(angle) * dist;
+            y = cyViewport + Math.sin(angle) * dist;
+        } else if (isRotational) {
+            // Spawn in a majestic off-screen rotational sector
+            var cxRot = -width * 0.4;
+            var cyRot = cyViewport + window.innerHeight * 2.0;
+            var R_min = Math.sqrt(Math.pow(0.4 * width, 2) + Math.pow(1.5 * window.innerHeight, 2));
+            var R_max = Math.sqrt(Math.pow(1.4 * width, 2) + Math.pow(2.5 * window.innerHeight, 2));
+            var angleCenter = Math.atan2(-2.0 * window.innerHeight, 0.9 * width);
+            var angle = angleCenter + (Math.random() - 0.5) * (Math.PI / 1.5); // 120-degree sector
+            var dist = Math.sqrt(R_min * R_min + Math.random() * (R_max * R_max - R_min * R_min));
+            x = cxRot + Math.cos(angle - canvasRotation) * dist;
+            y = cyRot + Math.sin(angle - canvasRotation) * dist;
         } else {
-            // Random position anywhere on screen (initial spawn)
             x = Math.random() * width;
             y = Math.random() * height;
         }
@@ -316,46 +451,66 @@
             layer: layer,
             baseRadius: baseRadius,
             brightness: lerp(activeBrightnessMin, activeBrightnessMax, Math.random()) * DEPTH[layer].bright,
-            // Scintillation parameters (unique per star)
-            noisePhase: Math.random() * 1000,
-            noiseSpeed: Math.random() * 0.006 + 0.001,
+            // Fast scintillation
+            scintIndex: Math.random() * SCINT_TABLE_SIZE,
+            scintSpeed: Math.random() * 0.06 + 0.01,
             // Movement wobble
             twinklePhase: Math.random() * Math.PI * 2,
             twinkleSpeed: Math.random() * 0.01 + 0.002,
             // Visual features
-            isBright: baseRadius > 0.8,    // gets a halo glow
-            hasSpikes: baseRadius > 1.5,   // gets diffraction spikes (JWST style)
+            isBright: baseRadius > 0.8,
+            hasSpikes: baseRadius > 1.5,
             // Flare state
             flareTimer: 0,
             flareActive: false,
-            flareDuration: 90 + Math.floor(Math.random() * 80), // 1.5–2.8 seconds
+            flareDuration: 90 + Math.floor(Math.random() * 80),
             // Lifecycle
-            life: 1,      // 0=invisible, 1=fully visible (used for fade in/out)
-            dying: false,  // marked for removal
-            color: pickStarColor()
+            life: 1,
+            dying: false,
+            colorIndex: pickStarColor()
         };
     }
 
-    // ============================================================
-    // DUST LAYER — Thousands of sub-pixel dots (milky way feel)
-    // ============================================================
-    // These are NOT interactive stars. They're a static background texture
-    // that drifts very slowly with parallax to add depth.
-    function createDust() {
-        return {
-            x: Math.random() * width,
-            y: Math.random() * height,
-            brightness: Math.random() * 0.08 + 0.015,  // very faint
-            size: Math.random() * 0.35 + 0.1,          // sub-pixel
-            depth: 0.05 + Math.random() * 0.15          // parallax factor
-        };
+    function createAndAddStar(nearCenter, isDying) {
+        var s = createStar(nearCenter);
+        if (isDying) s.dying = true;
+        if (s.layer === 'far') starsFar.push(s);
+        else if (s.layer === 'mid') starsMid.push(s);
+        else starsNear.push(s);
+        return s;
     }
 
+    // ============================================================
+    // DUST LAYER — Optimized tiled pattern fills
+    // ============================================================
     function initDust() {
-        dustLayer = [];
-        // ~2600 particles on 1920x1080. Adjust divisor for density.
-        var count = Math.floor(width * height / 800);
-        for (var i = 0; i < count; i++) dustLayer.push(createDust());
+        if (dustPattern1 && dustPattern2) return;
+
+        // Pattern 1: slow background dust
+        var canvas1 = document.createElement('canvas');
+        canvas1.width = canvas1.height = 1024;
+        var ctx1 = canvas1.getContext('2d');
+        ctx1.fillStyle = 'rgba(200,210,230,0.05)';
+        for (var i = 0; i < 800; i++) {
+            var dx = Math.random() * 1024;
+            var dy = Math.random() * 1024;
+            var size = Math.random() * 0.35 + 0.1;
+            ctx1.fillRect(dx, dy, size, size);
+        }
+        dustPattern1 = ctx.createPattern(canvas1, 'repeat');
+
+        // Pattern 2: nearer parallax dust
+        var canvas2 = document.createElement('canvas');
+        canvas2.width = canvas2.height = 1024;
+        var ctx2 = canvas2.getContext('2d');
+        ctx2.fillStyle = 'rgba(200,210,230,0.085)';
+        for (var i = 0; i < 600; i++) {
+            var dx = Math.random() * 1024;
+            var dy = Math.random() * 1024;
+            var size = Math.random() * 0.35 + 0.1;
+            ctx2.fillRect(dx, dy, size, size);
+        }
+        dustPattern2 = ctx.createPattern(canvas2, 'repeat');
     }
 
     // ============================================================
@@ -363,17 +518,22 @@
     // ============================================================
     function resize() {
         width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight * 3; // 300vh — tall canvas
+        height = canvas.height = window.innerHeight;
+        virtualHeight = height * 3;
         initDust();
     }
 
     function init() {
         resize();
-        stars = [];
-        // Canvas is 300vh tall — need 3x stars to fill it
-        var count = CAMERAS.calm.starCount * 3;
+        starsFar = [];
+        starsMid = [];
+        starsNear = [];
+        if (spriteCache.length === 0) {
+            buildSpriteCache();
+        }
+        var count = CAMERAS.calm.starCount;
         for (var i = 0; i < count; i++) {
-            stars.push(createStar(false));
+            createAndAddStar(false, false);
         }
     }
 
@@ -398,6 +558,20 @@
         targetStarCount = cam.starCount;
         adjustStarCount();
     };
+
+    function markStarsDying(count) {
+        var kill = count;
+        var arrays = [starsNear, starsMid, starsFar];
+        for (var a = 0; a < arrays.length && kill > 0; a++) {
+            var arr = arrays[a];
+            for (var i = arr.length - 1; i >= 0 && kill > 0; i--) {
+                if (!arr[i].dying) {
+                    arr[i].dying = true;
+                    kill--;
+                }
+            }
+        }
+    }
 
     /**
      * Engage lightspeed (chapter transition effect).
@@ -435,14 +609,16 @@
 
             // Colorful lightspeed palette
             var roll = Math.random();
-            if (roll < 0.25) s.color = { r: 255, g: 200, b: 140 };      // warm gold
-            else if (roll < 0.40) s.color = { r: 200, g: 160, b: 255 };  // lavender
-            else if (roll < 0.55) s.color = { r: 140, g: 200, b: 255 };  // ice blue
-            else if (roll < 0.65) s.color = { r: 255, g: 160, b: 120 };  // coral
-            else if (roll < 0.75) s.color = { r: 180, g: 255, b: 200 };  // mint
+            if (roll < 0.25) s.colorIndex = 7;      // warm gold
+            else if (roll < 0.40) s.colorIndex = 8;  // lavender
+            else if (roll < 0.55) s.colorIndex = 9;  // ice blue
+            else if (roll < 0.65) s.colorIndex = 10; // coral
+            else if (roll < 0.75) s.colorIndex = 11; // mint
             // else: keep random star color
 
-            stars.push(s);
+            if (s.layer === 'far') starsFar.push(s);
+            else if (s.layer === 'mid') starsMid.push(s);
+            else starsNear.push(s);
         }
     };
 
@@ -455,9 +631,10 @@
             lightspeedPhase = 'decelerating';
             lightspeedTimer = 0;
             // Mark excess stars for fade-out removal
-            var excess = stars.length - targetStarCount;
-            for (var i = stars.length - 1; i >= 0 && excess > 0; i--) {
-                if (!stars[i].dying) { stars[i].dying = true; excess--; }
+            var totalCount = starsFar.length + starsMid.length + starsNear.length;
+            var excess = totalCount - targetStarCount;
+            if (excess > 0) {
+                markStarsDying(excess);
             }
         }
     };
@@ -465,90 +642,41 @@
     // Adjust star count when mood changes (3x for tall canvas)
     function adjustStarCount() {
         var target = targetStarCount * 3;
-        var diff = target - stars.length;
+        var totalCount = starsFar.length + starsMid.length + starsNear.length;
+        var diff = target - totalCount;
         if (diff > 0) {
             for (var i = 0; i < diff; i++) {
-                var s = createStar(true);
+                var s = createAndAddStar(true, false);
                 s.life = 0;
-                stars.push(s);
             }
         } else if (diff < 0) {
-            var kill = -diff;
-            for (var i = stars.length - 1; i >= 0 && kill > 0; i--) {
-                if (!stars[i].dying) { stars[i].dying = true; kill--; }
-            }
+            markStarsDying(-diff);
         }
     }
 
     // ============================================================
     // UPDATE — Runs every frame. Moves stars, handles lightspeed.
     // ============================================================
-    function update() {
-        frameCount++;
-
-        // --- Canvas rotation: mood-driven, freezes during lightspeed ---
-        if (lightspeedPhase === 'idle') {
-            canvasRotation += activeRotationSpeed * activeRotationDir;
-        }
-
-        // --- Lightspeed phase machine ---
-        if (lightspeedPhase !== 'idle') {
-            lightspeedTimer++;
-            if (lightspeedPhase === 'accelerating') {
-                // Ramp up over 90 frames (~1.5 seconds at 60fps)
-                var t = Math.min(1, lightspeedTimer / 90);
-                lightspeedBoost = 1 + t * t * 20; // ease-in: slow start, fast end
-                activeBrightnessMin = lerp(activeBrightnessMin, 0.5, t * t * 0.1);
-                activeBrightnessMax = lerp(activeBrightnessMax, 1.0, t * t * 0.1);
-                if (lightspeedTimer >= 90) { lightspeedPhase = 'cruising'; lightspeedTimer = 0; }
-            } else if (lightspeedPhase === 'cruising') {
-                lightspeedBoost = 21; // max speed
-                activeBrightnessMin = lerp(activeBrightnessMin, 0.5, 0.03);
-                activeBrightnessMax = lerp(activeBrightnessMax, 1.0, 0.03);
-            } else if (lightspeedPhase === 'decelerating') {
-                // Ramp down over 90 frames
-                var t2 = 1 - Math.min(1, lightspeedTimer / 90);
-                lightspeedBoost = 1 + t2 * t2 * 20; // ease-out
-                if (lightspeedTimer >= 90) { lightspeedPhase = 'idle'; lightspeedBoost = 1; }
-            }
-        }
-
-        // --- Smooth transition between mood presets ---
-        if (lerpProgress < 1) {
-            lerpProgress = Math.min(1, lerpProgress + LERP_SPEED);
-            var t3 = easeInOut(lerpProgress);
-            activeSpeed = lerp(activeSpeed, targetCamera.speed, t3 * 0.02);
-            activeBrightnessMin = lerp(activeBrightnessMin, targetCamera.brightnessRange[0], t3 * 0.02);
-            activeBrightnessMax = lerp(activeBrightnessMax, targetCamera.brightnessRange[1], t3 * 0.02);
-            activeFlareChance = lerp(activeFlareChance, targetCamera.flareChance, t3 * 0.02);
-            activeRotationSpeed = lerp(activeRotationSpeed, targetCamera.rotationSpeed, t3 * 0.02);
-            if (t3 > 0.5) activeRotationDir = targetCamera.rotationDir; // snap direction at halfway
-        }
-
-        // --- Dust parallax (very subtle background drift) ---
-        var dustSpeed = activeSpeed * 0.12 * lightspeedBoost;
+    function updateStarsArray(arr) {
+        var cx = width / 2;
+        var cy = (-canvasCurrentY / 100) * window.innerHeight + window.innerHeight / 2;
         var dir = (lightspeedPhase !== 'idle') ? 'center-zoom' : activeDirection;
-        if (dir === 'center-zoom') { dustOffsetX += dustSpeed * 0.003; dustOffsetY += dustSpeed * 0.003; }
-        else if (dir === 'rise') { dustOffsetY -= dustSpeed * 0.25; }
-        else if (dir === 'sink') { dustOffsetY += dustSpeed * 0.15; }
-        else if (dir === 'drift-left') { dustOffsetX -= dustSpeed * 0.2; }
+        for (var i = arr.length - 1; i >= 0; i--) {
+            var s = arr[i];
 
-        // --- Move each star ---
-        var cx = width / 2, cy = height / 2;
-        for (var i = stars.length - 1; i >= 0; i--) {
-            var s = stars[i];
+            // Fast scintillation index progression
+            s.scintIndex += s.scintSpeed;
+            if (s.scintIndex >= SCINT_TABLE_SIZE) s.scintIndex -= SCINT_TABLE_SIZE;
 
             // Lifecycle: fade in / fade out
             if (s.dying) {
                 s.life -= 0.008;
-                if (s.life <= 0) { stars.splice(i, 1); continue; }
+                if (s.life <= 0) { arr.splice(i, 1); continue; }
             } else if (s.life < 1) {
                 s.life = Math.min(1, s.life + 0.012);
             }
 
             // Speed = base speed × depth multiplier × lightspeed boost
-            // This is where the parallax magic happens:
-            // Near stars move 25x faster than far stars.
             var speed = activeSpeed * DEPTH[s.layer].speed * lightspeedBoost;
 
             // Movement direction
@@ -581,18 +709,95 @@
                 if (s.flareTimer > s.flareDuration) s.flareActive = false;
             }
 
-            // Respawn when off-screen (canvas is 300vh tall)
-            if (s.x < -30 || s.x > width + 30 || s.y < -30 || s.y > height + 30) {
-                respawnStar(s);
+            // Respawn when off-screen
+            if (dir === 'clockwise' || dir === 'anticlockwise') {
+                var cxRot = -width * 0.4;
+                var cyRot = cy + window.innerHeight * 2.0;
+                var dx = s.x - cxRot;
+                var dy = s.y - cyRot;
+                var cos = Math.cos(canvasRotation);
+                var sin = Math.sin(canvasRotation);
+                var rx = cxRot + dx * cos - dy * sin;
+                var ry = cyRot + dx * sin + dy * cos;
+                var ryScreen = ry + (canvasCurrentY / 100) * window.innerHeight;
+
+                // Sector buffer off-screen bounds check
+                if (rx < -150 || rx > width + 150 || ryScreen < -150 || ryScreen > window.innerHeight + 150) {
+                    respawnStar(s);
+                }
+            } else {
+                if (s.x < -30 || s.x > width + 30 || s.y < -30 || s.y > height + 30) {
+                    respawnStar(s);
+                }
             }
         }
     }
 
+    function update() {
+        frameCount++;
+
+        // --- Canvas rotation: mood-driven, freezes during lightspeed ---
+        if (lightspeedPhase === 'idle') {
+            if (activeDirection === 'clockwise') {
+                canvasRotation += activeSpeed * 0.004;
+            } else if (activeDirection === 'anticlockwise') {
+                canvasRotation -= activeSpeed * 0.004;
+            } else {
+                canvasRotation += activeRotationSpeed * activeRotationDir;
+            }
+        }
+
+        // --- Lightspeed phase machine ---
+        if (lightspeedPhase !== 'idle') {
+            lightspeedTimer++;
+            if (lightspeedPhase === 'accelerating') {
+                var t = Math.min(1, lightspeedTimer / 90);
+                lightspeedBoost = 1 + t * t * 20;
+                activeBrightnessMin = lerp(activeBrightnessMin, 0.5, t * t * 0.1);
+                activeBrightnessMax = lerp(activeBrightnessMax, 1.0, t * t * 0.1);
+                if (lightspeedTimer >= 90) { lightspeedPhase = 'cruising'; lightspeedTimer = 0; }
+            } else if (lightspeedPhase === 'cruising') {
+                lightspeedBoost = 21;
+                activeBrightnessMin = lerp(activeBrightnessMin, 0.5, 0.03);
+                activeBrightnessMax = lerp(activeBrightnessMax, 1.0, 0.03);
+            } else if (lightspeedPhase === 'decelerating') {
+                var t2 = 1 - Math.min(1, lightspeedTimer / 90);
+                lightspeedBoost = 1 + t2 * t2 * 20;
+                if (lightspeedTimer >= 90) { lightspeedPhase = 'idle'; lightspeedBoost = 1; }
+            }
+        }
+
+        // --- Smooth transition between mood presets ---
+        if (lerpProgress < 1) {
+            lerpProgress = Math.min(1, lerpProgress + LERP_SPEED);
+            var t3 = easeInOut(lerpProgress);
+            activeSpeed = lerp(activeSpeed, targetCamera.speed, t3 * 0.02);
+            activeBrightnessMin = lerp(activeBrightnessMin, targetCamera.brightnessRange[0], t3 * 0.02);
+            activeBrightnessMax = lerp(activeBrightnessMax, targetCamera.brightnessRange[1], t3 * 0.02);
+            activeFlareChance = lerp(activeFlareChance, targetCamera.flareChance, t3 * 0.02);
+            activeRotationSpeed = lerp(activeRotationSpeed, targetCamera.rotationSpeed, t3 * 0.02);
+            if (t3 > 0.5) activeRotationDir = targetCamera.rotationDir;
+        }
+
+        // --- Dust parallax (very subtle background drift) ---
+        var dustSpeed = activeSpeed * 0.12 * lightspeedBoost;
+        var dir = (lightspeedPhase !== 'idle') ? 'center-zoom' : activeDirection;
+        if (dir === 'center-zoom') { dustOffsetX += dustSpeed * 0.003; dustOffsetY += dustSpeed * 0.003; }
+        else if (dir === 'rise') { dustOffsetY -= dustSpeed * 0.25; }
+        else if (dir === 'sink') { dustOffsetY += dustSpeed * 0.15; }
+        else if (dir === 'drift-left') { dustOffsetX -= dustSpeed * 0.2; }
+
+        // --- Move stars (partitioned arrays) ---
+        updateStarsArray(starsFar);
+        updateStarsArray(starsMid);
+        updateStarsArray(starsNear);
+    }
+
     function respawnStar(s) {
-        var cx = width / 2, cy = height / 2;
+        var cx = width / 2;
+        var cy = (-canvasCurrentY / 100) * window.innerHeight + window.innerHeight / 2;
         if (activeDirection === 'center-zoom') {
             var a = Math.random() * Math.PI * 2;
-            // Tight spawn during lightspeed (vanishing point effect), wider during normal
             var d = (lightspeedPhase !== 'idle')
                 ? Math.random() * 30 + 3
                 : Math.random() * Math.min(width, height) * 0.15 + 20;
@@ -600,8 +805,22 @@
         }
         else if (activeDirection === 'rise') { s.x = Math.random() * width; s.y = height + 15; }
         else if (activeDirection === 'sink') { s.x = Math.random() * width; s.y = -15; }
+        else if (activeDirection === 'clockwise' || activeDirection === 'anticlockwise') {
+            // Spawn in a majestic off-screen rotational sector
+            var cxRot = -width * 0.4;
+            var cyRot = cy + window.innerHeight * 2.0;
+            var R_min = Math.sqrt(Math.pow(0.4 * width, 2) + Math.pow(1.5 * window.innerHeight, 2));
+            var R_max = Math.sqrt(Math.pow(1.4 * width, 2) + Math.pow(2.5 * window.innerHeight, 2));
+            var angleCenter = Math.atan2(-2.0 * window.innerHeight, 0.9 * width);
+            var angle = angleCenter + (Math.random() - 0.5) * (Math.PI / 1.5); // 120-degree sector
+            var dist = Math.sqrt(R_min * R_min + Math.random() * (R_max * R_max - R_min * R_min));
+            s.x = cxRot + Math.cos(angle - canvasRotation) * dist;
+            s.y = cyRot + Math.sin(angle - canvasRotation) * dist;
+        }
         else { s.x = width + 15; s.y = Math.random() * height; }
         s.brightness = lerp(activeBrightnessMin, activeBrightnessMax, Math.random()) * DEPTH[s.layer].bright;
+        s.scintIndex = Math.random() * SCINT_TABLE_SIZE;
+        s.life = 0;
     }
 
     // ============================================================
@@ -615,73 +834,99 @@
 
         // Apply canvas rotation (entire starfield rotates as one)
         ctx.save();
-        ctx.translate(width / 2, height / 2);
-        ctx.rotate(canvasRotation);
-        ctx.translate(-width / 2, -height / 2);
+        var cx = width / 2;
+        var cy = (-canvasCurrentY / 100) * window.innerHeight + window.innerHeight / 2;
+        var isRotatedOffCenter = (activeDirection === 'clockwise' || activeDirection === 'anticlockwise');
 
-        // Layer 0: Background dust (static milky way texture)
+        if (isRotatedOffCenter) {
+            var cxRot = -width * 0.4;
+            var cyRot = cy + window.innerHeight * 2.0;
+            ctx.translate(cxRot, cyRot);
+            ctx.rotate(canvasRotation);
+            ctx.translate(-cxRot, -cyRot);
+        } else {
+            ctx.translate(cx, cy);
+            ctx.rotate(canvasRotation);
+            ctx.translate(-cx, -cy);
+        }
+
+        // Layer 0: Background dust (optimized tiled patterns)
         drawDust();
 
-        // Lightspeed center glow (warm purple radial)
+        // Lightspeed center glow (warm purple radial) — cached gradient
         if (lightspeedPhase !== 'idle') {
             var intensity = Math.min(1, (lightspeedBoost - 1) / 8);
-            var cx = width / 2, cy = height / 2;
-            var glowR = Math.max(width, height) * 0.5 * intensity;
-            var grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, glowR);
-            grad.addColorStop(0, 'rgba(220,200,255,' + (intensity * 0.15) + ')');
-            grad.addColorStop(0.3, 'rgba(160,140,220,' + (intensity * 0.08) + ')');
-            grad.addColorStop(1, 'rgba(80,60,140,0)');
-            ctx.fillStyle = grad;
+            if (!lsGradient || lsLastIntensity !== intensity) {
+                var glowR = Math.max(width, height) * 0.5 * intensity;
+                lsGradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, glowR);
+                lsGradient.addColorStop(0, 'rgba(220,200,255,' + (intensity * 0.15) + ')');
+                lsGradient.addColorStop(0.3, 'rgba(160,140,220,' + (intensity * 0.08) + ')');
+                lsGradient.addColorStop(1, 'rgba(80,60,140,0)');
+                lsLastIntensity = intensity;
+            }
+            ctx.fillStyle = lsGradient;
             ctx.fillRect(-50, -50, width + 100, height + 100);
         }
 
-        // Stars rendered by depth layer:
-        // Far = soft glow (simulates out-of-focus blur)
-        // Mid = slightly soft
-        // Near = sharp crisp (in focus)
-        for (var i = 0; i < stars.length; i++) {
-            if (stars[i].layer === 'far') drawStar(stars[i]);
+        // Stars rendered by depth layer (using partitioned arrays):
+        var i;
+        for (i = 0; i < starsFar.length; i++) {
+            drawStar(starsFar[i]);
         }
-        for (var i = 0; i < stars.length; i++) {
-            if (stars[i].layer === 'mid') drawStar(stars[i]);
+        for (i = 0; i < starsMid.length; i++) {
+            drawStar(starsMid[i]);
         }
-        for (var i = 0; i < stars.length; i++) {
-            if (stars[i].layer === 'near') drawStar(stars[i]);
+        for (i = 0; i < starsNear.length; i++) {
+            drawStar(starsNear[i]);
         }
 
+        ctx.globalAlpha = 1.0; // Reset alpha state
         ctx.restore(); // end rotation transform
     }
 
-    // --- Dust: sub-pixel dots with parallax offset ---
+    // --- Dust: tiled repeating pattern fills with parallax offset ---
     function drawDust() {
-        for (var i = 0; i < dustLayer.length; i++) {
-            var d = dustLayer[i];
-            var dx = (d.x + dustOffsetX * d.depth) % width;
-            var dy = (d.y + dustOffsetY * d.depth) % height;
-            if (dx < 0) dx += width;
-            if (dy < 0) dy += height;
-            ctx.fillStyle = 'rgba(200,210,230,' + d.brightness + ')';
-            ctx.fillRect(dx, dy, d.size, d.size);
-        }
+        if (!dustPattern1 || !dustPattern2) return;
+
+        // Layer 1: slower, deeper
+        var dx1 = (dustOffsetX * 0.08) % 1024;
+        var dy1 = (dustOffsetY * 0.08) % 1024;
+
+        ctx.save();
+        ctx.translate(dx1, dy1);
+        ctx.fillStyle = dustPattern1;
+        ctx.fillRect(-dx1, -dy1, width, height);
+        ctx.restore();
+
+        // Layer 2: faster, nearer
+        var dx2 = (dustOffsetX * 0.18) % 1024;
+        var dy2 = (dustOffsetY * 0.18) % 1024;
+
+        ctx.save();
+        ctx.translate(dx2, dy2);
+        ctx.fillStyle = dustPattern2;
+        ctx.fillRect(-dx2, -dy2, width, height);
+        ctx.restore();
     }
 
     // ============================================================
-    // DRAW STAR — Renders one star based on its depth layer
+    // DRAW STAR — Renders one star based on its depth layer (from sprite cache)
     // ============================================================
     function drawStar(s) {
-        // Scintillation (natural twinkle via noise)
-        var twinkle = 0.5 + 0.5 * scintillate(s.noisePhase, s.noiseSpeed);
-        var alpha = s.brightness * twinkle * s.life;
-        var radius = s.baseRadius;
+        // Scintillation lookup
+        var twinkle = 0.5 + 0.5 * SCINTILLATION_TABLE[(s.scintIndex | 0) & 2047];
+        
+        // Easing curve for smooth physical scaling & optical accumulation
+        var scale = s.life * (2 - s.life); 
+        var alpha = s.brightness * twinkle * scale;
+        var radius = s.baseRadius * scale;
 
-        // Lightspeed brightness boost (depth-based, realistic parallax):
-        // Near = much brighter, Far = barely changes
+        // Lightspeed brightness boost
         if (lightspeedPhase !== 'idle') {
             var boost = Math.min(4, (lightspeedBoost - 1) * 0.2);
             if (s.layer === 'near') alpha = Math.min(0.95, alpha * (1 + boost * 2.0));
             else if (s.layer === 'mid') alpha = Math.min(0.85, alpha * (1 + boost * 1.0));
             else alpha = Math.min(0.6, alpha * (1 + boost * 0.2));
-            // NO radius increase during lightspeed — keeps stars as small streaking points
         }
 
         // Flare effect (periodic bright pulse, only in normal mode)
@@ -689,98 +934,33 @@
             var prog = s.flareTimer / s.flareDuration;
             var curve = Math.pow(Math.sin(prog * Math.PI), 0.7); // fast attack, slow decay
             alpha = Math.min(1, alpha + curve * 0.5);
-            radius = s.baseRadius + curve * 1.0;
+            radius = radius + curve * 1.0;
         }
 
-        var r = s.color.r, g = s.color.g, b = s.color.b;
+        if (alpha <= 0) return;
 
-        // Diffraction spikes (JWST 6-point, only brightest stars, only normal mode)
-        if (s.hasSpikes && alpha > 0.4 && lightspeedPhase === 'idle') {
-            drawSpikes(s.x, s.y, radius, alpha, r, g, b);
-        }
+        ctx.globalAlpha = alpha;
+        var sprite = spriteCache[s.colorIndex];
 
-        // Halo glow (bright stars get a soft surrounding glow)
-        if (s.isBright && alpha > 0.2) {
-            var haloR = radius * 3.5 + 2;
-            var haloA = alpha * 0.18;
-            var hg = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, haloR);
-            hg.addColorStop(0, 'rgba(' + r + ',' + g + ',' + b + ',' + (haloA * 0.9) + ')');
-            hg.addColorStop(0.25, 'rgba(' + r + ',' + g + ',' + b + ',' + (haloA * 0.5) + ')');
-            hg.addColorStop(0.6, 'rgba(' + r + ',' + g + ',' + b + ',' + (haloA * 0.12) + ')');
-            hg.addColorStop(1, 'rgba(' + r + ',' + g + ',' + b + ',0)');
-            ctx.beginPath(); ctx.arc(s.x, s.y, haloR, 0, Math.PI * 2);
-            ctx.fillStyle = hg; ctx.fill();
-        }
-
-        // --- Core rendering by depth (simulates depth-of-field) ---
         if (s.layer === 'far') {
-            // FAR: Soft radial gradient dot (looks blurry/out-of-focus)
-            var softR = radius * 2.5 + 0.8;
-            var sg = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, softR);
-            sg.addColorStop(0, 'rgba(' + r + ',' + g + ',' + b + ',' + (alpha * 0.7) + ')');
-            sg.addColorStop(0.4, 'rgba(' + r + ',' + g + ',' + b + ',' + (alpha * 0.3) + ')');
-            sg.addColorStop(1, 'rgba(' + r + ',' + g + ',' + b + ',0)');
-            ctx.beginPath(); ctx.arc(s.x, s.y, softR, 0, Math.PI * 2);
-            ctx.fillStyle = sg; ctx.fill();
+            var drawR = radius * 2.5 + 0.8;
+            ctx.drawImage(sprite.far, s.x - drawR, s.y - drawR, drawR * 2, drawR * 2);
         } else if (s.layer === 'mid') {
-            // MID: Slightly soft gradient (mild depth-of-field)
-            var midR = radius * 1.6 + 0.4;
-            var mg = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, midR);
-            mg.addColorStop(0, 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')');
-            mg.addColorStop(0.6, 'rgba(' + r + ',' + g + ',' + b + ',' + (alpha * 0.4) + ')');
-            mg.addColorStop(1, 'rgba(' + r + ',' + g + ',' + b + ',0)');
-            ctx.beginPath(); ctx.arc(s.x, s.y, midR, 0, Math.PI * 2);
-            ctx.fillStyle = mg; ctx.fill();
+            var drawR = radius * 1.6 + 0.4;
+            ctx.drawImage(sprite.mid, s.x - drawR, s.y - drawR, drawR * 2, drawR * 2);
         } else {
-            // NEAR: Sharp, crisp circle (in focus)
-            if (radius < 0.5) {
-                ctx.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
-                ctx.fillRect(s.x - radius, s.y - radius, radius * 2, radius * 2);
+            // Near star
+            if (s.hasSpikes && alpha > 0.4 && lightspeedPhase === 'idle') {
+                var drawR = (radius * 12 + 6) * 1.185;
+                ctx.drawImage(sprite.spikes, s.x - drawR, s.y - drawR, drawR * 2, drawR * 2);
+            } else if (s.isBright && alpha > 0.2) {
+                var drawR = (radius * 3.5 + 2) * 1.067;
+                ctx.drawImage(sprite.halo, s.x - drawR, s.y - drawR, drawR * 2, drawR * 2);
             } else {
-                ctx.beginPath(); ctx.arc(s.x, s.y, radius, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
-                ctx.fill();
+                var drawR = radius;
+                ctx.drawImage(sprite.near, s.x - drawR, s.y - drawR, drawR * 2, drawR * 2);
             }
         }
-    }
-
-    // ============================================================
-    // DIFFRACTION SPIKES — JWST-style 6-point cross
-    // ============================================================
-    // Only drawn on the brightest stars (hasSpikes = true).
-    // 6 spikes = 3 pairs at 60° intervals, matching JWST's hexagonal mirror.
-    function drawSpikes(x, y, starRadius, alpha, r, g, b) {
-        var spikeLength = starRadius * 12 + 6;
-        var spikeAlpha = alpha * 0.3;
-
-        ctx.save();
-        ctx.globalCompositeOperation = 'screen'; // additive blending
-
-        for (var i = 0; i < 3; i++) {
-            var angle = i * Math.PI / 3 + Math.PI / 6; // 30°, 90°, 150°
-
-            // Forward spike
-            var ex = x + Math.cos(angle) * spikeLength;
-            var ey = y + Math.sin(angle) * spikeLength;
-            var g1 = ctx.createLinearGradient(x, y, ex, ey);
-            g1.addColorStop(0, 'rgba(' + r + ',' + g + ',' + b + ',' + spikeAlpha + ')');
-            g1.addColorStop(0.3, 'rgba(' + r + ',' + g + ',' + b + ',' + (spikeAlpha * 0.4) + ')');
-            g1.addColorStop(1, 'rgba(' + r + ',' + g + ',' + b + ',0)');
-            ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(ex, ey);
-            ctx.strokeStyle = g1; ctx.lineWidth = 0.7; ctx.stroke();
-
-            // Backward spike (opposite direction)
-            var ex2 = x - Math.cos(angle) * spikeLength;
-            var ey2 = y - Math.sin(angle) * spikeLength;
-            var g2 = ctx.createLinearGradient(x, y, ex2, ey2);
-            g2.addColorStop(0, 'rgba(' + r + ',' + g + ',' + b + ',' + spikeAlpha + ')');
-            g2.addColorStop(0.3, 'rgba(' + r + ',' + g + ',' + b + ',' + (spikeAlpha * 0.4) + ')');
-            g2.addColorStop(1, 'rgba(' + r + ',' + g + ',' + b + ',0)');
-            ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(ex2, ey2);
-            ctx.strokeStyle = g2; ctx.lineWidth = 0.7; ctx.stroke();
-        }
-
-        ctx.restore();
     }
 
     // ============================================================
@@ -838,7 +1018,7 @@
                 speed: 1 + Math.random() * 4,
                 radius: 0.15 + Math.random() * 0.35,
                 brightness: 0.4 + Math.random() * 0.5,
-                color: pickStarColor(),
+                colorIndex: pickStarColor(),
                 dist: dist
             });
         }
@@ -860,7 +1040,8 @@
         if (bigbangPhase === 'idle' || bigbangPhase === 'done') return;
         bigbangTimer++;
 
-        var cx = width / 2, cy = height / 2;
+        var cx = width / 2;
+        var cy = (-canvasCurrentY / 100) * window.innerHeight + window.innerHeight / 2;
         var progress;
 
         if (bigbangPhase === 'expand') {
@@ -1024,7 +1205,8 @@
     function drawBigBang() {
         if (bigbangPhase === 'idle' || bigbangPhase === 'done' || bigbangPhase === 'flash' || bigbangPhase === 'title') return;
 
-        var cx = width / 2, cy = height / 2;
+        var cx = width / 2;
+        var cy = (-canvasCurrentY / 100) * window.innerHeight + window.innerHeight / 2;
 
         // Darken background during reverse/collapse
         if (bigbangPhase === 'reverse' || bigbangPhase === 'collapse') {
@@ -1052,7 +1234,8 @@
         for (var i = 0; i < bigbangStars.length; i++) {
             var s = bigbangStars[i];
             if (s.dist <= 0) continue;
-            ctx.fillStyle = 'rgba(' + s.color.r + ',' + s.color.g + ',' + s.color.b + ',' + s.brightness + ')';
+            var col = ALL_COLORS[s.colorIndex];
+            ctx.fillStyle = 'rgba(' + col.r + ',' + col.g + ',' + col.b + ',' + s.brightness + ')';
             ctx.fillRect(s.x - s.radius, s.y - s.radius, s.radius * 2, s.radius * 2);
         }
     }

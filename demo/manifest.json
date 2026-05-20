@@ -1,0 +1,9 @@
+{
+  "title": "You Need God",
+  "subtitle": "理性对话系列",
+  "chapters": [
+    { "id": "NDEXP", "file": "chapters/01_ndexp.json", "template": "starfield", "transition": "lightspeed" },
+    { "id": "ONEGD", "file": "chapters/02_onegd.json", "template": "starfield", "transition": "lightspeed" },
+    { "id": "MFPRT", "file": "chapters/03_mfprt.json", "template": "starfield", "transition": "lightspeed" }
+  ]
+}

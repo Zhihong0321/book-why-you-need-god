@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>证据链全景图 — You Need God</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;600;700&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Noto Sans SC',sans-serif;
+  background:#0a0a0f;
+  color:rgba(220,220,230,0.9);
+  line-height:1.8;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background:radial-gradient(ellipse at 25% 15%, rgba(12,15,35,0.5) 0%, transparent 50%),
+             radial-gradient(ellipse at 75% 85%, rgba(10,6,22,0.4) 0%, transparent 50%);
+  pointer-events:none;z-index:0;
+}
+.page{
+  position:relative;z-index:1;
+  max-width:820px;margin:0 auto;
+  padding:5rem 2.5rem 8rem;
+}
+
+/* === HEADER === */
+.page-header{
+  text-align:center;margin-bottom:3.5rem;
+  padding-bottom:2.5rem;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+}
+.page-header .eyebrow{
+  font-size:0.65rem;letter-spacing:0.6em;text-transform:uppercase;
+  color:rgba(160,155,140,0.45);margin-bottom:0.8rem;
+}
+.page-header h1{
+  font-family:'Noto Serif SC',serif;
+  font-size:1.8rem;font-weight:700;
+  color:rgba(255,255,255,0.9);letter-spacing:0.04em;
+  margin-bottom:0.8rem;
+}
+.page-header .desc{
+  font-size:0.88rem;color:rgba(180,180,195,0.5);font-weight:300;
+  max-width:600px;margin:0 auto;line-height:1.7;
+}
+.page-header blockquote{
+  margin-top:1.5rem;
+  font-size:0.82rem;color:rgba(200,195,180,0.55);
+  font-style:italic;line-height:1.8;
+  border-left:2px solid rgba(180,150,100,0.3);
+  padding-left:1rem;text-align:left;
+  max-width:560px;margin-left:auto;margin-right:auto;
+}
+
+/* === SECTION TITLES === */
+.section-title{
+  font-family:'Noto Serif SC',serif;
+  font-size:0.95rem;font-weight:600;
+  color:rgba(255,255,255,0.8);
+  letter-spacing:0.12em;
+  margin-bottom:1.8rem;margin-top:4rem;
+  padding-left:1rem;
+  border-left:2px solid rgba(180,150,100,0.4);
+}
+
+/* === TABLE DESIGN === */
+.table-wrap{
+  margin-bottom:3rem;
+  border-radius:8px;
+  border:1px solid rgba(255,255,255,0.05);
+  overflow-x:auto;
+  background:rgba(255,255,255,0.012);
+  -webkit-overflow-scrolling:touch;
+}
+table{
+  width:100%;border-collapse:collapse;
+  font-size:0.82rem;min-width:580px;
+}
+thead{background:rgba(255,255,255,0.025);}
+th{
+  padding:0.75rem 1rem;text-align:left;
+  font-size:0.65rem;font-weight:600;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:rgba(200,195,180,0.7);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  white-space:nowrap;
+}
+td{
+  padding:0.7rem 1rem;
+  color:rgba(215,215,225,0.8);
+  border-bottom:1px solid rgba(255,255,255,0.03);
+  vertical-align:top;line-height:1.6;
+}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:hover{background:rgba(255,255,255,0.018);}
+td.name{font-weight:500;color:rgba(240,238,230,0.9);white-space:nowrap;}
+td.era{font-size:0.75rem;color:rgba(160,155,140,0.55);white-space:nowrap;}
+td.role{font-size:0.75rem;color:rgba(160,155,140,0.55);}
+td.note{font-size:0.8rem;color:rgba(180,180,195,0.65);font-weight:300;}
+
+/* === MOBILE CARD LAYOUT === */
+@media(max-width:700px){
+  .page{padding:3.5rem 1rem 5rem;}
+  .page-header h1{font-size:1.4rem;}
+  .table-wrap{border:none;background:none;border-radius:0;overflow:visible;}
+  table,thead,tbody,th,td,tr{display:block;width:100%;}
+  table{min-width:0;}
+  thead{display:none;}
+  tbody tr{
+    margin-bottom:0.8rem;padding:1rem;
+    background:rgba(255,255,255,0.015);
+    border:1px solid rgba(255,255,255,0.05);
+    border-radius:8px;
+  }
+  tbody tr:hover{background:rgba(255,255,255,0.025);}
+  td{padding:0.2rem 0;border-bottom:none;}
+  td.name{font-size:0.95rem;margin-bottom:0.2rem;white-space:normal;}
+  td.era{margin-bottom:0.3rem;}
+  td.role{margin-bottom:0.3rem;}
+  td.note{font-size:0.8rem;line-height:1.6;}
+}
+
+/* === DIVIDER === */
+.divider{width:3rem;height:1px;background:rgba(255,255,255,0.08);margin:4rem auto;}
+
+/* === FOOTER === */
+.colophon{text-align:center;padding-top:2rem;}
+.colophon p{font-size:0.7rem;color:rgba(120,120,140,0.35);letter-spacing:0.04em;margin-bottom:0.3rem;}
+.colophon blockquote{
+  margin-top:2rem;font-size:0.8rem;color:rgba(200,195,180,0.5);
+  font-style:italic;line-height:1.8;text-align:left;
+  border-left:2px solid rgba(180,150,100,0.25);padding-left:1rem;
+  max-width:620px;margin-left:auto;margin-right:auto;
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="page-header">
+  <p class="eyebrow">You Need God · 证据链全景图</p>
+  <h1>《你不是不需要神，而是……》</h1>
+  <p class="desc">这是人类历史上跨度最长、参与人数最多、学科最交叉的一项"探测工程"。</p>
+  <blockquote>从公元前18世纪的史诗作者，到2022年诺贝尔物理学奖得主——所有人都在回答同一个问题：我们所处的这个宇宙，以及我们灵魂深处所欠的那笔债务，究竟指向什么？</blockquote>
+</header>
+
+<!-- === LAYER 1 === -->
+<h2 class="section-title">第一层：古代历史学家（非基督徒与敌对见证人）</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>姓名</th><th>年代</th><th>身份</th><th>本书中的贡献</th></tr></thead>
+<tbody>
+<tr><td class="name">Flavius Josephus</td><td class="era">c. 37–100 AD</td><td class="role">犹太历史学家</td><td class="note">确认耶稣为历史人物、钉十字架史实、其弟雅各之死</td></tr>
+<tr><td class="name">Tacitus</td><td class="era">c. 56–120 AD</td><td class="role">罗马元老院议员</td><td class="note">确认基督在本丢彼拉多手下受极刑，记录尼禄迫害</td></tr>
+<tr><td class="name">Pliny the Younger</td><td class="era">c. 61–113 AD</td><td class="role">罗马比提尼亚总督</td><td class="note">确认早期基督徒"把基督当作神来敬拜"且甘愿受死</td></tr>
+<tr><td class="name">Suetonius</td><td class="era">c. 69–122 AD</td><td class="role">罗马历史学家</td><td class="note">记录AD 49因"Chrestus"骚乱驱逐犹太人，确认基督教已传至罗马</td></tr>
+<tr><td class="name">Thallus</td><td class="era">c. AD 50</td><td class="role">撒马利亚裔希腊历史学家</td><td class="note">最早非基督徒承认耶稣受难时黑暗事件，试图以日食解释</td></tr>
+<tr><td class="name">Phlegon of Tralles</td><td class="era">c. AD 80–140</td><td class="role">希腊历史学家</td><td class="note">记录提比略时期全日食与地震——与福音书钉十字架时间精确吻合</td></tr>
+<tr><td class="name">Mara bar Serapion</td><td class="era">c. 73+ AD</td><td class="role">叙利亚斯多葛哲学家</td><td class="note">最早非基督教文献提到被处决的"智者之王"</td></tr>
+<tr><td class="name">Lucian of Samosata</td><td class="era">c. 125–180 AD</td><td class="role">希腊讽刺作家</td><td class="note">以敌对口吻确认基督徒敬拜一位在巴勒斯坦被钉十字架的人</td></tr>
+<tr><td class="name">Babylonian Talmud</td><td class="era">c. 200–500 AD</td><td class="role">犹太拉比传统</td><td class="note">敌对传统记录耶稣在逾越节期间被处决</td></tr>
+</tbody>
+</table></div>
+
+<!-- === LAYER 2 === -->
+<h2 class="section-title">第二层：圣经作者与初代见证人</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>姓名</th><th>年代</th><th>身份</th><th>本书中的贡献</th></tr></thead>
+<tbody>
+<tr><td class="name">保罗 (Paul)</td><td class="era">c. 5–67 AD</td><td class="role">使徒，曾迫害教会</td><td class="note">最早复活目击记录（林前15:3-7），成文于受难后2-5年内</td></tr>
+<tr><td class="name">路加 (Luke)</td><td class="era">1st c. AD</td><td class="role">医生、历史学家</td><td class="note">记录司提反殉道及雅各被杀</td></tr>
+<tr><td class="name">马可 (Mark)</td><td class="era">1st c. AD</td><td class="role">传道者</td><td class="note">记录门徒在耶稣被捕时四散逃跑——难为情的真实细节</td></tr>
+<tr><td class="name">司提反 (Stephen)</td><td class="era">d. c. 34–35 AD</td><td class="role">执事</td><td class="note">第一位基督教殉道者，被公会处死</td></tr>
+<tr><td class="name">雅各（耶稣之弟）</td><td class="era">d. 62 AD</td><td class="role">耶路撒冷教会领袖</td><td class="note">被大祭司处死，约瑟夫斯独立确认</td></tr>
+</tbody>
+</table></div>
+
+<!-- === LAYER 3 === -->
+<h2 class="section-title">第三层：考古学家（物理封存证据）</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>姓名</th><th>年代</th><th>身份</th><th>本书中的贡献</th></tr></thead>
+<tbody>
+<tr><td class="name">Antonio Frova</td><td class="era">1961</td><td class="role">意大利考古学家</td><td class="note">发现彼拉多石碑，确认彼拉多为犹太巡抚</td></tr>
+<tr><td class="name">Zvi Greenhut</td><td class="era">1990</td><td class="role">以色列考古学家</td><td class="note">发现该亚法骨罐，确认该亚法历史存在</td></tr>
+<tr><td class="name">Vassilios Tzaferis</td><td class="era">1968</td><td class="role">希腊裔以色列考古学家</td><td class="note">发掘钉十字架遗骸，确认铁钉穿透脚跟骨</td></tr>
+<tr><td class="name">Bonani G. 等</td><td class="era">1991</td><td class="role">瑞士苏黎世联邦理工</td><td class="note">死海古卷碳-14定年，锁定于基督教前世纪</td></tr>
+<tr><td class="name">Doudna G. 等</td><td class="era">2001–2025</td><td class="role">国际碳-14研究团队</td><td class="note">但以理书古卷4QDanᶜ定年：公元前355–160年</td></tr>
+</tbody>
+</table></div>
+
+<!-- === LAYER 4 === -->
+<h2 class="section-title">第四层：濒死体验（NDE）科学研究员</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>姓名</th><th>年代</th><th>身份</th><th>本书中的贡献</th></tr></thead>
+<tbody>
+<tr><td class="name">Pim van Lommel</td><td class="era">b. 1943</td><td class="role">荷兰心脏病学家</td><td class="note">《柳叶刀》2001年前瞻性研究344名心脏骤停幸存者</td></tr>
+<tr><td class="name">Sam Parnia</td><td class="era">b. 1964</td><td class="role">英国重症医学专家</td><td class="note">AWARE (2014) 与 AWARE-II (2020)，验证心脏停跳期间离体感知</td></tr>
+<tr><td class="name">Kenneth Ring</td><td class="era">b. 1935</td><td class="role">美国心理学家</td><td class="note">31名盲人NDE研究，含先天盲人报告视觉感知</td></tr>
+<tr><td class="name">Bruce Greyson</td><td class="era">b. 1946</td><td class="role">美国精神科医生</td><td class="note">NDE量表研究，认知清晰度评分高于清醒基线</td></tr>
+<tr><td class="name">刘建勋 等</td><td class="era">1979</td><td class="role">中国唐山研究人员</td><td class="note">唐山大地震81例NDE，唯物主义环境下出现西方一致核心元素</td></tr>
+</tbody>
+</table></div>
+
+<!-- === LAYER 5 === -->
+<h2 class="section-title">第五层：物理学家与宇宙学家</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>姓名</th><th>年代</th><th>身份</th><th>本书中的贡献</th></tr></thead>
+<tbody>
+<tr><td class="name">Albert Einstein</td><td class="era">1879–1955</td><td class="role">物理学家</td><td class="note">广义相对论：质量与时空曲率，作为"本体论重量"模型</td></tr>
+<tr><td class="name">Aspect · Clauser · Zeilinger</td><td class="era">2022 Nobel</td><td class="role">物理学家</td><td class="note">量子纠缠非定域性实验验证，支撑灵魂-上帝关系类比</td></tr>
+<tr><td class="name">Martin Rees</td><td class="era">b. 1942</td><td class="role">英国皇家天文学家</td><td class="note">《Just Six Numbers》：六个必须精确调谐的基本常数</td></tr>
+<tr><td class="name">Enrico Fermi</td><td class="era">1901–1954</td><td class="role">物理学家</td><td class="note">费米悖论——高科技文明概率估算与宇宙大静默</td></tr>
+<tr><td class="name">Eugene Wigner</td><td class="era">1902–1995</td><td class="role">物理学家</td><td class="note">数学在自然科学中"不合理的有效性"</td></tr>
+</tbody>
+</table></div>
+
+<!-- === LAYER 6 === -->
+<h2 class="section-title">第六层：哲学家（五大核心引擎）</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>姓名</th><th>年代</th><th>身份</th><th>本书中的贡献</th></tr></thead>
+<tbody>
+<tr><td class="name">Immanuel Kant</td><td class="era">1724–1804</td><td class="role">德国哲学家</td><td class="note">先验道德律；定言命令；时间作为先验直观形式</td></tr>
+<tr><td class="name">G.W.F. Hegel</td><td class="era">1770–1831</td><td class="role">德国哲学家</td><td class="note">主奴辩证法；否定之否定与具体普遍性</td></tr>
+<tr><td class="name">Kurt Gödel</td><td class="era">1906–1978</td><td class="role">奥地利逻辑学家</td><td class="note">不完备性定理：一致系统无法自证一致性 → 灵魂无法自我救赎</td></tr>
+<tr><td class="name">Thomas Aquinas</td><td class="era">1225–1274</td><td class="role">意大利神学家</td><td class="note">五路证明、因果链论证、参与本体论</td></tr>
+<tr><td class="name">Søren Kierkegaard</td><td class="era">1813–1855</td><td class="role">丹麦哲学家</td><td class="note">存在三阶段、信仰之跃、致死的疾病</td></tr>
+</tbody>
+</table></div>
+
+<!-- === LAYER 7 === -->
+<h2 class="section-title">第七层：现代护教家与学者</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>姓名</th><th>年代</th><th>身份</th><th>本书中的贡献</th></tr></thead>
+<tbody>
+<tr><td class="name">C.S. Lewis</td><td class="era">1898–1963</td><td class="role">英国作家、牛津教授</td><td class="note">道德律论证、主/疯/骗三难推理、地狱之门从里面锁上</td></tr>
+<tr><td class="name">Timothy Keller</td><td class="era">1950–2023</td><td class="role">美国牧师</td><td class="note">"怀疑你的怀疑"、错位敬拜即罪、地狱关系论</td></tr>
+<tr><td class="name">William Lane Craig</td><td class="era">b. 1949</td><td class="role">美国哲学家</td><td class="note">卡拉姆宇宙论论证、微调论证、纯认知要求</td></tr>
+<tr><td class="name">Gary Habermas</td><td class="era">b. 1950</td><td class="role">美国神学家</td><td class="note">3400篇论文综述：约75%学者接受空坟墓历史性</td></tr>
+<tr><td class="name">Gerd Lüdemann</td><td class="era">1946–2021</td><td class="role">德国怀疑论学者</td><td class="note">承认林前15:3-7可追溯至AD 30-35，门徒确有真实复活体验</td></tr>
+</tbody>
+</table></div>
+
+<!-- === LAYER 8 === -->
+<h2 class="section-title">第八层：法律、政府与制度性见证</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>机构 / 人物</th><th>年代</th><th>身份</th><th>本书中的贡献</th></tr></thead>
+<tbody>
+<tr><td class="name">查士丁尼法典</td><td class="era">c. 533 AD</td><td class="role">罗马法体系</td><td class="note">债务清偿（Solutio）与收养（Adrogatio）制度 → 救赎法律类比</td></tr>
+<tr><td class="name">苏联最高苏维埃</td><td class="era">1940</td><td class="role">无神论政权</td><td class="note">废除7天工作制失败，被迫恢复 → 第四诫不可废除性</td></tr>
+<tr><td class="name">联合国大会</td><td class="era">1948</td><td class="role">国际组织</td><td class="note">《世界人权宣言》以 Imago Dei 神学为根基</td></tr>
+<tr><td class="name">NASA / JPL</td><td class="era">1977–present</td><td class="role">美国航天局</td><td class="note">旅行者号40余年无回应 → 费米悖论物理证据</td></tr>
+<tr><td class="name">诺贝尔物理学奖委员会</td><td class="era">2022</td><td class="role">瑞典皇家科学院</td><td class="note">确认量子纠缠非定域性实验验证</td></tr>
+</tbody>
+</table></div>
+
+<!-- === LAYER 9 === -->
+<h2 class="section-title">第九层：远古文明与跨文化见证</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>来源</th><th>年代</th><th>身份</th><th>本书中的贡献</th></tr></thead>
+<tbody>
+<tr><td class="name">《吉尔伽美什史诗》</td><td class="era">c. 18th c. BCE</td><td class="role">美索不达米亚传统</td><td class="note">洪水叙事中的方舟、动物、鸟类与山巅着陆——与圣经平行</td></tr>
+<tr><td class="name">七十士译本学者</td><td class="era">3rd–2nd c. BCE</td><td class="role">亚历山大港犹太社群</td><td class="note">提前200年将弥赛亚预言锁定于另一语言系统</td></tr>
+<tr><td class="name">全球200+独立文化</td><td class="era">未知</td><td class="role">跨文明口述传统</td><td class="note">共享结构相同的洪水记忆，无已知借用路径</td></tr>
+</tbody>
+</table></div>
+
+<div class="divider"></div>
+
+<footer class="colophon">
+  <blockquote>本书的立场不是"信仰先于证据"，而是"证据先于结论"。上述每一位参与者——无论是罗马总督、犹太历史学家、无神论政权、诺贝尔得主，还是敌对的希腊讽刺作家——都在各自的维度上提供了独立、可交叉验证的证据碎片。当这些碎片被拼接在一起时，它们指向的不是一个模糊的"更高力量"，而是一个在历史中留下脚印、在法律中留下债务、在十字架上留下代价的具体存在。</blockquote>
+  <p style="margin-top:2rem;">You Need God · 理性对话系列 · © 2025</p>
+</footer>
+
+</div>
+</body>
+</html>

@@ -42,7 +42,13 @@
         var allSets = document.querySelectorAll('.aurora-set');
         allSets.forEach(function (s) { s.classList.remove('active'); });
         var newAurora = document.getElementById('aurora-' + mood);
-        if (newAurora) newAurora.classList.add('active');
+        if (newAurora) {
+            newAurora.classList.add('active');
+        } else {
+            // Fallback to calm for custom preview moods
+            var calmAurora = document.getElementById('aurora-calm');
+            if (calmAurora) calmAurora.classList.add('active');
+        }
 
         currentMood = mood;
     };

@@ -1,0 +1,300 @@
+{
+  "id": "MFPRT",
+  "label": "第三章 · MFPRT",
+  "title": "弥赛亚指纹审计",
+  "referenceRegistry": {
+    "MFPRT-001": {
+      "author": "Flavius Josephus",
+      "title": "Antiquities of the Jews 18.3.3 & 20.9.1",
+      "source": "Book 18.3.3 & Book 20.9.1",
+      "year": "c. AD 93-94",
+      "type": "PRIMARY",
+      "used_for": "Confirms Jesus as historical figure, crucifixion under Pilate, James as his brother."
+    },
+    "MFPRT-002": {
+      "author": "Tacitus",
+      "title": "Annals 15.44",
+      "source": "Book 15, Chapter 44",
+      "year": "c. AD 116",
+      "type": "PRIMARY",
+      "used_for": "Confirms Christ's execution under Pontius Pilate during Tiberius' reign."
+    },
+    "MFPRT-003": {
+      "author": "Pliny the Younger",
+      "title": "Epistulae X.96",
+      "source": "Letter to Emperor Trajan",
+      "year": "c. AD 112",
+      "type": "PRIMARY",
+      "used_for": "Confirms early Christian worship of Christ as divine."
+    },
+    "MFPRT-004": {
+      "author": "Babylonian Talmud",
+      "title": "Sanhedrin 43a",
+      "source": "Babylonian Talmud",
+      "year": "c. AD 200-500",
+      "type": "PRIMARY",
+      "used_for": "Hostile Jewish tradition recording Jesus' execution at Passover."
+    },
+    "MFPRT-005": {
+      "author": "Mara bar Serapion",
+      "title": "Letter to his son",
+      "source": "British Museum Syriac MS Add. 14658",
+      "year": "c. AD 73+",
+      "type": "PRIMARY",
+      "used_for": "Non-Christian tradition of the executed wise king."
+    },
+    "MFPRT-006": {
+      "author": "Lucian of Samosata",
+      "title": "The Passing of Peregrinus",
+      "source": "Ancient Greek satire",
+      "year": "c. AD 165",
+      "type": "PRIMARY",
+      "used_for": "Hostile satire describing Christians worshiping a crucified man."
+    },
+    "MFPRT-007": {
+      "author": "Antonio Frova and team",
+      "title": "Pilate Stone",
+      "source": "Israel Museum, Jerusalem",
+      "year": "1961",
+      "type": "ARCHAEOLOGY",
+      "used_for": "Confirms Pontius Pilate as real Roman prefect in Judea."
+    },
+    "MFPRT-008": {
+      "author": "Zvi Greenhut and team",
+      "title": "Caiaphas Ossuary",
+      "source": "Israel Museum, Jerusalem",
+      "year": "1990",
+      "type": "ARCHAEOLOGY",
+      "used_for": "Confirms historical existence of Caiaphas."
+    },
+    "MFPRT-009": {
+      "author": "Vassilios Tzaferis",
+      "title": "Yehohanan Crucifixion Remains",
+      "source": "Giv'at ha-Mivtar excavation",
+      "year": "1968",
+      "type": "ARCHAEOLOGY",
+      "used_for": "Confirms Roman crucifixion practice and iron nail penetration through heel bone."
+    },
+    "MFPRT-012": {
+      "author": "Bonani G. et al.",
+      "title": "Radiocarbon Dating of the Dead Sea Scrolls",
+      "source": "Atiqot 20",
+      "year": "1991",
+      "type": "JOURNAL",
+      "used_for": "Radiocarbon dating of Dead Sea Scroll materials to pre-Christian centuries."
+    },
+    "MFPRT-014": {
+      "author": "Popovic M. et al.",
+      "title": "AI writer identification of Dead Sea Scrolls scribes",
+      "source": "PLOS ONE 16(4)",
+      "year": "2021",
+      "type": "JOURNAL",
+      "used_for": "AI handwriting analysis confirming scribal dating of Dead Sea Scrolls."
+    },
+    "MFPRT-022": {
+      "author": "Jewish scholars in Alexandria",
+      "title": "Septuagint (LXX) Greek Translation",
+      "source": "Alexandria, Egypt",
+      "year": "3rd-2nd century BC",
+      "type": "PRIMARY",
+      "used_for": "Messianic prophecies locked in separate language system 200+ years before Jesus."
+    },
+    "MFPRT-026": {
+      "author": "Harold W. Hoehner",
+      "title": "Chronological Aspects of the Life of Christ",
+      "source": "Zondervan",
+      "year": "1977",
+      "type": "BOOK",
+      "used_for": "Daniel 9 time prophecy: 173,880 days from 444 BC to AD 33 Palm Sunday."
+    },
+    "MFPRT-028": {
+      "author": "Gary R. Habermas",
+      "title": "Resurrection Research 1975-Present",
+      "source": "Journal for the Study of the Historical Jesus 3(2)",
+      "year": "2005",
+      "type": "JOURNAL",
+      "used_for": "~75% of scholars accept historicity of empty tomb, including non-conservative."
+    },
+    "MFPRT-030": {
+      "author": "Flavius Josephus",
+      "title": "Jewish Antiquities 18.116-119",
+      "source": "c. AD 93-94",
+      "year": "c. AD 93-94",
+      "type": "PRIMARY",
+      "used_for": "Independent confirmation of John the Baptist's historical existence and ministry."
+    },
+    "MFPRT-031": {
+      "author": "Martin Hengel",
+      "title": "Crucifixion in the Ancient World",
+      "source": "Fortress Press",
+      "year": "1977",
+      "type": "BOOK",
+      "used_for": "Roman soldiers' right to divide condemned person's garments as standard practice."
+    },
+    "MFPRT-033": {
+      "author": "Plutarch; Vegetius",
+      "title": "Life of Cato 2.6; De Re Militari 4.7",
+      "source": "Ancient Greek/Latin texts",
+      "year": "c. AD 100 / 390",
+      "type": "PRIMARY",
+      "used_for": "Posca (vinegar-water) as standard Roman military beverage at crucifixion sites."
+    },
+    "MFPRT-034": {
+      "author": "Suetonius",
+      "title": "Life of Claudius 25.4",
+      "source": "c. AD 121",
+      "year": "c. AD 121",
+      "type": "PRIMARY",
+      "used_for": "Claudius expelling Jews over Chrestus/Christ — Christianity in Rome by AD 49."
+    },
+    "MFPRT-035": {
+      "author": "Israel Antiquities Authority",
+      "title": "Akeldama Archaeological Excavation",
+      "source": "Hinnom Valley, Jerusalem",
+      "year": "1989",
+      "type": "ARCHAEOLOGY",
+      "used_for": "Confirms potter's field site consistent with Zechariah 11:13 / Matthew 27:7."
+    },
+    "MFPRT-036": {
+      "author": "Doudna G. et al.; 2025 AI+AMS team",
+      "title": "4QDanielc Radiocarbon Dating",
+      "source": "Radiocarbon; PLOS ONE",
+      "year": "2001-2025",
+      "type": "JOURNAL",
+      "used_for": "Carbon-14 locks Daniel 9 time prophecy to pre-Christian era."
+    },
+    "MFPRT-037": {
+      "author": "Rodney Stark",
+      "title": "The Rise of Christianity",
+      "source": "Princeton University Press",
+      "year": "1996",
+      "type": "BOOK",
+      "used_for": "Sociological growth model: ~1000 Christians AD 40 to ~6.3 million by AD 300."
+    }
+  },
+  "zones": [
+    {
+      "mood": "calm",
+      "blocks": [
+        {"type":"heading","level":2,"text":"神有没有在历史中留下指纹？","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"两个问题：","fx":"fx-fade-up"},
+        {"type":"list","ordered":true,"items":["神有没有在历史中留下指纹？","如果有，是什么，在哪里？"],"fx":"fx-fade-up"},
+        {"type":"paragraph","text":"上帝在历史中留下的指纹，多不胜数。本篇只选择最重要的一个系列。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"就是——<strong>「道路、真理、生命」在哪里。</strong>","fx":"fx-glow"},
+        {"type":"divider"},
+        {"type":"heading","level":3,"text":"结论","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"有没有可能——一个人还没有出生，他的一生已经写好在人类历史里？","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"不但是写好了，还是横跨近千年、由10位作者记载串联而成。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"这10位作者，彼此之间没有关系，却都写出了一个系列的预言——在未来实现了。只能证明一件事：就如作者自己所说的，他们和上帝有交流。是上帝把这些预言拼图赐给他们。","fx":"fx-fade-up"},
+        {"type":"quote","text":"「分布本身就是证据。分散，意味着无法合谋。拼合，意味着背后有一个统一的策划者。」","fx":"fx-quote"},
+        {"type":"paragraph","text":"那个策划者，就是站在时间之外的那一位。","fx":"fx-glow"},
+        {"type":"divider"},
+        {"type":"heading","level":3,"text":"指纹的逻辑","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"如果上帝创造了时间，祂就不受时间限制。这意味着：祂可以在事件发生之前，写下事件的细节。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"就像一个编剧，在演员上台之前，已经写好了剧本。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"但有一个关键区别——人写的剧本，演员是照着演的；上帝写的预言，当事人根本不知道自己正在应验预言。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"耶稣出生在伯利恒，不是因为耶稣读了弥迦书5:2然后故意去伯利恒出生——他还没出生，怎么选择出生地？","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"<strong>预言的应验，不是演员照剧本演的——是历史本身，在不知不觉中，走进了提前写好的轨道。</strong>","fx":"fx-glow"},
+        {"type":"divider"},
+        {"type":"heading","level":3,"text":"验证的逻辑","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"你怎么知道这些预言不是事后补写的？你怎么知道不是耶稣死了之后，有人倒推他的经历，然后假装「预言」早就写好了？","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"这个问题有一个物理级别的答案。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"同样——你怎么知道应验不是基督徒自己编的？","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"<strong>去问耶稣的敌人。</strong>","fx":"fx-glow"},
+        {"type":"paragraph","text":"如果连最恨你的人，都在自己的记录里不小心确认了你说的是事实——那「编造」这个解释就站不住了。","fx":"fx-fade-up"}
+      ]
+    },
+    {
+      "mood": "awe",
+      "blocks": [
+        {"type":"heading","level":3,"text":"预言拼图：10位作者，近千年，同一张脸","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"以下是旧约中关于弥赛亚的预言，按耶稣生平顺序排列。每一位作者写下这些话的时候，耶稣都还没有出生。","fx":"fx-fade-up"},
+        {"type":"divider"},
+
+        {"type":"heading","level":4,"text":"A · 身份与出生","fx":"fx-fade-up"},
+        {"type":"table","headers":["预言","作者（写作年代）","⏱"],"rows":[["祂的来源从亘古、从太初","弥迦（~前700年）","—"],["必有童贞女怀孕生子","以赛亚（~前700年）","695年"],["圭必不离犹大，直到示罗来","摩西（~前1400年）","1,395年"],["从耶西的本必发一条","以赛亚（~前700年）","695年"],["伯利恒……必有一位出来","弥迦（~前700年）","695年"],["拉结哭泣她的儿女","耶利米（~前600年）","595年"],["我从埃及召出我的儿子","何西阿（~前750年）","745年"]],"fx":"fx-fade-up"},
+
+        {"type":"heading","level":4,"text":"B · 事工与传道","fx":"fx-fade-up"},
+        {"type":"table","headers":["预言","作者（写作年代）","⏱"],"rows":[["在旷野有人声喊着说","以赛亚（~前700年）","727年"],["坐在黑暗里的百姓看见了大光","以赛亚（~前700年）","728年"],["瞎子的眼必睁开","以赛亚（~前700年）","728年"],["我要开口说比喻","诗篇作者（~前1000年）","1,028年"],["祂被藐视，被人厌弃","以赛亚（~前700年）","730年"],["我为你的殿心里焦急，如同火烧","诗篇作者（~前1000年）","1,030年"]],"fx":"fx-fade-up"},
+
+        {"type":"heading","level":4,"text":"C · 进城与背叛","fx":"fx-fade-up"},
+        {"type":"table","headers":["预言","作者（写作年代）","⏱"],"rows":[["你的王……谦谦和和地骑着驴","撒迦利亚（~前520年）","550年"],["我所信任、吃我饭的人用脚踢我","诗篇作者（~前1000年）","1,030年"],["他们就给了我三十块银钱","撒迦利亚（~前520年）","550年"],["将这三十块银钱丢给窑户","撒迦利亚（~前520年）","550年"],["击打牧人，羊就四散","撒迦利亚（~前520年）","550年"]],"fx":"fx-fade-up"},
+
+        {"type":"heading","level":4,"text":"D · 受审与受难","fx":"fx-fade-up"},
+        {"type":"table","headers":["预言","作者（写作年代）","⏱"],"rows":[["祂被欺压……却不开口","以赛亚（~前700年）","730年"],["凡看见我的都嗤笑我","诗篇作者（~前1000年）","1,030年"],["羊羔的骨头一根也不可折断","摩西（~前1400年）","1,430年"],["他们扎了我的手，我的脚","诗篇作者（~前1000年）","1,030年"],["祂也被列在罪犯之中","以赛亚（~前700年）","730年"],["他们分我的外衣，为我的里衣拈阄","诗篇作者（~前1000年）","1,030年"],["拿苦胆给我当食物；拿醋给我喝","诗篇作者（~前1000年）","1,030年"],["我必使日头在正午沉落","阿摩司（~前750年）","780年"],["连一根也不折断","诗篇作者（~前1000年）","1,030年"],["他们必仰望他们所扎的人","撒迦利亚（~前520年）","550年"]],"fx":"fx-fade-up"},
+
+        {"type":"heading","level":4,"text":"E · 安葬、复活与之后","fx":"fx-fade-up"},
+        {"type":"table","headers":["预言","作者（写作年代）","⏱"],"rows":[["死的时候与财主同葬","以赛亚（~前700年）","730年"],["不叫你的圣者见朽坏","诗篇作者（~前1000年）","1,030年"],["你坐在我的右边","诗篇作者（~前1000年）","1,030年"],["地的四极都要记念耶和华","诗篇作者（~前1000年）","1,000年"],["七十个七：到弥赛亚被剪除483年","但以理（~前539年）","572年"]],"fx":"fx-fade-up"},
+
+        {"type":"quote","text":"「33条预言，最短550年，最长1,430年。全部指向同一个人。」","fx":"fx-glow"},
+        {"type":"divider"},
+
+        {"type":"heading","level":4,"text":"排除「事后补写」：物理封存","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"1947年，牧羊人在死海边的洞穴里发现了被封存近两千年的卷轴。其中最关键的一份：<strong>以赛亚大卷轴（1QIsaᵃ）</strong>——完整保存了以赛亚书全部66章，包括第53章。","fx":"fx-fade-up"},
+        {"type":"table","headers":["检测项目","结果"],"rows":[["碳-14定年（苏黎世理工；亚利桑那大学）","校准日期：前356年 - 前103年"],["古文字学定年（多位独立学者）","前150年 - 前100年"],["AI笔迹分析 <span class=\"ref-tag\" data-ref=\"MFPRT-014\">[MFPRT-014]</span>","两位抄写员完成，与古文字学一致"]],"fx":"fx-fade-up"},
+        {"type":"paragraph","text":"<strong>物理裁定：以赛亚书53章的受难预言，在耶稣出生前至少100年，已经处于「只读状态」。事后补写在物理上不可能。</strong>","fx":"fx-glow"},
+        {"type":"paragraph","text":"以赛亚大卷轴是一整张连续的羊皮纸（长约7.3米），53章位于卷轴中部——物理上不可能被后期插入而不留痕迹。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"再加上：七十士译本（LXX）<span class=\"ref-tag\" data-ref=\"MFPRT-022\">[MFPRT-022]</span>——公元前280-130年完成的希腊文圣经翻译——将预言锁入了第二个独立语言系统。即使用最苛刻的怀疑，你也无法解释两个独立语言系统的翻译者如何「合谋篡改」。","fx":"fx-fade-up"},
+        {"type":"divider"},
+
+        {"type":"heading","level":4,"text":"排除「自圆其说」：敌方确认","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"就算预言是真的、古老的——你怎么知道应验也是真的？去问耶稣的敌人。","fx":"fx-fade-up"},
+
+        {"type":"lens","label":"证人一：塔西佗 — 罗马元老院议员","paragraphs":["立场：称基督教为「致命的迷信」<span class=\"ref-tag\" data-ref=\"MFPRT-002\">[MFPRT-002]</span>","他写道：基督，在提比略统治时期被我们的一位总督本丢·彼拉多处以极刑。","<strong>敌方确认：耶稣是真实被处决的人，时间窗口与福音书一致，执行者是彼拉多。</strong>"]},
+
+        {"type":"lens","label":"证人二：约瑟夫斯 — 犹太-罗马史学家","paragraphs":["立场：非基督徒犹太人，为罗马皇帝写作<span class=\"ref-tag\" data-ref=\"MFPRT-001\">[MFPRT-001]</span>","记载耶稣是一位「智慧的人」，在彼拉多手下被钉十字架，追随者在他死后并未消散。","<strong>敌方确认：耶稣真实存在，被钉十字架，运动持续。</strong>"]},
+
+        {"type":"lens","label":"证人三：塔木德 — 犹太拉比文献","paragraphs":["立场：明确贬低耶稣为「行法术者」<span class=\"ref-tag\" data-ref=\"MFPRT-004\">[MFPRT-004]</span>——这是「敌方数据备份」，不是友方证词","记载：在逾越节前夕，Yeshu（耶稣）被吊死。在此之前四十天，传令官宣告——但没有人来为他辩护。","<strong>无意中确认：处决时间在逾越节；耶稣行了超自然之事（敌人无法否认事件本身，只能重新归因）；有大量追随者。</strong>"]},
+
+        {"type":"lens","label":"证人四：小普林尼 — 罗马总督","paragraphs":["立场：正在审讯和处决基督徒<span class=\"ref-tag\" data-ref=\"MFPRT-003\">[MFPRT-003]</span>","报告：基督徒轮流向基督唱颂歌，如同向神唱颂歌一样。","<strong>敌方确认：公元112年基督徒已大规模存在；基督徒将基督视为「神」来敬拜。</strong>"]},
+
+        {"type":"lens","label":"证人五：琉善 — 希腊讽刺作家","paragraphs":["立场：嘲笑基督徒「愚蠢轻信」<span class=\"ref-tag\" data-ref=\"MFPRT-006\">[MFPRT-006]</span>","写道：他们崇拜那位在巴勒斯坦被钉十字架的伟大人物。","<strong>敌方确认处决地点和方式。</strong>"]},
+
+        {"type":"lens","label":"证人六：马拉·巴·塞拉皮翁 — 叙利亚哲学家","paragraphs":["立场：异教哲学家<span class=\"ref-tag\" data-ref=\"MFPRT-005\">[MFPRT-005]</span>，将耶稣与苏格拉底并列","写道：犹太人处决了他们的「智慧之王」，此后他们的王国就被废除了。","<strong>敌方确认处决，以及处决后犹太王国灭亡（公元70年耶路撒冷被毁）。</strong>"]},
+
+        {"type":"paragraph","text":"<strong>5位独立的非基督徒作者，在不同时间、不同地点、以不同立场，共同确认了同一组核心事实。当最敌对的来源都在无意中确认了核心事实时，「编造」假说就在逻辑上崩溃了。</strong>","fx":"fx-glow"},
+        {"type":"divider"},
+
+        {"type":"heading","level":4,"text":"排除「文学虚构」：考古物证","fx":"fx-fade-up"},
+
+        {"type":"lens","label":"彼拉多石碑（1961年出土）","paragraphs":["凯撒利亚罗马剧场遗址中发掘出的石灰岩铭文<span class=\"ref-tag\" data-ref=\"MFPRT-007\">[MFPRT-007]</span>","刻有：「本丢·彼拉多，犹太行省长官」","<strong>排除「彼拉多是虚构人物」的假说。确认其官方头衔与路加福音3:1一致。</strong>"]},
+
+        {"type":"lens","label":"该亚法骨瓮（1990年出土）","paragraphs":["耶路撒冷南部墓穴中出土的精美骨瓮<span class=\"ref-tag\" data-ref=\"MFPRT-008\">[MFPRT-008]</span>","铭文两次刻有「Yehosef bar Qayafa」。骨瓮内有一位约60岁男性的遗骨。","<strong>排除「该亚法是虚构人物」的假说。主持审判耶稣的大祭司——此人真实存在。</strong>"]},
+
+        {"type":"lens","label":"耶霍哈南足骨（1968年出土）","paragraphs":["耶路撒冷北部墓穴中发现的年轻男性遗骨<span class=\"ref-tag\" data-ref=\"MFPRT-009\">[MFPRT-009]</span>","右脚跟骨中仍嵌有一枚11.5厘米长的铁钉，钉尖弯曲——因撞击橄榄木十字架上的木节而弯折。","<strong>物理证实：罗马人确实在一世纪的耶路撒冷执行十字架刑。诗篇22:16写于约公元前1000年——当时十字架刑尚不存在。</strong>"]},
+
+        {"type":"paragraph","text":"<strong>从地下挖出的石头和骨头，不持任何宗教立场。</strong>","fx":"fx-glow"},
+        {"type":"divider"},
+
+        {"type":"heading","level":4,"text":"拼图还原","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"<strong>出生：</strong>弥迦（~前700年）写：弥赛亚生于伯利恒。何西阿（~前750年）写：从埃及召出我的儿子。耶利米（~前600年）写：拉结为儿女哭号。→ 耶稣出生在伯利恒（因罗马普查被迫返回祖籍），幼年逃往埃及又回来，伯利恒婴孩被杀。","fx":"fx-fade-up"},
+        {"type":"typewriter","text":"一个人怎么选择自己的出生地？"},
+        {"type":"paragraph","text":"<strong>事工：</strong>以赛亚写：瞎子看见，聋子听见。以赛亚写：在加利利的大光。诗篇作者写：用比喻说话。→ 耶稣在加利利传道，行神迹，用比喻教导。","fx":"fx-fade-up"},
+        {"type":"typewriter","text":"一个人怎么选择自己事工的方式和地点？"},
+        {"type":"paragraph","text":"<strong>受难：</strong>诗篇22篇写：扎了我的手，我的脚；分我的外衣；拿醋给我喝。以赛亚53章写：被藐视；不开口；与恶人同列；与财主同葬。撒迦利亚写：三十块银钱；丢给窑户。→ 耶稣被门徒以三十块银钱出卖，沉默受审，手脚被扎穿，衣服被掣签分配，被喂醋，骨头未折，与财主同葬新坟。","fx":"fx-fade-up"},
+        {"type":"typewriter","text":"一个人怎么选择自己被卖的价格、被处刑的方式、被安葬的地点？"},
+        {"type":"paragraph","text":"<strong>复活与之后：</strong>诗篇16篇写：不叫你的圣者见朽坏。诗篇110篇写：坐在我右边。诗篇22篇写：地的四极都要记念耶和华。→ 耶稣复活。教会从耶路撒冷扩展到罗马，再到全世界——至今仍在扩展。","fx":"fx-fade-up"},
+        {"type":"typewriter","text":"一个人怎么选择自己死后发生的事？"},
+        {"type":"divider"},
+
+        {"type":"heading","level":4,"text":"概率：排除巧合","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"数学家 Peter Stoner 仅取其中8条预言，计算一个人同时偶然应验的概率：","fx":"fx-fade-up"},
+        {"type":"quote","text":"「1 / 10¹⁷」","fx":"fx-glow"},
+        {"type":"paragraph","text":"即：在10¹⁷个人中，只有1人可以由纯粹巧合同时满足这8条。10¹⁷个人约等于地球历史上曾存在的全部人口的1,400倍。若取48条预言：概率降至 1 / 10¹⁵⁷。","fx":"fx-fade-up"},
+        {"type":"lens","label":"【诚实窗口】","paragraphs":["Stoner 的计算有一个已知缺陷：他假设每条预言互相独立，然后将概率直接相乘。但「生于伯利恒」和「从大卫后裔而来」不是独立的。此外，每条预言的概率赋值也是 Stoner 自己预设的，学术界对此有争议。","<strong>1/10¹⁷ 还是 1/10⁸——数字有争议，方向是一致的：一个人同时应验这么多预言，不可能是巧合。</strong>哪怕把 Stoner 的数字砍掉九个数量级，结论的方向不变。"]},
+        {"type":"paragraph","text":"<strong>「巧合」假说已被证伪——不是被一个精确数字证伪的，而是被量级差距证伪的。</strong>","fx":"fx-glow"},
+        {"type":"divider"},
+
+        {"type":"heading","level":4,"text":"排除其他候选人","fx":"fx-fade-up"},
+        {"type":"table","headers":["候选人","满足条数","关键失败点"],"rows":[["西蒙·巴尔·科赫巴（132年）","~1–2","未生于伯利恒；战死未复活"],["西奥达斯（44年）","0","被罗马军队杀死，无预言应验"],["拿撒勒的耶稣（前5–33年）","33+","唯一同时满足全部类别预言的历史人物"]],"fx":"fx-fade-up"},
+        {"type":"paragraph","text":"<strong>唯一性不是声称——是对比出来的。</strong>","fx":"fx-glow"},
+        {"type":"divider"},
+
+        {"type":"paragraph","text":"33条预言。10位互不相识的作者。横跨近千年。全部指向同一个人。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"物理封存证明预言不是事后补写的。敌方证词证明应验不是编造的。考古物证证明圣经描述的世界是真实的。概率计算证明巧合是不可能的。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"<strong>只有站在时间之外的那一位，才能在时间之内留下这样的痕迹。</strong>","fx":"fx-glow"},
+        {"type":"next","text":"下一章：如果这个人真的来了——祂的复活，能不能被验证？"}
+      ]
+    }
+  ]
+}

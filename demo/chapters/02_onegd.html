@@ -1,0 +1,380 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第二章：为什么只能有一个神 — You Need God</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;600;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Noto Sans SC',sans-serif;
+  line-height:2.0;color:rgba(215,215,225,0.92);
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  background:#050508;
+}
+/* Aurora */
+.aurora{position:fixed;inset:0;z-index:0;transition:background 4s ease;pointer-events:none}
+/* Starfield */
+canvas{position:fixed;inset:0;z-index:1;pointer-events:none}
+/* Content */
+.content{
+  position:relative;z-index:10;
+  max-width:700px;margin:0 auto;padding:6rem 2rem 10rem;
+  opacity:0;transition:opacity 1.5s ease 0.5s;
+}
+.content.visible{opacity:1}
+/* Zone */
+.zone{margin-bottom:6rem;padding-top:2rem}
+/* Headings */
+h1,h2,h3{font-family:'Noto Serif SC',serif;color:rgba(255,255,255,0.92);letter-spacing:0.04em}
+h2{font-size:1.8rem;margin-bottom:1.5rem;border-bottom:1px solid rgba(255,255,255,0.06);padding-bottom:0.6rem}
+h3{font-size:1.2rem;color:rgba(230,230,240,0.85);margin-top:2.5rem;margin-bottom:1rem}
+h4{font-size:1rem;color:rgba(200,200,215,0.8);margin-top:2rem;margin-bottom:0.8rem;font-weight:500}
+/* Text */
+p{margin-bottom:1.4rem;font-size:1.05rem;color:rgba(215,215,225,0.85)}
+strong{color:#fff;font-weight:600}
+.lead{font-size:1.25rem;color:#e2e1e9;font-weight:300;margin-bottom:1.6rem}
+/* Lists */
+ul,ol{padding-left:1.5rem;margin-bottom:1.5rem}
+li{margin-bottom:0.6rem;font-size:1rem;color:rgba(205,205,218,0.85)}
+/* Blockquote */
+blockquote{
+  border-left:2px solid rgba(255,255,255,0.08);padding:0.8rem 1.5rem;
+  margin:1.5rem 0;color:rgba(195,195,210,0.75);font-style:italic;
+  background:rgba(255,255,255,0.01);
+}
+blockquote.fx-quote{
+  font-family:'Noto Serif SC',serif;
+  border-left:3px solid rgba(160,130,220,0.3);padding:1.5rem 2rem;
+  margin:2.5rem 0;background:rgba(160,130,220,0.02);border-radius:6px;
+  font-style:normal;font-size:1.2rem;line-height:1.8;color:#f1ebd9;
+  opacity:0;transform:scale(0.97);
+  transition:opacity 1.8s ease,transform 1.8s ease,border-color 2s ease 0.5s,box-shadow 2s ease 0.5s;
+}
+blockquote.fx-quote.visible{
+  opacity:1;transform:scale(1);
+  border-left-color:rgba(160,130,220,0.7);
+  box-shadow:-4px 0 20px rgba(160,130,220,0.1),0 0 30px rgba(0,0,0,0.2);
+}
+/* Lens */
+.lens-block{border-left:2px solid rgba(160,130,100,0.3);padding-left:1.5rem;margin:2.5rem 0}
+.lens-label{font-family:'Noto Serif SC',serif;font-size:0.75rem;letter-spacing:0.25em;color:rgba(180,150,120,0.6);margin-bottom:1rem;font-weight:600}
+/* Divider */
+.divider{width:3rem;height:1px;background:rgba(255,255,255,0.1);margin:4rem 0}
+/* Tables */
+.table-wrap{margin:2rem 0;border-radius:8px;border:1px solid rgba(255,255,255,0.05);overflow-x:auto;background:rgba(255,255,255,0.012);-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:0.85rem;min-width:500px}
+thead{background:rgba(255,255,255,0.025)}
+th{padding:0.7rem 1rem;text-align:left;font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(200,195,180,0.7);border-bottom:1px solid rgba(255,255,255,0.08)}
+td{padding:0.65rem 1rem;color:rgba(215,215,225,0.8);border-bottom:1px solid rgba(255,255,255,0.03);vertical-align:top;line-height:1.6}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:rgba(255,255,255,0.015)}
+/* Ref tags */
+.ref-tag{font-size:0.68rem;color:rgba(130,160,220,0.7);cursor:pointer;border-bottom:1px dotted rgba(130,160,220,0.3);transition:color 0.2s}
+.ref-tag:hover{color:rgba(160,190,255,1)}
+/* Effects */
+.fx-fade-up{opacity:0;transform:translateY(18px);transition:opacity 1.2s ease,transform 1.2s ease}
+.fx-fade-up.visible{opacity:1;transform:translateY(0)}
+.fx-glow{opacity:0;transition:opacity 1.5s ease}
+.fx-glow.visible{opacity:1;animation:textGlow 3.5s ease-in-out 1}
+@keyframes textGlow{0%{text-shadow:0 0 0 rgba(200,210,255,0)}30%{text-shadow:0 0 20px rgba(180,195,255,0.4),0 0 40px rgba(150,170,255,0.15)}60%{text-shadow:0 0 10px rgba(180,195,255,0.2)}100%{text-shadow:none}}
+.fx-typewriter{opacity:0;transition:opacity 0.5s}.fx-typewriter.visible{opacity:1}
+.tw-cursor{display:inline-block;width:2px;height:1.1em;background:rgba(200,210,240,0.7);margin-left:2px;vertical-align:text-bottom;animation:blink .8s step-end infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+/* Next chapter hint */
+.next-chapter{margin-top:3rem;color:rgba(140,140,160,0.5);font-style:italic;font-size:0.9rem}
+/* Chapter label */
+.chapter-label{font-family:'Noto Serif SC',serif;font-size:0.7rem;letter-spacing:0.5em;text-transform:uppercase;color:rgba(140,150,180,0.5);margin-bottom:2rem;border-left:2px solid rgba(140,150,180,0.25);padding-left:0.8rem}
+/* Transition zone */
+.zone-transition{height:60vh;display:flex;align-items:center;justify-content:center}
+/* Controls */
+.music-toggle{position:fixed;top:1.5rem;right:1.5rem;z-index:900;background:rgba(10,10,18,0.7);border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.5);width:2.4rem;height:2.4rem;border-radius:50%;font-size:0.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s}
+.music-toggle:hover{color:#fff;border-color:rgba(255,255,255,0.2)}
+.music-toggle.muted{color:rgba(255,255,255,0.2);text-decoration:line-through}
+/* Music toast */
+.music-toast{
+  position:fixed;top:1.5rem;right:4.5rem;z-index:900;
+  background:rgba(10,10,18,0.85);border:1px solid rgba(255,255,255,0.08);
+  padding:0.5rem 1.2rem;border-radius:2rem;
+  display:flex;align-items:center;gap:0.5rem;
+  opacity:0;transform:translateX(15px);
+  transition:opacity 1s ease,transform 1s ease,box-shadow 0.6s ease;
+  pointer-events:none;
+}
+.music-toast.visible{opacity:1;transform:translateX(0)}
+.music-toast.glow{box-shadow:0 0 15px rgba(160,180,255,0.3);border-color:rgba(140,160,220,0.4)}
+.toast-icon{font-size:0.7rem;color:rgba(140,160,220,0.7)}
+.toast-text{font-size:0.72rem;color:rgba(180,185,200,0.8);white-space:nowrap}
+/* Scene change flash indicator */
+.scene-indicator{
+  position:fixed;top:0;left:0;right:0;height:2px;z-index:800;
+  background:linear-gradient(90deg,transparent,rgba(140,160,220,0.6),transparent);
+  opacity:0;transition:opacity 0.8s ease;pointer-events:none;
+}
+.scene-indicator.flash{opacity:1}
+/* Responsive */
+@media(max-width:640px){
+  .content{padding:4rem 1.2rem 6rem}
+  h2{font-size:1.4rem}
+  .table-wrap{border:none;background:none}
+  table{min-width:0}
+}
+</style>
+</head>
+<body>
+<div class="aurora" id="au"></div>
+<div class="scene-indicator" id="sceneFlash"></div>
+<canvas id="c"></canvas>
+<button class="music-toggle" id="musicToggle">♪</button>
+<div class="music-toast" id="musicToast"><span class="toast-icon">♪</span> <span class="toast-text" id="toastText"></span></div>
+
+<main class="content" id="mainContent">
+
+<!-- ZONE 1: WONDER — Opening -->
+<section class="zone" data-mood="wonder">
+  <div class="chapter-label">第二章 · ONEGD</div>
+  <h2 class="fx-fade-up">为什么只能有一个神</h2>
+  <p class="lead fx-fade-up">先说清楚：这一章在辩论什么</p>
+  <p class="fx-fade-up">前面的章节，我们已经走过了这样一条路：宇宙有起点、宇宙的精密设计不是随机的、你有灵魂。走到这里，"有没有神"这个问题，已经有了答案：<strong>有。</strong></p>
+  <p class="fx-fade-up">但很多人在这个时候，会本能地跳到另一个战场：</p>
+  <blockquote>"好吧，就算有神——但你怎么知道只有你那个神？"</blockquote>
+  <p class="fx-fade-up">注意——这个反应，<strong>悄悄换了一个问题。</strong></p>
+  <p class="fx-fade-up"><strong>这一章只回答一个问题：</strong></p>
+  <blockquote class="fx-quote">神的数量，是 1，还是 2 或以上？</blockquote>
+  <p class="fx-fade-up">不需要信仰，不需要宗教立场，只需要逻辑。</p>
+  <div class="divider"></div>
+  <h3 class="fx-fade-up">结论</h3>
+  <p class="fx-fade-up">整个宇宙只有一套法则。一套法则，只能有一个立法者。</p>
+  <p class="fx-glow">这不是宗教偏见——这是逻辑。</p>
+  <div class="divider"></div>
+  <h3 class="fx-fade-up">逻辑</h3>
+  <p class="fx-fade-up">很多人会有一个"包容性"的反应："我同时接受释迦摩尼、阿拉、宇宙意识……不行吗？"</p>
+  <p class="fx-fade-up">这个想法听起来很开明。但它犯了一个根本性的逻辑错误。不是"哪个神更好"的问题。是<strong>结构上不可能同时成立</strong>。</p>
+  <div class="lens-block fx-fade-up">
+    <p class="lens-label">【直觉窗口】</p>
+    <p>你被生了一次。你只有一个母亲。没有人会说："我同时接受张女士和李女士都是我的亲生母亲。"不是因为不够包容，而是因为你只被生了一次——那个起点只能有一个人。</p>
+    <p><strong>宇宙只被创造了一次。那个起点，只能有一个创造者。</strong></p>
+  </div>
+</section>
+
+<!-- ZONE TRANSITION -->
+<section class="zone-transition" data-transition="lightspeed"></section>
+
+<!-- ZONE 2: AWE — Arguments -->
+<section class="zone" data-mood="awe">
+  <h3 class="fx-fade-up">论证</h3>
+  <h4 class="fx-fade-up">一、法则的唯一性</h4>
+  <p class="fx-fade-up">整个可观测宇宙遵循<strong>同一套</strong>物理法则：光速恒定、1+1=2 没有例外、引力常数 G 在任何角落都相同。</p>
+  <p class="fx-fade-up">假设有两个神各自带着一套法则：神A说光速是 c，神B说光速是 2c。结果？宇宙在第一秒就矛盾崩溃。</p>
+  <p class="fx-glow"><strong>宇宙存在且运作正常</strong> → 只有一套法则 → 只有一个立法者。</p>
+  <div class="lens-block fx-fade-up">
+    <p class="lens-label">【诚实窗口：你可能想到的反驳】</p>
+    <p>"多个立法者达成一致，不也可以产生一套法则吗？"——这把"法"理解成了法律。但宇宙的"法"是<strong>真理定律</strong>。</p>
+    <p>真理是<strong>客观</strong>的（不依赖同意）、<strong>绝对</strong>的（没有例外）、<strong>排他</strong>的（不可能同时真又不真）。真理不是被"决定"的，是被"发现"的。如果真理有一个源头，那个源头只能是一个。</p>
+  </div>
+  <div class="divider"></div>
+  <h4 class="fx-fade-up">二、全能的自我矛盾</h4>
+  <p class="fx-fade-up">假设神A和神B同时存在，都声称全能。问一个简单的问题：</p>
+  <blockquote class="fx-quote">神A能不能限制神B的能力？</blockquote>
+  <ul class="fx-fade-up">
+    <li><strong>能</strong>——那神B不再全能</li>
+    <li><strong>不能</strong>——那神A不再全能</li>
+  </ul>
+  <p class="fx-glow">全能在逻辑上只能是一个。两个全能等于零个全能。</p>
+  <div class="divider"></div>
+  <h4 class="fx-fade-up">三、起源的唯一性</h4>
+  <p class="fx-fade-up">宇宙有一个起点（大爆炸）。创造是一个<strong>单次事件</strong>。两个创造者同时"创造"同一个宇宙，在逻辑上等于两个人同时生了同一个孩子。</p>
+  <p class="fx-fade-up"><strong>起点只有一个。那个起点的源头，只能是一个。</strong></p>
+  <div class="divider"></div>
+  <h4 class="fx-fade-up">四、"条条大路通罗马"说明了什么</h4>
+  <p class="fx-fade-up">这个比喻恰恰证明了相反的事：</p>
+  <p class="fx-glow"><strong>罗马只有一个。</strong>所有路通向的，是同一个地方。</p>
+  <p class="fx-fade-up">不同的路，不代表不同的终点。也不代表所有路都真的到达了那个终点。</p>
+  <div class="divider"></div>
+  <h4 class="fx-fade-up">五、"耶稣和释迦摩尼都是神"为什么不成立</h4>
+  <p class="fx-fade-up">释迦摩尼从未声称自己是创造宇宙的神。他明确说自己是人，不是神。</p>
+  <p class="fx-fade-up">耶稣说："我与父原为一。"（约翰福音 10:30）他声称的是创造者的身份。</p>
+  <p class="fx-fade-up"><strong>"神"这个词，在逻辑上只能指向那一位创造宇宙的存在者——而那个位置，只有一个。</strong></p>
+  <div class="divider"></div>
+  <h3 class="fx-fade-up">小结</h3>
+  <div class="table-wrap fx-fade-up">
+    <table><thead><tr><th>论证</th><th>结论</th></tr></thead><tbody>
+    <tr><td>宇宙只有一套法则</td><td>只能有一个立法者</td></tr>
+    <tr><td>全能在逻辑上不可能是两个</td><td>全能只能是一个</td></tr>
+    <tr><td>创造只发生了一次</td><td>创造者只能是一个</td></tr>
+    <tr><td>释迦摩尼从未声称是创造者</td><td>不是同一类声称</td></tr>
+    <tr><td>你的灵魂是永恒的</td><td>这个问题的后果也是永恒的</td></tr>
+    </tbody></table>
+  </div>
+  <p class="fx-glow"><strong>神，只能有一个。不是"可能只有一个"——是逻辑上不可能多于一个。</strong></p>
+</section>
+
+<!-- ZONE 3: AWE — Closing -->
+<section class="zone" data-mood="awe">
+  <h3 class="fx-fade-up">那一个是谁？</h3>
+  <p class="fx-fade-up">问题只剩下一个：<strong>那一个是谁？</strong></p>
+  <p class="fx-fade-up">人造出来的神，留在人的想象里。它的权威来自相信它的人——一旦没有人相信，它就消失了。</p>
+  <p class="fx-fade-up"><strong>但真正的神，不会只活在人的想象里。</strong></p>
+  <p class="fx-fade-up">如果有一位神，真的创造了宇宙，真的站在时间之外——那祂必然在历史中留下痕迹。在时间里，提前写下只有祂才能写下的东西。</p>
+  <p class="fx-glow"><strong>我们把这些痕迹，叫做神的指纹。</strong></p>
+  <p class="fx-fade-up">下一章，我们就来看这些指纹——然后，指向那一位。</p>
+  <p class="next-chapter fx-fade-up"><em>不是"某个宗教的神"。是那位唯一的 CREATOR。</em></p>
+</section>
+
+</main>
+
+
+<audio id="track-calm" loop preload="auto"><source src="../../music_asset/Scott Buckley - Snowfall.mp3" type="audio/mpeg"></audio>
+<audio id="track-wonder" loop preload="auto"><source src="../../music_asset/Scott Buckley - Filaments.mp3" type="audio/mpeg"></audio>
+<audio id="track-awe" loop preload="auto"><source src="../../music_asset/Scott Buckley - Horizons.mp3" type="audio/mpeg"></audio>
+<audio id="track-weight" loop preload="auto"><source src="../../music_asset/Sappheiros - Escape.mp3" type="audio/mpeg"></audio>
+
+<script>
+// === STARFIELD V4 + MUSIC + FAST MOOD TRANSITIONS ===
+(function(){
+var canvas=document.getElementById('c'),ctx=canvas.getContext('2d'),W,H;
+var MOODS={
+  calm:{count:400,speed:0.025,dir:'zoomIn',rot:0.00003,rotDir:1,glow:0.6,aurora:'radial-gradient(ellipse at 35% 45%, rgba(12,30,75,0.55) 0%, rgba(6,12,35,0.2) 40%, transparent 70%)',track:'track-calm'},
+  wonder:{count:650,speed:0.04,dir:'rise',rot:0.00007,rotDir:1,glow:0.8,aurora:'radial-gradient(ellipse at 45% 40%, rgba(50,25,100,0.5) 0%, rgba(20,10,55,0.2) 40%, transparent 70%)',track:'track-wonder'},
+  awe:{count:1100,speed:0.07,dir:'zoomIn',rot:0.00004,rotDir:-1,glow:1.0,aurora:'radial-gradient(ellipse at 40% 50%, rgba(90,30,130,0.55) 0%, rgba(20,50,120,0.22) 35%, transparent 75%)',track:'track-awe'},
+  weight:{count:300,speed:0.012,dir:'sink',rot:0.00002,rotDir:-1,glow:0.35,aurora:'radial-gradient(ellipse at 50% 50%, rgba(10,8,25,0.35) 0%, rgba(5,4,15,0.12) 40%, transparent 65%)',track:'track-weight'}
+};
+var stars=[],angle=0,target=MOODS.calm;
+var rt={count:400,speed:0.025,dir:'zoomIn',rot:0.00003,rotDir:1,glow:0.6};
+var COLORS=[[210,225,255],[255,252,240],[230,235,255],[195,215,255],[255,240,220],[255,220,180],[255,195,170]];
+function pickColor(){var r=Math.random();if(r<.35)return COLORS[0];if(r<.55)return COLORS[1];if(r<.70)return COLORS[2];if(r<.82)return COLORS[3];if(r<.90)return COLORS[4];if(r<.96)return COLORS[5];return COLORS[6];}
+function spawnStar(dir){var x,y;switch(dir){case'zoomIn':var a=Math.random()*Math.PI*2,d=Math.random()*60+5;x=W/2+Math.cos(a)*d;y=H/2+Math.sin(a)*d;break;case'rise':x=Math.random()*W;y=H+Math.random()*20;break;case'sink':x=Math.random()*W;y=-Math.random()*20;break;default:x=Math.random()*W;y=Math.random()*H;break;}return{x:x,y:y,r:0.2+Math.pow(Math.random(),2.5)*1.5,col:pickColor(),bright:0.25+Math.random()*0.55,phase:Math.random()*Math.PI*2,speed:0.004+Math.random()*0.012};}
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+function initStars(n){stars=[];for(var i=0;i<n;i++)stars.push(spawnStar('clockwise'));}
+function lerp(a,b,t){return a+(b-a)*t;}
+function adjustCount(){var tc=rt.count;if(stars.length<tc){var add=Math.min(12,tc-stars.length);for(var i=0;i<add;i++)stars.push(spawnStar(rt.dir));}if(stars.length>tc){var rem=Math.min(12,stars.length-tc);stars.splice(stars.length-rem,rem);}}
+function moveStar(s){var cx=W/2,cy=H/2,spd=rt.speed;switch(rt.dir){case'zoomIn':var dx=s.x-cx,dy=s.y-cy;s.x+=dx*spd*0.012;s.y+=dy*spd*0.012;break;case'rise':s.y-=spd*1.2;s.x+=Math.sin(s.phase*0.3)*spd*0.15;break;case'sink':s.y+=spd*1.0;s.x+=Math.cos(s.phase*0.3)*spd*0.1;break;default:var dx=s.x-cx,dy=s.y-cy;s.x+=dx*spd*0.003;s.y+=dy*spd*0.003;break;}}
+function checkBounds(s){var m=30;if(s.x<-m||s.x>W+m||s.y<-m||s.y>H+m){var ns=spawnStar(rt.dir);s.x=ns.x;s.y=ns.y;s.bright=ns.bright;s.r=ns.r;s.col=ns.col;}}
+function update(){
+  // FASTER lerp: 0.04 instead of 0.015 — scene changes are visible within 2-3 seconds
+  var t=0.04;
+  rt.speed=lerp(rt.speed,target.speed,t);
+  rt.rot=lerp(rt.rot,target.rot,t);
+  rt.glow=lerp(rt.glow,target.glow,t);
+  rt.count=Math.round(lerp(rt.count,target.count,t*0.5));
+  rt.rotDir=target.rotDir;
+  rt.dir=target.dir;
+  adjustCount();angle+=rt.rot*rt.rotDir;
+  for(var i=0;i<stars.length;i++){var s=stars[i];moveStar(s);s.phase+=s.speed;checkBounds(s);}
+}
+function draw(){ctx.clearRect(0,0,W,H);ctx.save();ctx.translate(W/2,H/2);ctx.rotate(angle);ctx.translate(-W/2,-H/2);for(var i=0;i<stars.length;i++){var s=stars[i],tw=0.55+0.45*Math.sin(s.phase),alpha=s.bright*tw*rt.glow,r=s.r;if(r<0.5){ctx.fillStyle='rgba('+s.col[0]+','+s.col[1]+','+s.col[2]+','+alpha+')';ctx.fillRect(s.x,s.y,r*2,r*2);}else{ctx.beginPath();ctx.arc(s.x,s.y,r,0,Math.PI*2);ctx.fillStyle='rgba('+s.col[0]+','+s.col[1]+','+s.col[2]+','+alpha+')';ctx.fill();if(r>1.0&&alpha>0.25){ctx.beginPath();ctx.arc(s.x,s.y,r*2.8,0,Math.PI*2);ctx.fillStyle='rgba('+s.col[0]+','+s.col[1]+','+s.col[2]+','+(alpha*0.1)+')';ctx.fill();}}}ctx.restore();}
+function loop(){update();draw();requestAnimationFrame(loop);}
+resize();initStars(rt.count);document.getElementById('au').style.background=target.aurora;loop();
+window.addEventListener('resize',resize);
+
+// === MUSIC SYSTEM ===
+var MAX_VOL=0.28,FADE_MS=5000;
+var currentAudio=null,isMuted=false,activeFades=new Map();
+
+function fadeVolume(audio,from,to,dur,cb){
+  var existing=activeFades.get(audio);if(existing)clearInterval(existing);
+  var steps=50,stepTime=dur/steps,step=0;audio.volume=Math.max(0,Math.min(1,from));
+  var iv=setInterval(function(){step++;var p=step/steps,e=0.5-0.5*Math.cos(Math.PI*p);
+    audio.volume=Math.max(0,Math.min(1,from+(to-from)*e));
+    if(step>=steps){clearInterval(iv);activeFades.delete(audio);audio.volume=Math.max(0,Math.min(1,to));if(cb)cb();}
+  },stepTime);activeFades.set(audio,iv);
+}
+
+function transitionMusic(trackId){
+  var newAudio=document.getElementById(trackId);
+  if(!newAudio||newAudio===currentAudio)return;
+  if(currentAudio){var old=currentAudio;fadeVolume(old,old.volume,0,FADE_MS,function(){old.pause();});}
+  var vol=isMuted?0:MAX_VOL;newAudio.volume=0;newAudio.play().catch(function(){});
+  setTimeout(function(){fadeVolume(newAudio,0,vol,FADE_MS);},600);
+  currentAudio=newAudio;
+}
+
+// Mute toggle
+document.getElementById('musicToggle').addEventListener('click',function(){
+  isMuted=!isMuted;this.classList.toggle('muted',isMuted);
+  if(currentAudio){if(isMuted)fadeVolume(currentAudio,currentAudio.volume,0,1500);else fadeVolume(currentAudio,0,MAX_VOL,1500);}
+});
+
+// === MOOD ENGINE (scroll-driven) ===
+var TRACK_INFO={'track-calm':{title:'Snowfall',artist:'Scott Buckley'},'track-wonder':{title:'Filaments',artist:'Scott Buckley'},'track-awe':{title:'Horizons',artist:'Scott Buckley'},'track-weight':{title:'Escape',artist:'Sappheiros'}};
+var toastTimer=null;
+function showToast(trackId){
+  var info=TRACK_INFO[trackId];if(!info)return;
+  var toast=document.getElementById('musicToast'),text=document.getElementById('toastText');
+  text.textContent=info.title+' — '+info.artist;
+  if(toastTimer)clearTimeout(toastTimer);
+  toast.classList.remove('visible','glow');
+  setTimeout(function(){toast.classList.add('visible');},50);
+  setTimeout(function(){toast.classList.add('glow');},400);
+  setTimeout(function(){toast.classList.remove('glow');},1800);
+  toastTimer=setTimeout(function(){toast.classList.remove('visible');},5000);
+}
+function flashScene(){
+  var el=document.getElementById('sceneFlash');
+  el.classList.add('flash');
+  setTimeout(function(){el.classList.remove('flash');},1200);
+}
+
+var zones=document.querySelectorAll('.zone[data-mood]');
+var currentMood='calm';
+window.setStarfieldMood=function(mood){
+  var m=MOODS[mood];if(!m||mood===currentMood)return;
+  currentMood=mood;
+  target=m;
+  document.getElementById('au').style.background=m.aurora;
+  // Scene flash
+  flashScene();
+  // Music crossfade + toast
+  if(m.track){transitionMusic(m.track);showToast(m.track);}
+  console.log('[Mood]',mood);
+};
+
+// Use scroll event for more reliable detection (IntersectionObserver can miss on fast scroll)
+var scrollTimer=null;
+window.addEventListener('scroll',function(){
+  if(scrollTimer)return;
+  scrollTimer=setTimeout(function(){scrollTimer=null;checkZones();},150);
+});
+function checkZones(){
+  var best=null;
+  for(var i=zones.length-1;i>=0;i--){
+    var rect=zones[i].getBoundingClientRect();
+    if(rect.top<window.innerHeight*0.55){best=zones[i].getAttribute('data-mood');break;}
+  }
+  if(best&&best!==currentMood)window.setStarfieldMood(best);
+}
+
+// === TEXT EFFECTS ===
+var fadeEls=document.querySelectorAll('.fx-fade-up');
+var fadeObs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');fadeObs.unobserve(e.target);}});},{threshold:0.15});
+fadeEls.forEach(function(el){fadeObs.observe(el);});
+
+var glowEls=document.querySelectorAll('.fx-glow');
+var glowObs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');glowObs.unobserve(e.target);}});},{threshold:0.3});
+glowEls.forEach(function(el){glowObs.observe(el);});
+
+var quoteEls=document.querySelectorAll('.fx-quote');
+var quoteObs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');quoteObs.unobserve(e.target);}});},{threshold:0.2});
+quoteEls.forEach(function(el){quoteObs.observe(el);});
+
+var twEls=document.querySelectorAll('.fx-typewriter');
+var twObs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){startTypewriter(e.target);twObs.unobserve(e.target);}});},{threshold:0.4});
+twEls.forEach(function(el){twObs.observe(el);});
+function startTypewriter(el){var text=el.getAttribute('data-text')||el.textContent;el.textContent='';el.classList.add('visible');var cursor=document.createElement('span');cursor.className='tw-cursor';el.appendChild(cursor);var i=0;function type(){if(i<text.length){el.insertBefore(document.createTextNode(text.charAt(i)),cursor);i++;setTimeout(type,50+Math.random()*20);}else{setTimeout(function(){cursor.style.transition='opacity 1s';cursor.style.opacity='0';setTimeout(function(){cursor.remove();},1000);},1500);}}type();}
+
+// === AUTOPLAY FIRST TRACK ON FIRST INTERACTION ===
+var started=false;
+document.addEventListener('click',function(){
+  if(started)return;started=true;
+  var first=document.getElementById('track-calm');
+  if(first){first.volume=0;first.play().catch(function(){});fadeVolume(first,0,isMuted?0:MAX_VOL,FADE_MS);currentAudio=first;}
+},{once:false});
+
+document.getElementById('mainContent').classList.add('visible');
+})();
+</script>
+</body>
+</html>
+

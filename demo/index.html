@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinematic Experience Preview</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #0a0a12 0%, #0d0d1a 50%, #08080f 100%);
+            min-height: 100vh;
+            color: #e0e0e8;
+            padding: 40px 20px;
+        }
+
+        .container { max-width: 900px; margin: 0 auto; }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #6eb5ff, #a78bfa, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 50px;
+            font-weight: 300;
+        }
+
+        .experience-list {
+            display: grid;
+            gap: 20px;
+        }
+
+        .experience-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 28px 32px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .experience-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(110, 180, 255, 0.5), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .experience-card:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(110, 180, 255, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .experience-card:hover::before { opacity: 1; }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin-bottom: 12px;
+            color: #f0f0f8;
+        }
+
+        .card-meta {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.45);
+        }
+
+        .card-meta span { display: flex; align-items: center; gap: 6px; }
+
+        .card-zones {
+            margin-top: 14px;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.35);
+        }
+
+        .zones-count {
+            display: inline-block;
+            background: rgba(110, 180, 255, 0.1);
+            border: 1px solid rgba(110, 180, 255, 0.2);
+            padding: 3px 10px;
+            border-radius: 12px;
+            margin-left: 6px;
+        }
+
+        .preview-btn {
+            position: absolute;
+            right: 28px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            opacity: 0.9;
+        }
+
+        .preview-btn:hover { opacity: 1; transform: translateY(-50%) scale(1.05); }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .empty-state p { margin-top: 10px; font-size: 0.95rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cinematic Experience Preview</h1>
+        <p class="subtitle">沉浸式阅读体验预览系统</p>
+
+        <div class="experience-list" id="experienceList">
+            <div class="empty-state">
+                <p>加载中...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function loadExperiences() {
+            const list = document.getElementById('experienceList');
+
+            try {
+                const response = await fetch('./');
+                const html = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const links = Array.from(doc.querySelectorAll('a'));
+
+                const jsonFiles = links
+                    .map(a => a.href)
+                    .filter(href => href.endsWith('.json'))
+                    .map(href => {
+                        const parts = href.split('/');
+                        return parts[parts.length - 1];
+                    })
+                    .filter(name => name !== 'index.json');
+
+                if (jsonFiles.length === 0) {
+                    list.innerHTML = `
+                        <div class="empty-state">
+                            <p>暂无预览文件</p>
+                            <p style="margin-top:8px;font-size:0.85rem;">请在 /demo 目录中添加 exp_*.json 文件</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const cards = [];
+                for (const file of jsonFiles) {
+                    try {
+                        const res = await fetch('./' + file);
+                        const data = await res.json();
+                        cards.push({ file, data });
+                    } catch (e) {
+                        console.error('Failed to load', file, e);
+                    }
+                }
+
+                if (cards.length === 0) {
+                    list.innerHTML = '<div class="empty-state"><p>无法读取任何体验文件</p></div>';
+                    return;
+                }
+
+                list.innerHTML = cards.map(({ file, data }) => `
+                    <div class="experience-card" onclick="openPreview('${file}')">
+                        <div class="card-title">${data.chapterTitle || '未命名章节'}</div>
+                        <div class="card-meta">
+                            <span>📁 ${file}</span>
+                            <span>📊 ${data.zones?.length || 0} zones</span>
+                            <span>📚 ${Object.keys(data.referenceRegistry || {}).length} references</span>
+                        </div>
+                        <div class="card-zones">
+                            Moods:
+                            ${getUniqueMoods(data.zones).map(m =>
+                                `<span class="zones-count">${m}</span>`
+                            ).join('')}
+                        </div>
+                        <button class="preview-btn">预览 →</button>
+                    </div>
+                `).join('');
+
+            } catch (e) {
+                console.error('Failed to load experience list', e);
+                list.innerHTML = '<div class="empty-state"><p>加载失败</p></div>';
+            }
+        }
+
+        function getUniqueMoods(zones) {
+            if (!zones) return [];
+            const moods = zones.map(z => z.mood).filter(Boolean);
+            return [...new Set(moods)];
+        }
+
+        function openPreview(file) {
+            window.location.href = 'preview.html?file=' + encodeURIComponent(file);
+        }
+
+        loadExperiences();
+    </script>
+</body>
+</html>

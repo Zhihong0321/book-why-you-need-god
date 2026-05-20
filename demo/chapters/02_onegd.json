@@ -1,0 +1,52 @@
+{
+  "id": "ONEGD",
+  "label": "第二章 · ONEGD",
+  "title": "为什么只能有一个神",
+  "zones": [
+    {
+      "mood": "wonder",
+      "blocks": [
+        {"type":"heading","level":2,"text":"为什么只能有一个神","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"走到这里，「有没有神」这个问题，已经有了答案：<strong>有。</strong>","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"<strong>这一章只回答一个问题：</strong>","fx":"fx-fade-up"},
+        {"type":"quote","text":"神的数量，是1，还是2或以上？","fx":"fx-quote"},
+        {"type":"paragraph","text":"不需要信仰，不需要宗教立场，只需要逻辑。","fx":"fx-fade-up"},
+        {"type":"divider"},
+        {"type":"heading","level":3,"text":"结论","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"整个宇宙只有一套法则。一套法则，只能有一个立法者。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"这不是宗教偏见——这是逻辑。","fx":"fx-glow"},
+        {"type":"divider"},
+        {"type":"lens","label":"【直觉窗口】","paragraphs":["你被生了一次。你只有一个母亲。没有人会说：我同时接受张女士和李女士都是我的亲生母亲。","<strong>宇宙只被创造了一次。那个起点，只能有一个创造者。</strong>"]}
+      ]
+    },
+    {
+      "mood": "awe",
+      "blocks": [
+        {"type":"heading","level":3,"text":"论证","fx":"fx-fade-up"},
+        {"type":"heading","level":4,"text":"一、法则的唯一性","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"整个可观测宇宙遵循<strong>同一套</strong>物理法则。假设有两个神各自带着一套法则：神A说光速是c，神B说光速是2c。结果？宇宙在第一秒就矛盾崩溃。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"<strong>宇宙存在且运作正常</strong>→只有一套法则→只有一个立法者。","fx":"fx-glow"},
+        {"type":"divider"},
+        {"type":"heading","level":4,"text":"二、全能的自我矛盾","fx":"fx-fade-up"},
+        {"type":"quote","text":"神A能不能限制神B的能力？能——那神B不再全能。不能——那神A不再全能。","fx":"fx-quote"},
+        {"type":"paragraph","text":"全能在逻辑上只能是一个。两个全能等于零个全能。","fx":"fx-glow"},
+        {"type":"divider"},
+        {"type":"heading","level":4,"text":"三、起源的唯一性","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"宇宙有一个起点。创造是一个<strong>单次事件</strong>。起点只有一个，源头只能是一个。","fx":"fx-fade-up"},
+        {"type":"divider"},
+        {"type":"heading","level":4,"text":"四、条条大路通罗马说明了什么","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"<strong>罗马只有一个。</strong>所有路通向的，是同一个地方。","fx":"fx-glow"},
+        {"type":"divider"},
+        {"type":"heading","level":3,"text":"小结","fx":"fx-fade-up"},
+        {"type":"table","headers":["论证","结论"],"rows":[["宇宙只有一套法则","只能有一个立法者"],["全能不可能是两个","全能只能是一个"],["创造只发生了一次","创造者只能是一个"],["释迦摩尼从未声称是创造者","不是同一类声称"],["你的灵魂是永恒的","这个问题的后果也是永恒的"]]},
+        {"type":"paragraph","text":"<strong>神，只能有一个。不是「可能只有一个」——是逻辑上不可能多于一个。</strong>","fx":"fx-glow"},
+        {"type":"divider"},
+        {"type":"heading","level":3,"text":"那一个是谁？","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"人造出来的神，留在人的想象里。<strong>但真正的神，不会只活在人的想象里。</strong>","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"如果有一位神，真的创造了宇宙——那祂必然在历史中留下痕迹。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"<strong>我们把这些痕迹，叫做神的指纹。</strong>","fx":"fx-glow"},
+        {"type":"next","text":"下一章，我们就来看这些指纹——然后，指向那一位。"}
+      ]
+    }
+  ]
+}

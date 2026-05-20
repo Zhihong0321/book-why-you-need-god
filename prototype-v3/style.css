@@ -1,4 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;700&display=swap');
+
 /* ===== V3 Phase 1+2 — Enhanced Cinematic Space ===== */
+:root {
+    --font-sans: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-serif: 'Noto Serif SC', "Source Han Serif CN", Georgia, serif;
+}
 
 *, *::before, *::after {
     margin: 0;
@@ -10,9 +16,9 @@ html { scroll-behavior: smooth; }
 
 /* ===== BODY: Deep space gradient ===== */
 body {
-    font-family: "Noto Serif SC", "Source Han Serif CN", Georgia, serif;
-    line-height: 1.9;
-    color: #e8e8e8;
+    font-family: var(--font-sans);
+    line-height: 2.0;
+    color: rgba(215, 215, 225, 0.95);
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     background: 
@@ -49,11 +55,9 @@ body {
     position: fixed;
     top: 0; left: 0;
     width: 100vw;
-    height: 300vh; /* TALL canvas — 3x viewport, stars fill entire height */
+    height: 400vh;
     z-index: 0;
     pointer-events: none;
-    transform: translateY(-100vh); /* start centered (middle third visible) */
-    /* NO CSS transition — JS handles animation for better easing control */
 }
 
 /* ===== AURORA BACKGROUND (BEHIND stars) ===== */
@@ -86,21 +90,35 @@ body {
     width: 100%; height: 100%;
     opacity: 0;
     transition: opacity 5s ease;
+    pointer-events: none;
 }
-.aurora-set.active { opacity: 1; }
-
-/* Phase 2: Base aurora layer — NO border-radius, use SVG filter for organic shape */
+.aurora-set.active {
+    opacity: 1;
+    pointer-events: none;
+    will-change: opacity;
+}
+/* Phase 2: Base aurora layer — Use custom asymmetrical border-radius for organic shapes */
 .aurora-layer {
     position: absolute;
-    border-radius: 45% 55% 60% 40% / 50% 45% 55% 50%;
+}
+.aurora-set.active .aurora-layer {
+    will-change: transform, opacity;
 }
 
+/* Globally define unique, organic asymmetrical shapes for the 6 layers */
+.aurora-layer.a1 { border-radius: 40% 60% 50% 50% / 40% 40% 60% 60%; }
+.aurora-layer.a2 { border-radius: 50% 50% 30% 70% / 50% 60% 40% 50%; }
+.aurora-layer.a3 { border-radius: 60% 40% 70% 30% / 50% 30% 70% 50%; }
+.aurora-layer.a4 { border-radius: 55% 45% 55% 45% / 45% 55% 45% 55%; }
+.aurora-layer.a5 { border-radius: 30% 70% 60% 40% / 80% 20% 80% 20%; }
+.aurora-layer.a6 { border-radius: 45% 55% 35% 65% / 55% 45% 55% 45%; }
+
 /* ===== CALM: 6 layers — faint cold nebula ===== */
-/* a1: main body (warped, medium blur) */
+/* a1: main body (medium blur) */
 .aurora-calm .a1 {
     width: 130vw; height: 130vh;
     top: -35%; left: -20%;
-    filter: blur(70px) url(#nebula-warp-1);
+    filter: blur(70px);
     background: radial-gradient(ellipse at 40% 45%,
         rgba(20, 50, 110, 0.55) 0%,
         rgba(12, 30, 70, 0.25) 25%,
@@ -108,11 +126,11 @@ body {
         transparent 65%);
     animation: auroraFloat1 30s ease-in-out infinite, auroraBreathe 10s ease-in-out infinite;
 }
-/* a2: secondary (different warp, lighter blur) */
+/* a2: secondary (lighter blur) */
 .aurora-calm .a2 {
     width: 90vw; height: 90vh;
     top: 5%; right: -25%;
-    filter: blur(55px) url(#nebula-warp-2);
+    filter: blur(55px);
     background: radial-gradient(ellipse at 60% 50%,
         rgba(25, 60, 120, 0.4) 0%,
         rgba(14, 38, 75, 0.15) 30%,
@@ -124,7 +142,7 @@ body {
 .aurora-calm .a3 {
     width: 70vw; height: 60vh;
     bottom: -15%; left: 5%;
-    filter: blur(90px) url(#nebula-warp-3);
+    filter: blur(90px);
     background: radial-gradient(ellipse at 35% 60%,
         rgba(15, 35, 80, 0.3) 0%,
         rgba(8, 20, 50, 0.1) 35%,
@@ -144,24 +162,23 @@ body {
     animation: auroraFloat2 45s ease-in-out infinite, auroraBreathe 16s ease-in-out infinite;
     animation-delay: -15s, -10s;
 }
-/* a5: Phase 2 — filament ribbon (narrow, warped, sharp) */
+/* a5: Phase 2 — filament ribbon (narrow, sharp) */
 .aurora-calm .a5 {
     width: 100vw; height: 30vh;
     top: 20%; left: -10%;
-    filter: blur(40px) url(#nebula-filament);
+    filter: blur(40px);
     background: linear-gradient(135deg,
         rgba(15, 40, 90, 0.2) 0%,
         rgba(20, 55, 110, 0.12) 40%,
         transparent 70%);
     animation: auroraFloat3 38s ease-in-out infinite, auroraBreathe 18s ease-in-out infinite;
     animation-delay: -8s, -12s;
-    border-radius: 30% 70% 60% 40% / 80% 20% 80% 20%;
 }
 /* a6: Phase 2 — color-separated edge (slightly different hue) */
 .aurora-calm .a6 {
     width: 80vw; height: 70vh;
     top: -10%; right: -15%;
-    filter: blur(95px) url(#nebula-warp-2);
+    filter: blur(95px);
     background: radial-gradient(ellipse at 70% 40%,
         rgba(12, 30, 75, 0.18) 0%,
         rgba(8, 18, 50, 0.06) 30%,
@@ -174,7 +191,7 @@ body {
 .aurora-wonder .a1 {
     width: 130vw; height: 130vh;
     top: -30%; left: -15%;
-    filter: blur(65px) url(#nebula-warp-1);
+    filter: blur(65px);
     background: radial-gradient(ellipse at 35% 40%,
         rgba(55, 35, 120, 0.55) 0%,
         rgba(30, 20, 75, 0.25) 22%,
@@ -185,7 +202,7 @@ body {
 .aurora-wonder .a2 {
     width: 85vw; height: 80vh;
     top: 10%; right: -20%;
-    filter: blur(50px) url(#nebula-warp-2);
+    filter: blur(50px);
     background: radial-gradient(ellipse at 65% 45%,
         rgba(70, 30, 130, 0.45) 0%,
         rgba(40, 18, 80, 0.18) 28%,
@@ -196,7 +213,7 @@ body {
 .aurora-wonder .a3 {
     width: 65vw; height: 55vh;
     bottom: -10%; left: 20%;
-    filter: blur(80px) url(#nebula-warp-3);
+    filter: blur(80px);
     background: radial-gradient(ellipse at 50% 55%,
         rgba(50, 25, 100, 0.38) 0%,
         rgba(28, 14, 60, 0.14) 30%,
@@ -219,20 +236,19 @@ body {
 .aurora-wonder .a5 {
     width: 110vw; height: 35vh;
     top: 30%; left: -15%;
-    filter: blur(35px) url(#nebula-filament);
+    filter: blur(35px);
     background: linear-gradient(160deg,
         rgba(80, 25, 120, 0.25) 0%,
         rgba(55, 15, 90, 0.12) 35%,
         transparent 65%);
     animation: auroraFloat2 28s ease-in-out infinite, auroraBreathe 10s ease-in-out infinite;
     animation-delay: -5s, -2s;
-    border-radius: 25% 75% 55% 45% / 75% 25% 75% 25%;
 }
 /* a6: blue edge separation */
 .aurora-wonder .a6 {
     width: 90vw; height: 75vh;
     bottom: -20%; right: -10%;
-    filter: blur(85px) url(#nebula-warp-1);
+    filter: blur(85px);
     background: radial-gradient(ellipse at 55% 60%,
         rgba(25, 45, 110, 0.2) 0%,
         rgba(12, 25, 65, 0.08) 28%,
@@ -245,7 +261,7 @@ body {
 .aurora-awe .a1 {
     width: 140vw; height: 140vh;
     top: -35%; left: -25%;
-    filter: blur(60px) url(#nebula-warp-1);
+    filter: blur(60px);
     background: 
         radial-gradient(ellipse at 28% 32%,
             rgba(120, 40, 160, 0.85) 0%,
@@ -261,7 +277,7 @@ body {
 .aurora-awe .a2 {
     width: 100vw; height: 90vh;
     top: 5%; right: -15%;
-    filter: blur(50px) url(#nebula-warp-2);
+    filter: blur(50px);
     background: 
         radial-gradient(ellipse at 50% 38%,
             rgba(140, 50, 150, 0.75) 0%,
@@ -277,7 +293,7 @@ body {
 .aurora-awe .a3 {
     width: 75vw; height: 65vh;
     bottom: -10%; left: 10%;
-    filter: blur(75px) url(#nebula-warp-3);
+    filter: blur(75px);
     background: 
         radial-gradient(ellipse at 42% 48%,
             rgba(100, 55, 140, 0.65) 0%,
@@ -294,7 +310,7 @@ body {
 .aurora-awe .a4 {
     width: 80vw; height: 70vh;
     top: -5%; left: 15%;
-    filter: blur(45px) url(#nebula-warp-2);
+    filter: blur(45px);
     background: 
         radial-gradient(ellipse at 65% 25%,
             rgba(200, 120, 40, 0.4) 0%,
@@ -311,7 +327,7 @@ body {
 .aurora-awe .a5 {
     width: 120vw; height: 25vh;
     top: 40%; left: -20%;
-    filter: blur(30px) url(#nebula-filament);
+    filter: blur(30px);
     background: linear-gradient(145deg,
         rgba(140, 30, 50, 0.3) 0%,
         rgba(100, 20, 40, 0.15) 30%,
@@ -319,7 +335,6 @@ body {
         transparent 75%);
     animation: auroraFloat3 24s ease-in-out infinite, auroraBreathe 7s ease-in-out infinite;
     animation-delay: -4s, -1s;
-    border-radius: 20% 80% 65% 35% / 85% 15% 85% 15%;
 }
 /* a6: deep background envelope */
 .aurora-awe .a6 {
@@ -343,7 +358,7 @@ body {
 .aurora-weight .a1 {
     width: 120vw; height: 120vh;
     top: -30%; left: -15%;
-    filter: blur(90px) url(#nebula-warp-1);
+    filter: blur(90px);
     background: radial-gradient(ellipse at 45% 50%,
         rgba(18, 14, 45, 0.3) 0%,
         rgba(8, 6, 25, 0.1) 30%,
@@ -353,7 +368,7 @@ body {
 .aurora-weight .a2 {
     width: 80vw; height: 70vh;
     top: 15%; right: -20%;
-    filter: blur(100px) url(#nebula-warp-2);
+    filter: blur(100px);
     background: radial-gradient(ellipse at 55% 45%,
         rgba(20, 12, 50, 0.25) 0%,
         rgba(10, 7, 28, 0.08) 30%,
@@ -364,7 +379,7 @@ body {
 .aurora-weight .a3 {
     width: 60vw; height: 50vh;
     bottom: -5%; left: 15%;
-    filter: blur(80px) url(#nebula-warp-3);
+    filter: blur(80px);
     background: radial-gradient(ellipse at 40% 55%,
         rgba(14, 8, 35, 0.2) 0%,
         rgba(6, 4, 18, 0.06) 30%,
@@ -386,14 +401,13 @@ body {
 .aurora-weight .a5 {
     width: 90vw; height: 20vh;
     top: 50%; left: 0%;
-    filter: blur(60px) url(#nebula-filament);
+    filter: blur(60px);
     background: linear-gradient(170deg,
         rgba(12, 8, 30, 0.15) 0%,
         rgba(8, 5, 20, 0.06) 40%,
         transparent 65%);
     animation: auroraFloat2 50s ease-in-out infinite, auroraBreathe 28s ease-in-out infinite;
     animation-delay: -30s, -18s;
-    border-radius: 35% 65% 50% 50% / 70% 30% 70% 30%;
 }
 .aurora-weight .a6 {
     width: 100vw; height: 80vh;
@@ -411,7 +425,7 @@ body {
 .aurora-lightspeed .a1 {
     width: 140vw; height: 140vh;
     top: -30%; left: -20%;
-    filter: blur(55px) url(#nebula-warp-1);
+    filter: blur(55px);
     background: 
         radial-gradient(ellipse at 35% 40%,
             rgba(130, 60, 200, 0.85) 0%,
@@ -426,7 +440,7 @@ body {
 .aurora-lightspeed .a2 {
     width: 100vw; height: 95vh;
     top: 0%; right: -15%;
-    filter: blur(45px) url(#nebula-warp-2);
+    filter: blur(45px);
     background: 
         radial-gradient(ellipse at 50% 45%,
             rgba(160, 60, 180, 0.75) 0%,
@@ -442,7 +456,7 @@ body {
 .aurora-lightspeed .a3 {
     width: 80vw; height: 70vh;
     bottom: -5%; left: 10%;
-    filter: blur(70px) url(#nebula-warp-3);
+    filter: blur(70px);
     background: 
         radial-gradient(ellipse at 45% 50%,
             rgba(100, 50, 160, 0.6) 0%,
@@ -459,11 +473,11 @@ body {
 .aurora-lightspeed .a4 {
     width: 90vw; height: 80vh;
     top: -10%; left: 20%;
-    filter: blur(40px) url(#nebula-warp-2);
+    filter: blur(40px);
     background: 
         radial-gradient(ellipse at 60% 20%,
             rgba(240, 150, 50, 0.5) 0%,
-            rgba(180, 90, 25, 0.2) 15%,
+            rgba(18, 90, 25, 0.2) 15%,
             transparent 35%),
         radial-gradient(ellipse at 30% 80%,
             rgba(220, 120, 40, 0.35) 0%,
@@ -476,7 +490,7 @@ body {
 .aurora-lightspeed .a5 {
     width: 130vw; height: 30vh;
     top: 25%; left: -20%;
-    filter: blur(25px) url(#nebula-filament);
+    filter: blur(25px);
     background: linear-gradient(130deg,
         rgba(160, 60, 200, 0.4) 0%,
         rgba(100, 40, 160, 0.2) 25%,
@@ -485,7 +499,6 @@ body {
         transparent 90%);
     animation: auroraFloat3 12s ease-in-out infinite, auroraBreathe 3.5s ease-in-out infinite;
     animation-delay: -2s, -1s;
-    border-radius: 15% 85% 70% 30% / 90% 10% 90% 10%;
 }
 /* a6: deep envelope */
 .aurora-lightspeed .a6 {
@@ -548,9 +561,8 @@ body {
     transform: translateX(-50%);
     z-index: 100;
     text-align: center;
-    background: rgba(5, 5, 12, 0.85);
+    background: rgba(5, 5, 12, 0.92);
     border: 1px solid rgba(80, 80, 110, 0.3);
-    backdrop-filter: blur(10px);
     padding: 1.2rem 2rem;
     border-radius: 12px;
 }
@@ -597,30 +609,610 @@ body {
     letter-spacing: 0.05em;
 }
 
-/* ===== CONTENT ===== */
+/* ===== CONTENT & TYPOGRAPHY ===== */
 .content {
-    max-width: 660px;
+    max-width: 720px;
     margin: 0 auto;
-    padding: 4rem 2rem 12rem;
+    padding: 8rem 2rem 15rem;
     opacity: 0;
-    transition: opacity 2s ease;
+    transition: opacity 2s ease 0.5s;
     position: relative;
     z-index: 10; /* ABOVE mountain, above starfield — text never gets covered */
 }
 .content.visible { opacity: 1; }
 
-.zone { margin-bottom: 4rem; }
-.text-block { margin-bottom: 2rem; }
-.text-block p { margin-bottom: 0.8rem; font-size: 1rem; color: rgba(215, 215, 225, 0.9); }
-.text-block .lead { font-size: 1.3rem; color: #dde; margin-bottom: 1.2rem; }
+.zone { 
+    margin-bottom: 8rem; 
+    padding-top: 2rem; 
+}
+
+/* Zone Transition Space */
+.zone-transition {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: transparent;
+}
+.transition-space {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.95);
+    letter-spacing: 0.05em;
+    margin-top: 3.5rem;
+    margin-bottom: 1.8rem;
+    line-height: 1.4;
+}
+
+h2 {
+    font-size: 2.2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 0.8rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+    color: rgba(230, 230, 240, 0.9);
+}
+
+/* Chapter labels */
+.chapter-label {
+    font-family: var(--font-serif);
+    font-size: 0.75rem;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: rgba(140, 150, 180, 0.6);
+    margin-bottom: 3rem;
+    border-left: 2px solid rgba(140, 150, 180, 0.3);
+    padding-left: 1rem;
+}
+
+/* Paragraphs & blocks */
+.text-block { 
+    margin-bottom: 3.5rem; 
+}
+.text-block p { 
+    margin-bottom: 1.5rem; 
+    font-size: 1.1rem; 
+    color: rgba(215, 215, 225, 0.85); 
+    line-height: 2.0;
+}
+.text-block .lead { 
+    font-size: 1.35rem; 
+    color: #e2e1e9; 
+    margin-bottom: 1.8rem; 
+    font-weight: 300;
+    line-height: 1.8;
+}
+.text-block .highlight { 
+    font-family: var(--font-serif);
+    font-size: 1.3rem; 
+    color: #f1ebd9; 
+    margin: 3rem 0; 
+    line-height: 1.8;
+}
+.text-block strong { 
+    color: #fff; 
+    font-weight: 600; 
+}
+.text-block ol, .text-block ul { 
+    padding-left: 1.8rem; 
+    margin-bottom: 1.8rem; 
+}
+.text-block li { 
+    margin-bottom: 0.8rem; 
+    font-size: 1.05rem; 
+    color: rgba(205, 205, 218, 0.85); 
+}
+
+/* Lens Blocks (Perspective shifts) */
+.lens-block { 
+    border-left: 2px solid rgba(160, 130, 100, 0.35); 
+    padding-left: 1.8rem; 
+    margin-top: 3rem; 
+    margin-bottom: 3rem;
+}
+.lens-label { 
+    font-family: var(--font-serif);
+    font-size: 0.8rem; 
+    letter-spacing: 0.25em; 
+    color: rgba(180, 150, 120, 0.7); 
+    margin-bottom: 1.2rem !important; 
+    font-weight: 700;
+}
+
+.divider { 
+    width: 3.5rem; 
+    height: 1px; 
+    background: rgba(255, 255, 255, 0.15); 
+    margin: 5rem auto; 
+}
+
+.evidence-note { 
+    font-style: italic; 
+    color: rgba(140, 140, 160, 0.6) !important; 
+    font-size: 0.95rem !important; 
+    margin-bottom: 2.5rem !important; 
+}
+
+.closing p { 
+    font-size: 1.15rem; 
+}
+
+.next-chapter { 
+    margin-top: 4.5rem !important; 
+    color: rgba(140, 140, 160, 0.6) !important; 
+    font-style: italic; 
+}
+
+/* ===== MAJESTIC CLINICAL/AUDIT TABLE SYSTEM ===== */
+.table-container {
+    margin: 3rem 0;
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(10, 10, 15, 0.7);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    font-size: 0.92rem; 
+    color: rgba(200, 200, 215, 0.85);
+    text-align: left;
+}
+
+th, td { 
+    padding: 1rem 1.2rem; 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06); 
+}
+
+th { 
+    background: rgba(255, 255, 255, 0.03);
+    color: rgba(255, 255, 255, 0.95); 
+    font-weight: 600; 
+    font-size: 0.8rem; 
+    letter-spacing: 0.08em; 
+    text-transform: uppercase; 
+    border-bottom: 2px solid rgba(255, 255, 255, 0.12);
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+tbody tr:nth-child(even) { 
+    background: rgba(255, 255, 255, 0.01); 
+}
+
+tbody tr:hover { 
+    background: rgba(255, 255, 255, 0.04); 
+    color: #fff;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+/* Table statuses & numbers styling */
+table td {
+    line-height: 1.6;
+}
+
+/* ===== CINEMATIC BLOCKQUOTE ===== */
+blockquote {
+    border-left: 2px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem 1.8rem;
+    margin: 2.2rem 0;
+    color: rgba(195, 195, 210, 0.8);
+    font-style: italic;
+    background: rgba(255, 255, 255, 0.01);
+}
+
+blockquote.fx-quote {
+    font-family: var(--font-serif);
+    border-left: 3px solid rgba(160, 130, 220, 0.3);
+    padding: 1.8rem 2.2rem;
+    margin: 3.5rem 0;
+    background: rgba(160, 130, 220, 0.02);
+    border-radius: 6px;
+    font-style: normal;
+    font-size: 1.25rem;
+    line-height: 1.8;
+    color: #f1ebd9;
+    opacity: 0;
+    transform: scale(0.97);
+    transition: 
+        opacity 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        transform 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        border-color 2s ease 0.5s,
+        box-shadow 2s ease 0.5s,
+        background 2s ease 0.5s;
+    box-shadow: none;
+    position: relative;
+}
+
+blockquote.fx-quote.visible {
+    opacity: 1;
+    transform: scale(1);
+    border-left-color: rgba(160, 130, 220, 0.8);
+    box-shadow: 
+        -4px 0 24px rgba(160, 130, 220, 0.12),
+        0 0 35px rgba(0, 0, 0, 0.2),
+        inset 0 0 40px rgba(160, 130, 220, 0.02);
+    background: rgba(160, 130, 220, 0.04);
+}
+
+blockquote.fx-quote::before {
+    content: '';
+    position: absolute;
+    left: -2px;
+    top: 15%;
+    height: 70%;
+    width: 3px;
+    background: linear-gradient(to bottom, 
+        transparent, 
+        rgba(200, 180, 255, 0.6), 
+        transparent);
+    opacity: 0;
+    transition: opacity 2s ease 1s;
+}
+
+blockquote.fx-quote.visible::before {
+    opacity: 1;
+}
+
+/* ===== START OVERLAY ===== */
+.start-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(3, 3, 8, 0.98);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: opacity 2s ease;
+}
+.start-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+.start-content { 
+    text-align: center; 
+    max-width: 500px;
+    padding: 2rem;
+}
+.start-subtitle {
+    font-family: var(--font-serif);
+    font-size: 0.85rem;
+    letter-spacing: 0.4em;
+    color: rgba(140, 150, 180, 0.5);
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+}
+.start-title {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 2.5rem;
+    letter-spacing: 0.08em;
+    line-height: 1.4;
+}
+.start-hint {
+    font-size: 0.8rem;
+    color: rgba(140, 150, 180, 0.4);
+    margin-bottom: 3rem;
+    letter-spacing: 0.1em;
+}
+.start-btn {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.8);
+    padding: 1rem 3.5rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    letter-spacing: 0.25em;
+    transition: all 0.6s ease;
+    border-radius: 4px;
+    font-family: inherit;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+.start-btn:hover {
+    border-color: rgba(255, 255, 255, 0.5);
+    color: #fff;
+    box-shadow: 0 4px 30px rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
+}
+
+/* ===== MUSIC TOGGLE ===== */
+.music-toggle {
+    position: fixed;
+    top: 1.5rem; right: 1.5rem;
+    z-index: 900;
+    background: rgba(10, 10, 18, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.6);
+    width: 2.5rem; height: 2.5rem;
+    border-radius: 50%;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.music-toggle:hover { 
+    color: #fff; 
+    border-color: rgba(255, 255, 255, 0.2); 
+    background: rgba(15, 15, 25, 0.6);
+    transform: scale(1.05);
+}
+.music-toggle.muted { 
+    color: rgba(255, 255, 255, 0.2); 
+    text-decoration: line-through; 
+}
+
+/* ===== MUSIC TOAST NOTIFICATION ===== */
+.music-toast {
+    position: fixed;
+    top: 1.5rem;
+    right: 4.8rem;
+    transform: translateX(20px);
+    background: rgba(10, 10, 18, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0.6rem 1.3rem;
+    border-radius: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    opacity: 0;
+    transition: opacity 1.2s ease, transform 1.2s ease, box-shadow 0.8s ease;
+    pointer-events: none;
+    z-index: 800;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+.music-toast.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+.music-toast.glow {
+    box-shadow: 0 0 20px rgba(160, 180, 255, 0.25), 0 10px 35px rgba(0, 0, 0, 0.4);
+    border-color: rgba(160, 180, 255, 0.3);
+}
+.music-toast-icon {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.4);
+    transition: color 0.8s ease;
+}
+.music-toast.glow .music-toast-icon {
+    color: rgba(160, 180, 255, 0.8);
+}
+.music-toast-text {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    transition: color 0.8s ease;
+}
+.music-toast.glow .music-toast-text {
+    color: rgba(255, 255, 255, 0.95);
+}
+
+/* ===== REFERENCE SYSTEM ===== */
+.ref-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: rgba(160, 180, 255, 0.85);
+    cursor: pointer;
+    border-bottom: 1px dashed rgba(160, 180, 255, 0.4);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    padding: 0 2px;
+    margin: 0 2px;
+    font-family: monospace;
+}
+.ref-tag:hover {
+    color: #fff;
+    border-bottom-color: #fff;
+    background: rgba(160, 180, 255, 0.1);
+    border-radius: 2px;
+}
+
+/* Reference slide-up panel */
+.ref-panel {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-height: 0;
+    overflow: hidden;
+    background: rgba(8, 8, 16, 0.96);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    transition: max-height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), padding 0.5s ease;
+    z-index: 950;
+    padding: 0 2.5rem;
+    box-shadow: 0 -15px 40px rgba(0, 0, 0, 0.5);
+}
+.ref-panel.open {
+    max-height: 320px;
+    padding: 1.5rem 2.5rem 2rem;
+}
+.ref-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding-bottom: 0.6rem;
+}
+.ref-panel-id {
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    color: rgba(160, 180, 255, 0.9);
+    font-family: monospace;
+    font-weight: 700;
+}
+.ref-panel-close {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.2rem 0.6rem;
+    transition: color 0.3s ease;
+    line-height: 1;
+}
+.ref-panel-close:hover {
+    color: #fff;
+}
+.ref-panel-body {
+    font-size: 0.9rem;
+    line-height: 1.8;
+    color: rgba(200, 200, 215, 0.85);
+}
+.ref-panel-body .ref-field {
+    margin-bottom: 0.4rem;
+    display: flex;
+    align-items: flex-start;
+}
+.ref-panel-body .ref-label {
+    color: rgba(255, 255, 255, 0.35);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    min-width: 90px;
+    display: inline-block;
+    padding-top: 1px;
+}
+.ref-panel-body .ref-value {
+    color: rgba(220, 220, 235, 0.95);
+    flex: 1;
+}
+
+/* ===== TEXT EFFECTS ===== */
+
+/* --- Effect 1: GLOW — text pulses with soft light when visible --- */
+.fx-glow {
+    opacity: 0;
+    transition: opacity 1.5s ease;
+}
+.fx-glow.visible {
+    opacity: 1;
+    animation: textGlow 3.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes textGlow {
+    0% { 
+        text-shadow: 0 0 0px rgba(200, 210, 255, 0); 
+        color: rgba(215, 215, 225, 0.85);
+    }
+    30% { 
+        text-shadow: 0 0 15px rgba(160, 180, 255, 0.6), 0 0 30px rgba(160, 180, 255, 0.25); 
+        color: #fff;
+    }
+    60% { 
+        text-shadow: 0 0 10px rgba(160, 180, 255, 0.4), 0 0 20px rgba(160, 180, 255, 0.15); 
+        color: #fff;
+    }
+    100% { 
+        text-shadow: 0 0 4px rgba(160, 180, 255, 0.15); 
+        color: rgba(230, 230, 245, 0.95);
+    }
+}
+
+/* --- Effect 2: FADE UP — slides up from below with fade --- */
+.fx-fade-up {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.fx-fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Effect 3: TYPEWRITER — text reveals character by character --- */
+.fx-typewriter {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+.fx-typewriter.visible {
+    opacity: 1;
+}
+.fx-typewriter .tw-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.1em;
+    background: rgba(200, 210, 240, 0.8);
+    margin-left: 3px;
+    vertical-align: text-bottom;
+    animation: cursorBlink 0.8s step-end infinite;
+}
+@keyframes cursorBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* --- Effect 4: REVEAL — text fades in word by word --- */
+.fx-reveal {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+.fx-reveal.visible {
+    opacity: 1;
+}
+.fx-reveal .reveal-word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.fx-reveal .reveal-word.shown {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Credits Footer */
+.credits { 
+    margin-top: 10rem; 
+    padding: 3rem 0; 
+    border-top: 1px solid rgba(255, 255, 255, 0.05); 
+    text-align: center; 
+}
+.credits p { 
+    font-size: 0.75rem; 
+    color: rgba(255, 255, 255, 0.25); 
+    margin-bottom: 0.5rem; 
+    letter-spacing: 0.05em;
+}
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 600px) {
-    .content { padding: 3rem 1.2rem 10rem; }
-    .text-block p { font-size: 0.95rem; }
+    .content { padding: 6rem 1.2rem 10rem; }
+    .text-block p { font-size: 1rem; line-height: 1.9; }
+    .text-block .lead { font-size: 1.2rem; }
+    h2 { font-size: 1.7rem; }
+    h3 { font-size: 1.3rem; }
+    .table-container { margin: 2rem 0; }
+    table { font-size: 0.82rem; }
+    th, td { padding: 0.7rem 0.8rem; }
     .aurora-layer { filter: blur(50px) !important; }
     .demo-controls { padding: 1rem 1.2rem; }
     .demo-buttons button { padding: 0.4rem 0.8rem; font-size: 0.7rem; }
+    blockquote.fx-quote { padding: 1.3rem 1.5rem; font-size: 1.1rem; }
 }
 
 /* ===== BIG BANG REVERSE — Chapter Opening Overlay ===== */

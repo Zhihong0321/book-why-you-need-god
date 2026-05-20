@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>目录 — You Need God</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;600;700&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Noto Sans SC',sans-serif;
+  background:#0a0a0f;
+  color:rgba(220,220,230,0.9);
+  line-height:1.8;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* Subtle texture */
+body::before{
+  content:'';position:fixed;inset:0;
+  background:radial-gradient(ellipse at 30% 20%, rgba(15,20,40,0.4) 0%, transparent 50%),
+             radial-gradient(ellipse at 70% 80%, rgba(12,8,25,0.3) 0%, transparent 50%);
+  pointer-events:none;z-index:0;
+}
+
+.page{
+  position:relative;z-index:1;
+  max-width:720px;margin:0 auto;
+  padding:6rem 2.5rem 8rem;
+}
+
+/* === BOOK TITLE HEADER === */
+.book-header{
+  text-align:center;
+  margin-bottom:5rem;
+  padding-bottom:3rem;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.book-header .label{
+  font-size:0.7rem;letter-spacing:0.5em;text-transform:uppercase;
+  color:rgba(160,165,180,0.5);margin-bottom:1rem;
+}
+.book-header h1{
+  font-family:'Noto Serif SC',serif;
+  font-size:2.4rem;font-weight:700;
+  color:rgba(255,255,255,0.92);
+  letter-spacing:0.06em;margin-bottom:0.8rem;
+}
+.book-header .subtitle{
+  font-size:1rem;color:rgba(180,180,195,0.6);
+  font-weight:300;letter-spacing:0.04em;
+}
+
+/* === TABLE OF CONTENTS === */
+.toc-section{margin-bottom:5rem;}
+.toc-section h2{
+  font-family:'Noto Serif SC',serif;
+  font-size:1.1rem;font-weight:600;
+  color:rgba(255,255,255,0.85);
+  letter-spacing:0.15em;text-transform:uppercase;
+  margin-bottom:2.5rem;
+  padding-left:1rem;
+  border-left:2px solid rgba(140,150,200,0.4);
+}
+
+.toc-part{margin-bottom:3rem;}
+.toc-part-title{
+  font-family:'Noto Serif SC',serif;
+  font-size:0.95rem;font-weight:600;
+  color:rgba(200,195,220,0.8);
+  letter-spacing:0.08em;
+  margin-bottom:1.2rem;
+  padding-bottom:0.5rem;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+}
+
+.toc-list{list-style:none;padding:0;}
+.toc-item{
+  display:flex;align-items:baseline;
+  padding:0.6rem 0;
+  border-bottom:1px solid rgba(255,255,255,0.025);
+  transition:background 0.3s;
+}
+.toc-item:hover{background:rgba(255,255,255,0.02);}
+.toc-item:last-child{border-bottom:none;}
+
+.toc-num{
+  font-size:0.75rem;color:rgba(140,150,180,0.5);
+  min-width:2.5rem;font-weight:500;
+  letter-spacing:0.05em;
+}
+.toc-title{
+  flex:1;font-size:0.95rem;
+  color:rgba(220,220,230,0.85);
+  font-weight:400;
+}
+.toc-dots{
+  flex:1;margin:0 0.8rem;
+  border-bottom:1px dotted rgba(255,255,255,0.08);
+  min-width:2rem;align-self:center;
+  height:0;
+}
+.toc-page{
+  font-size:0.75rem;color:rgba(140,150,180,0.45);
+  font-weight:400;min-width:1.5rem;text-align:right;
+}
+
+/* === CONTRIBUTORS === */
+.contributors-section{margin-bottom:5rem;}
+.contributors-section h2{
+  font-family:'Noto Serif SC',serif;
+  font-size:1.1rem;font-weight:600;
+  color:rgba(255,255,255,0.85);
+  letter-spacing:0.15em;text-transform:uppercase;
+  margin-bottom:2.5rem;
+  padding-left:1rem;
+  border-left:2px solid rgba(180,140,100,0.4);
+}
+
+.contributor-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:1.8rem;
+}
+
+.contributor-card{
+  padding:1.5rem 1.8rem;
+  background:rgba(255,255,255,0.015);
+  border:1px solid rgba(255,255,255,0.04);
+  border-radius:6px;
+  transition:border-color 0.3s, background 0.3s;
+}
+.contributor-card:hover{
+  border-color:rgba(255,255,255,0.08);
+  background:rgba(255,255,255,0.025);
+}
+
+.contributor-role{
+  font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;
+  color:rgba(160,150,130,0.6);margin-bottom:0.5rem;font-weight:500;
+}
+.contributor-name{
+  font-family:'Noto Serif SC',serif;
+  font-size:1.15rem;font-weight:600;
+  color:rgba(255,255,255,0.9);margin-bottom:0.4rem;
+}
+.contributor-desc{
+  font-size:0.85rem;color:rgba(180,180,195,0.6);
+  line-height:1.7;font-weight:300;
+}
+
+/* === FOOTER === */
+.page-footer{
+  text-align:center;
+  padding-top:3rem;
+  border-top:1px solid rgba(255,255,255,0.04);
+}
+.page-footer p{
+  font-size:0.7rem;color:rgba(120,120,140,0.4);
+  letter-spacing:0.05em;margin-bottom:0.3rem;
+}
+
+/* === RESPONSIVE === */
+@media(max-width:600px){
+  .page{padding:4rem 1.5rem 5rem;}
+  .book-header h1{font-size:1.8rem;}
+  .contributor-grid{gap:1.2rem;}
+  .contributor-card{padding:1.2rem 1.4rem;}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Book Header -->
+  <header class="book-header">
+    <p class="label">理性对话系列</p>
+    <h1>You Need God</h1>
+    <p class="subtitle">一本写给不信神的人的书</p>
+  </header>
+
+  <!-- Table of Contents -->
+  <section class="toc-section">
+    <h2>目录</h2>
+
+    <div class="toc-part">
+      <p class="toc-part-title">第一部 · 灵魂是否存在</p>
+      <ul class="toc-list">
+        <li class="toc-item">
+          <span class="toc-num">01</span>
+          <span class="toc-title">濒死体验科学审计</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">1</span>
+        </li>
+        <li class="toc-item">
+          <span class="toc-num">02</span>
+          <span class="toc-title">我不是罪人</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">18</span>
+        </li>
+        <li class="toc-item">
+          <span class="toc-num">03</span>
+          <span class="toc-title">为什么我不能自我救赎</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">34</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="toc-part">
+      <p class="toc-part-title">第二部 · 宇宙的主人</p>
+      <ul class="toc-list">
+        <li class="toc-item">
+          <span class="toc-num">03b</span>
+          <span class="toc-title">宇宙是你的吗</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">48</span>
+        </li>
+        <li class="toc-item">
+          <span class="toc-num">04</span>
+          <span class="toc-title">灵魂与耶稣</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">62</span>
+        </li>
+        <li class="toc-item">
+          <span class="toc-num">05</span>
+          <span class="toc-title">为什么耶稣能拯救所有人</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">78</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="toc-part">
+      <p class="toc-part-title">第三部 · 永恒的审判</p>
+      <ul class="toc-list">
+        <li class="toc-item">
+          <span class="toc-num">06</span>
+          <span class="toc-title">好人也犯罪，恶人也被赎</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">94</span>
+        </li>
+        <li class="toc-item">
+          <span class="toc-num">07</span>
+          <span class="toc-title">永恒的刑罚</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">108</span>
+        </li>
+        <li class="toc-item">
+          <span class="toc-num">08</span>
+          <span class="toc-title">耶稣的复活</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">122</span>
+        </li>
+        <li class="toc-item">
+          <span class="toc-num">09</span>
+          <span class="toc-title">为什么我必须面对最终审判</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">136</span>
+        </li>
+        <li class="toc-item">
+          <span class="toc-num">10</span>
+          <span class="toc-title">条条大路通同一个地址</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">150</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Contributors -->
+  <section class="contributors-section">
+    <h2>贡献者</h2>
+
+    <div class="contributor-grid">
+      <div class="contributor-card">
+        <p class="contributor-role">作者</p>
+        <p class="contributor-name">作者姓名</p>
+        <p class="contributor-desc">本书的构思、研究与写作。</p>
+      </div>
+      <div class="contributor-card">
+        <p class="contributor-role">AI 协作</p>
+        <p class="contributor-name">Claude / GPT</p>
+        <p class="contributor-desc">辅助研究、逻辑校验、排版与视觉呈现系统开发。</p>
+      </div>
+      <div class="contributor-card">
+        <p class="contributor-role">音乐</p>
+        <p class="contributor-name">Scott Buckley · Sappheiros</p>
+        <p class="contributor-desc">背景氛围音乐，CC BY 3.0 授权。</p>
+      </div>
+      <div class="contributor-card">
+        <p class="contributor-role">视觉设计</p>
+        <p class="contributor-name">Starfield V4 Engine</p>
+        <p class="contributor-desc">星空动力学、星云色温系统与章节转场动画。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="page-footer">
+    <p>You Need God · 理性对话系列</p>
+    <p>© 2025</p>
+  </footer>
+
+</div>
+</body>
+</html>
