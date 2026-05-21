@@ -480,17 +480,6 @@ USED_FOR: 81 NDE reports from Tangshan earthquake survivors in a materialist-edu
 URL: NONE
 ---
 
-[NDEXP-007]
-CHAPTER: NDEXP
-TYPE: JOURNAL
-AUTHOR: Pasricha, S. & Stevenson, I.
-TITLE: Near-death experiences in India
-SOURCE: UNKNOWN
-YEAR: 1986
-USED_FOR: Hindu-culture NDE study showing core protocol consistent despite cultural coloring
-URL: NONE
----
-
 [NDEXP-008]
 CHAPTER: NDEXP
 TYPE: JOURNAL
