@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>你不是不需要神，而是…… | Book Cover</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      font-family: 'Noto Serif SC', serif;
+      background: #fbfcf8;
+      color: #1a1a18;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .book-cover {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      /* Background matching jesus_crown.png bg color */
+      background: #fbfcf8;
+    }
+
+    .book-cover::before {
+      display: none;
+    }
+
+    .book-cover::after {
+      display: none;
+    }
+
+    .cover-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+      max-width: 600px;
+    }
+
+    /* Crown image */
+    .crown-image {
+      width: clamp(200px, 45vw, 320px);
+      height: auto;
+      margin-bottom: 48px;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* Ornamental line */
+    .ornament {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(80, 60, 30, 0.4), transparent);
+      margin-bottom: 32px;
+    }
+
+    /* Title */
+    .title {
+      font-size: clamp(28px, 7vw, 48px);
+      font-weight: 900;
+      line-height: 1.4;
+      letter-spacing: 0.02em;
+      color: #1a1a18;
+      margin-bottom: 16px;
+    }
+
+    .title-ellipsis {
+      color: rgba(120, 80, 20, 0.7);
+    }
+
+    /* Subtitle */
+    .subtitle {
+      font-size: clamp(13px, 3vw, 16px);
+      font-weight: 400;
+      color: rgba(40, 40, 35, 0.55);
+      line-height: 1.8;
+      letter-spacing: 0.06em;
+      margin-bottom: 56px;
+      max-width: 28ch;
+    }
+
+    /* Author */
+    .author {
+      font-size: clamp(12px, 2.5vw, 14px);
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: rgba(80, 60, 20, 0.6);
+      text-transform: uppercase;
+    }
+
+    /* Bottom ornament */
+    .bottom-ornament {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 2;
+    }
+
+    .bottom-ornament .dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: rgba(80, 60, 30, 0.35);
+    }
+
+    .bottom-ornament .line {
+      width: 24px;
+      height: 1px;
+      background: rgba(80, 60, 30, 0.2);
+    }
+
+    /* Copyright */
+    .copyright {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+      color: rgba(40, 40, 35, 0.3);
+      letter-spacing: 0.05em;
+      z-index: 2;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 480px) {
+      .crown-image {
+        width: 180px;
+        margin-bottom: 36px;
+      }
+      .cover-content {
+        padding: 32px 20px;
+      }
+      .ornament {
+        margin-bottom: 24px;
+      }
+      .subtitle {
+        margin-bottom: 40px;
+      }
+    }
+
+    @media (min-height: 900px) {
+      .crown-image {
+        margin-bottom: 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="book-cover">
+    <div class="cover-content">
+      <!-- Crown of Thorns Image -->
+      <img 
+        src="jesus_crown.png" 
+        alt="Crown of Thorns" 
+        class="crown-image"
+      >
+
+      <!-- Ornamental divider -->
+      <div class="ornament"></div>
+
+      <!-- Book Title -->
+      <h1 class="title">
+        你不是不需要神<br>而是<span class="title-ellipsis">……</span>
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="subtitle">
+        科学 · 历史 · 哲学<br>
+        回答一个终极问题
+      </p>
+
+      <!-- Author -->
+      <p class="author">Zhihong</p>
+    </div>
+
+    <!-- Bottom decorative element -->
+    <div class="bottom-ornament">
+      <span class="line"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="line"></span>
+    </div>
+
+    <!-- Copyright -->
+    <p class="copyright">© 2026 Zhihong. All Rights Reserved.</p>
+  </div>
+</body>
+</html>

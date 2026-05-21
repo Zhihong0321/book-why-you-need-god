@@ -32,12 +32,20 @@ I am building an interactive cinematic ebook reader. The platform is already bui
 6. Add it to `/demo/manifest.json`
 7. Mark it complete in `/demo/BUILD_TASKLIST.md`
 
+### CORE DIRECTIVES (CRITICAL):
+
+1. **MOBILE OPTIMIZATION (Especially Tables)**: Keep layouts mobile-optimized. Tables must have a **maximum of 3 columns** (no exceptions). Use `lens` cards for dense details. Keep paragraphs short (1-3 sentences).
+2. **DIRECTOR'S MOOD SWINGS**: Act as a theatrical director. Use emotional swings (`calm`, `wonder`, `awe`, `weight`) to dynamically change the starfield speed/direction, music tracks, background aurora colors, and text animation effects to create an immersive reading experience.
+3. **BIG BANG TRANSITIONS**: Chapter changes must use the Big Bang effect. Always end the chapter JSON with a `next` block so the engine triggers this transition.
+4. **ONE CHAPTER AT A TIME**: Each JSON chapter must be fully self-contained.
+
 ### JSON rules (CRITICAL — do not break):
 
 - Use `「」` for Chinese quotation marks (NOT `""` — those break JSON parsing)
 - No unescaped `"` inside string values
 - After writing, VALIDATE with: `python -c "import json; json.load(open(FILE, encoding='utf-8')); print('OK')"`
 - Do NOT tell me to check until validation passes
+- All `[CHAPTERUID-NNN]` citations must be written in plain text brackets (e.g. `[NDEXP-002]`, do NOT wrap in HTML spans) and registered in `referenceRegistry`
 
 ### JSON block types available:
 

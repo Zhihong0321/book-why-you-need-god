@@ -53,7 +53,6 @@ CHAPTERS = [
     ("TOCNT", "P0_01_table_content.md",             None,       "PART1"),
     ("CAST",  "P0_02_cast_of_contributors.md",      None,       "PART1"),
     ("INTRO", "P0_03_front_note.md",                None,       "PART1"),
-    ("LNSML", "P0_04_lens_manual.md",               None,       "PART1"),
 
     # ─── 第一部：理性对话 ───
     ("NDEXP", "PART1_01_nde_research_report.md",    "PART1",    "PART1"),

@@ -1,0 +1,60 @@
+{
+  "id": "INTRO",
+  "label": "前言 · INTRO",
+  "title": "前言：一页纸就能读完的逻辑",
+  "referenceRegistry": {},
+  "zones": [
+    {
+      "mood": "calm",
+      "blocks": [
+        {"type":"heading","level":2,"text":"前言：一页纸就能读完的逻辑","fx":"fx-reveal"},
+        {"type":"paragraph","text":"这是一本极度危险的书。","class":"lead","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"世界上影响力最大的一本书是《圣经》。在这本书里，最重要也最受争议的一句话是，耶稣说：「我就是道路、真理、生命；若不藉着我，没有人能到父那里去。」","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"在人类历史上，有许多人发现道理、领悟生命、找到真理，但唯独耶稣宣告自己「就是」道路、真理和生命。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"而本书的危险，与《圣经》不同。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"《圣经》记录了耶稣的话语，而本书则是要去理性地「证明」耶稣所说的话是否属实。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"如果你宣告你是神，他宣告他是神，彼此互不干涉，所有的「信仰」或许可以和平共存。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"但本书的危险之处在于——如果我们以严密的逻辑和证据证明了「1 + 1 = 2」，那么所有「1 + 1 不等于 2」的信仰，就立时变成假的了。","fx":"fx-fade-up"}
+      ]
+    },
+    {
+      "mood": "wonder",
+      "blocks": [
+        {"type":"heading","level":3,"text":"逻辑：全书逻辑大纲","fx":"fx-reveal"},
+        {"type":"paragraph","text":"我知道你很忙。因此，整本书的核心逻辑，其实用一页纸就可以概括：","class":"lead","fx":"fx-fade-up"},
+        {"type":"divider"},
+        {"type":"paragraph","text":"1. 灵魂真的存在的科学实验证据（五十年来，全球东西方科学界的实验数据）。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"这留下的疑问是：如果我死后确实有灵魂，那我的灵魂该怎么办？","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"2. 寻找神，并且找到祂。如果有造物主，祂必然在历史中留下了只属于上帝的指纹。从上帝的指纹就可以找到神。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"这留下的疑问是：找到神之后，我的灵魂又与祂有什么关系？","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"3. 先证实有灵魂，再找到谁是神、神在哪里。接着我们就可以倾听——神究竟说了什么。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"如果你现在已经看见了这独一无二的神，你必须知道这位神对我们说了哪些至关重要的事。","fx":"fx-fade-up"}
+      ]
+    },
+    {
+      "mood": "awe",
+      "blocks": [
+        {"type":"heading","level":3,"text":"论证：债务与代价","fx":"fx-reveal"},
+        {"type":"paragraph","text":"4. 灵魂的盼望在哪里，我灵魂的债务该如何偿还。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"死亡的可怕不在于它是一个终点。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"死亡的可怕在于——它是进入永恒的起点。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"5. 没有行为代价，只有认知代价。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"面对这个最极端的问题——要么是永远的活，要么是永远的刑罚。在这两者之间，你需要的仅仅是认知代价，而不是行为代价。","fx":"fx-fade-up"}
+      ]
+    },
+    {
+      "mood": "weight",
+      "blocks": [
+        {"type":"heading","level":3,"text":"证据：通往事实的桥梁","fx":"fx-reveal"},
+        {"type":"paragraph","text":"==== 以上就是这本书的全部答案 ====","class":"lead","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"如果你愿意，请让我清楚地为你论证并展现证据，证明我说的是逻辑自洽、科学客观、并在历史中真实彰显的事实。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"作为本书的作者，我仅仅提出了思路大纲。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"而这本书之所以能够完成，依靠的是人类几千年来，跨文化、跨宗教，集历史、哲学、科学、天文学的集成努力。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"我们要让全人类看见：占比为 0% 的今生之后，死后才是生命真正的开始。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"我们要为全人类解答一个最重要、也是最终极的终端问题：","fx":"fx-fade-up"},
+        {"type":"typewriter","text":"死后怎么办？"},
+        {"type":"next","text":"下一章，我们将正式进入第一章：灵魂是否存在。"}
+      ]
+    }
+  ]
+}

@@ -21,18 +21,18 @@ I am building an interactive cinematic ebook reader. The platform is already bui
 6. Add it to [/demo/manifest.json](cci:7://file:///g:/You_Need_God/demo/manifest.json:0:0-0:0)
 7. Mark it complete in [/demo/BUILD_TASKLIST.md](cci:7://file:///g:/You_Need_God/demo/BUILD_TASKLIST.md:0:0-0:0)
  
-### The Four Laws (priority order):
-1. **MAXIMIZE CINEMATIC EXPERIENCE** — more mood zones, use ALL effect types (fx-fade-up, fx-glow, fx-typewriter, fx-quote, fx-reveal). A chapter with only fx-fade-up is a FAILURE. Every zone change = music crossfade + aurora shift + camera change.
-2. **MOBILE-FIRST** — max 3 columns per table, use `lens` blocks for narrative detail, split giant tables into category groups.
-3. **BIG BANG TRANSITIONS** — handled by engine. End every chapter with a `next` block.
-4. **ONE CHAPTER AT A TIME** — each JSON is self-contained.
+### The Three Cinematic Directives (CRITICAL):
+1. **MOBILE OPTIMIZATION (Especially Tables)** — The ebook is read on mobile devices. You must use a **maximum of 3 columns** per table (no exceptions). Use `lens` cards for dense details. Keep paragraphs short (1-3 sentences).
+2. **DIRECTOR'S MOOD SWINGS** — Act as a theatrical director. Use emotional swings (`calm`, `wonder`, `awe`, `weight`) to dynamically change the starfield (speed, direction, rotation), music tracks (crossfades), background aurora colors, and text animation effects to create an immersive reading experience.
+3. **BIG BANG TRANSITIONS** — Chapter changes must use the Big Bang effect. Always end the chapter JSON with a `next` block so the engine triggers this transition.
+4. **ONE CHAPTER AT A TIME** — Each JSON chapter must be fully self-contained.
  
 ### JSON rules (CRITICAL — do not break):
 - Use `「」` for Chinese quotation marks (NOT `""` — those break JSON parsing)
 - No unescaped `"` inside string values
 - After writing, VALIDATE with: `python -c "import json; json.load(open(FILE, encoding='utf-8')); print('OK')"`
 - Do NOT tell me to check until validation passes
-- All `[CHAPTERUID-NNN]` citations must be wrapped in `<span class="ref-tag" data-ref="CHAPTERUID-NNN">[CHAPTERUID-NNN]</span>` and registered in `referenceRegistry`
+- All `[CHAPTERUID-NNN]` citations must be written in plain text brackets (e.g. `[NDEXP-002]`, do NOT wrap in HTML spans) and registered in `referenceRegistry`
  
 ### Server: Run from project root:
 `python -m http.server 8080 --bind 127.0.0.1`

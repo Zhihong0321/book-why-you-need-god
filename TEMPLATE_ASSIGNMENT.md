@@ -15,7 +15,6 @@
 | TOCNT | Table of Contents | `codex` | Static reference page |
 | CAST | Cast of Contributors | `codex` | 9-layer evidence table |
 | INTRO | Front Note / Introduction | `codex` | Author's preface |
-| LNSML | Lens Manual | `codex` | Reading guide |
 | NDEXP | NDE Research Report | `starfield` | Mood: calm → wonder → awe → weight |
 | ONEGD | One God | `starfield` | Mood: wonder → awe |
 | MFPRT | Messianic Fingerprint | `starfield` | Mood: calm → awe (heavy evidence tables) |

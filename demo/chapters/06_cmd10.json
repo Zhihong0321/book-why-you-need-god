@@ -1,0 +1,361 @@
+{
+  "id": "CMD10",
+  "label": "第六章 · CMD10",
+  "title": "十诫——律法之母，预言之父",
+  "referenceRegistry": {
+    "CMD10-001": {
+      "author": "Tom Holland",
+      "title": "Dominion: How the Christian Revolution Remade the World",
+      "source": "Little, Brown",
+      "year": "2019",
+      "type": "BOOK",
+      "used_for": "Proof that modern universal values are products of Christian revolution."
+    },
+    "CMD10-002": {
+      "author": "UNKNOWN",
+      "title": "US Supreme Court Building Frieze (Moses)",
+      "source": "US Government",
+      "year": "1935",
+      "type": "OTHER",
+      "used_for": "Physical evidence of the Ten Commandments as the root of American law."
+    },
+    "CMD10-003": {
+      "author": "William Blackstone",
+      "title": "Commentaries on the Laws of England",
+      "source": "Clarendon Press",
+      "year": "1765",
+      "type": "BOOK",
+      "used_for": "Proof that English common law relies on divine law (Scripture)."
+    },
+    "CMD10-004": {
+      "author": "UNKNOWN",
+      "title": "人类最早期的法律成就之一",
+      "source": "北京法院网 (Beijing Court Web)",
+      "year": "UNKNOWN",
+      "type": "WEBSITE",
+      "used_for": "Confirmation of the historical legal value of the Ten Commandments by a secular state institution."
+    },
+    "CMD10-005": {
+      "author": "彭小玲",
+      "title": "西方法律的雏形",
+      "source": "锦绣",
+      "year": "UNKNOWN",
+      "type": "JOURNAL",
+      "used_for": "Academic acknowledgment of the Ten Commandments as the prototype of Western law."
+    },
+    "CMD10-006": {
+      "author": "UNKNOWN",
+      "title": "Universal Declaration of Human Rights",
+      "source": "United Nations",
+      "year": "1948",
+      "type": "GOVERNMENT",
+      "used_for": "Universal rights declaration rooted in the biblical concept of Imago Dei."
+    },
+    "CMD10-007": {
+      "author": "William Wilberforce",
+      "title": "Slave Trade Act 1807 / Slavery Abolition Act 1833",
+      "source": "UK Parliament",
+      "year": "1807",
+      "type": "PRIMARY",
+      "used_for": "Historical proof that abolition was driven by the biblical concept of human dignity."
+    },
+    "CMD10-008": {
+      "author": "UNKNOWN",
+      "title": "1940 Decree of the Presidium of the Supreme Soviet",
+      "source": "USSR",
+      "year": "1940",
+      "type": "GOVERNMENT",
+      "used_for": "Evidence of an atheist state's failure to abolish the 7-day week."
+    },
+    "CMD10-009": {
+      "author": "李鹏 (Li Peng)",
+      "title": "国务院第174号令",
+      "source": "PRC State Council",
+      "year": "1995",
+      "type": "GOVERNMENT",
+      "used_for": "Legal evidence of the global adoption of the 7-day week (4th commandment)."
+    },
+    "CMD10-010": {
+      "author": "UNKNOWN",
+      "title": "1950 Marriage Law of the People's Republic of China",
+      "source": "PRC",
+      "year": "1950",
+      "type": "GOVERNMENT",
+      "used_for": "Evidence of a secular state enforcing monogamy (7th commandment) as a universal standard."
+    }
+  },
+  "zones": [
+    {
+      "mood": "calm",
+      "blocks": [
+        {"type": "heading", "level": 2, "text": "十诫——律法之母，预言之父", "fx": "fx-reveal"},
+        {"type": "paragraph", "text": "前面的章节，我们用弥赛亚预言证明了：神在历史中留下了指纹。那些指纹精准、深入，指向一个人的命运。", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "这一章，我们要看另一种指纹。", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "它不是手术刀——精准地切割一个人的命运。", "fx": "fx-fade-up"},
+        {"type": "typewriter", "text": "它是一张蓝图——宽阔地铺开全人类文明的轨迹。"},
+        {"type": "paragraph", "text": "这张蓝图，就是<strong>十诫</strong>。", "fx": "fx-glow"},
+        {"type": "divider"},
+        {"type": "paragraph", "text": "这一章要论证两件事：", "fx": "fx-fade-up"},
+        {"type": "list", "ordered": true, "items": ["十诫是<strong>律法之母</strong>——它生育了所有人类法律体系的底层逻辑。", "正因为它生育了人类法律体系，它同时也是<strong>预言之父</strong>——它是人类历史上覆盖面最广、时间跨度最长、被应验人数最多的预言，而且尚未完成。"]},
+        {"type": "paragraph", "text": "先从律法之母说起。", "fx": "fx-fade-up"},
+        {"type": "divider"},
+        {"type": "heading", "level": 3, "text": "十诫原文", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "在论证之前，你必须先看到它。不是摘要。不是概括。是原文。", "fx": "fx-fade-up"},
+        {"type": "lens", "label": "第一诫", "paragraphs": ["除了我以外，你不可有别的神。"]},
+        {"type": "lens", "label": "第二诫", "paragraphs": ["不可为自己雕刻偶像，也不可跪拜那些像。"]},
+        {"type": "lens", "label": "第三诫", "paragraphs": ["不可妄称耶和华你神的名。"]},
+        {"type": "lens", "label": "第四诫", "paragraphs": ["当记念安息日，守为圣日。六日要劳碌做你一切的工，但第七日是向耶和华你神当守的安息日。这一日，你和你的儿女、仆婢、牲畜，并你城里寄居的客旅，无论何工都不可做。"]},
+        {"type": "lens", "label": "第五诫", "paragraphs": ["当孝敬父母。"]},
+        {"type": "lens", "label": "第六诫", "paragraphs": ["不可杀人。"]},
+        {"type": "lens", "label": "第七诫", "paragraphs": ["不可奸淫。"]},
+        {"type": "lens", "label": "第八诫", "paragraphs": ["不可偷盗。"]},
+        {"type": "lens", "label": "第九诫", "paragraphs": ["不可作假见证陷害人。"]},
+        {"type": "lens", "label": "第十诫", "paragraphs": ["不可贪恋人的房屋，也不可贪恋人的妻子、仆婢、牛驴，并他一切所有的。"]},
+        {"type": "paragraph", "text": "公元前1400年。西奈旷野。一个奴隶民族从神的手中接过两块石板。那时候，四周没有一个文明在遵守这些命令。", "fx": "fx-fade-up"}
+      ]
+    },
+    {
+      "mood": "calm",
+      "blocks": [
+        {"type": "heading", "level": 3, "text": "律法之母：十条命令，覆盖文明的全部维度", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "把十诫摊开，你会看到一个惊人的完整性——", "fx": "fx-fade-up"},
+        {"type": "table", "headers": ["诫命", "覆盖维度", "核心原则"], "rows": [
+          ["第一诫", "信仰的终极对象", "只有一位真神"],
+          ["第二诫", "敬拜的方式", "不可用物质代表神"],
+          ["第三诫", "话语的神圣性", "不可借神之名行恶"],
+          ["第四诫", "时间的神圣性", "每周必须休息"],
+          ["第五诫", "代际关系", "家庭是社会的根基"],
+          ["第六诫", "生命的神圣性", "生命平等，不可剥夺"],
+          ["第七诫", "婚姻的神圣性", "两性平等，一夫一妻"],
+          ["第八诫", "财产的神圣性", "劳动成果受保护"],
+          ["第九诫", "话语的真实性", "信用是社会的粘合剂"],
+          ["第十诫", "内心的秩序", "从根源切断侵犯他人的欲望"]
+        ]},
+        {"type": "paragraph", "text": "从人对神的关系（前三诫），到人对人的关系（后七诫）。从时间的秩序，到生命的秩序，到关系的秩序，到经济的秩序，到话语的秩序，到内心的秩序。", "fx": "fx-fade-up"},
+        {"type": "typewriter", "text": "没有一个维度被遗漏。"},
+        {"type": "paragraph", "text": "这不是一组宗教禁忌。这是一个文明运行所需的<strong>完整底层代码</strong>。", "fx": "fx-glow"},
+        {"type": "divider"},
+        {"type": "heading", "level": 3, "text": "为什么是「母」——而不是「影响」", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "「影响」这个词太弱了。罗马法影响了欧洲。儒家伦理影响了东亚。汉谟拉比法典影响了美索不达米亚。这些是影响——它们在某个区域、某个时段留下了痕迹，然后被替代、被修正、被遗忘。", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "十诫不是影响。十诫是<strong>母</strong>。", "fx": "fx-glow"},
+        {"type": "paragraph", "text": "「母」的意思是：它生育了后代。后代长得不像它，甚至不承认它——但后代的基因里，流着它的血。", "fx": "fx-fade-up"},
+        {"type": "list", "ordered": false, "items": [
+          "你走进任何一个国家的法庭——法官要求证人说实话。那是第九诫。",
+          "你签任何一份劳动合同——里面写着你有休息的权利。那是第四诫。",
+          "你翻开任何一个国家的刑法——杀人有罪。那是第六诫。",
+          "你看任何一个国家的婚姻法——一夫一妻。那是第七诫。",
+          "你查任何一个国家的民法——偷盗有罪，财产受保护。那是第八诫。"
+        ]},
+        {"type": "paragraph", "text": "这些法律，没有一个标注「出处：出埃及记20章」。但它们的基因，全部来自同一个源头。", "fx": "fx-fade-up"},
+        {"type": "quote", "text": "这就是「母」的含义：你不需要承认她，你的身体里已经流着她的血。", "fx": "fx-quote"}
+      ]
+    },
+    {
+      "mood": "wonder",
+      "blocks": [
+        {"type": "heading", "level": 3, "text": "这不是最古老的律法——这是最优的律法", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "有人说：汉谟拉比法典比十诫更早，约公元前1750年。十诫不算最古老的。好，让我们比较。", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "汉谟拉比法典282条，按阶级定价人命：", "fx": "fx-fade-up"},
+        {"type": "list", "ordered": false, "items": [
+          "打死一个自由人，赔银10舍客勒",
+          "打死一个奴隶，赔银3舍客勒",
+          "打掉一个同等地位者的牙，打掉你自己的牙",
+          "打掉一个地位低者的牙，只罚银1舍客勒"
+        ]},
+        {"type": "paragraph", "text": "<strong>人命，按阶级定价。</strong>", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "十诫呢？", "fx": "fx-fade-up"},
+        {"type": "typewriter", "text": "「不可杀人。」——没有附加条件。没有阶级限定。没有价格表。"},
+        {"type": "paragraph", "text": "每一个人。无论贵贱。无论男女。无论老幼。生命不可剥夺。这不是最古老的律法。这是<strong>第一个把生命平等写进律法的文本</strong>。", "fx": "fx-glow"},
+        {"type": "paragraph", "text": "十条命令，282条法典——哪一个更完整？哪一个更公正？哪一个被全人类采纳？答案不言自明。", "fx": "fx-fade-up"},
+        {"type": "divider"},
+        {"type": "heading", "level": 3, "text": "证据：不是教会说的，是人类自己说的", "fx": "fx-fade-up"},
+        {"type": "lens", "label": "汤姆·霍兰（Tom Holland）— 英国历史学家，非基督徒", "paragraphs": [
+          "他在2019年出版的著作中发现 [CMD10-001]：",
+          "「我们今天认为『普世』和『不言自明』的一切现代价值——人权、人格尊严、对弱者的关怀、民主问责、对奴隶制的道德谴责——在古代世界根本不是不言自明的。它们是基督教的产物。」",
+          "<strong>「在西方做一个世俗主义者，仍然意味着你是基督教文明的产物。」</strong>"
+        ]},
+        {"type": "lens", "label": "美国最高法院大楼 [CMD10-002]", "paragraphs": [
+          "正门浮雕刻有人类历史上18位最伟大的立法者。居中者：摩西，手持十诫。",
+          "不在教堂里，不在神学院里。在世界上最有权力的法庭的正门上。",
+          "建造这座建筑的是世俗的美国政府，设计的是世俗的建筑师。"
+        ]},
+        {"type": "lens", "label": "布莱克斯通《英国法律评注》[CMD10-003]", "paragraphs": [
+          "英美普通法的奠基文献。今日美国、英国、澳大利亚、香港每一所法学院的传承都源于此书。",
+          "他在第一卷第一章写道：",
+          "<strong>「人类的一切法律，都依赖于两个基础：自然法与神启之法。任何违背这两者的人类法律均无效力。」</strong>"
+        ]},
+        {"type": "lens", "label": "北京法院网 [CMD10-004] + 中国学者彭小玲 [CMD10-005]", "paragraphs": [
+          "北京法院网——中国首都法院系统的官方网站——发表文章，称十诫为「人类最早期的法律成就之一」。",
+          "中国学者彭小玲在学术期刊《锦绣》发表论文，称十诫为「西方法律的雏形」。",
+          "<strong>不是教会说的，是中国司法机构和学者自己说的。</strong>"
+        ]},
+        {"type": "lens", "label": "1948年《世界人权宣言》[CMD10-006]", "paragraphs": [
+          "宣告所有人类拥有不可剥夺的尊严与权利。",
+          "起草委员会最关键的两位思想家——法国哲学家雅克·马里坦与黎巴嫩外交官查尔斯·马利克——都将这份人权宣言的哲学根基建立在同一句话上：",
+          "<strong>「神按照自己的形象创造了人。」（创世记1:27）</strong>",
+          "全人类的权利宣言，建立在圣经的一句话之上。起草者是哲学家和外交官，不是传教士。"
+        ]},
+        {"type": "lens", "label": "废奴运动领袖威伯福斯 [CMD10-007]", "paragraphs": [
+          "在英国国会数十年的演讲只有一个核心论据：所有人都按神的形象被造，因此任何人不能成为另一个人的财产。",
+          "1807年废除奴隶贸易，1833年全面废奴。",
+          "<strong>奴隶制终结，因为创世记说每一个人都带有神的形象。</strong>"
+        ]},
+        {"type": "divider"},
+        {"type": "paragraph", "text": "摩西的律法不是以色列的律法。它成了人类的律法。每一个法庭，每一份劳工合同，每一张离婚判决书，每一次你休息的周末——都在运行公元前1400年写下的同一套代码。", "fx": "fx-fade-up"},
+        {"type": "typewriter", "text": "这就是律法之母。"}
+      ]
+    },
+    {
+      "mood": "wonder",
+      "blocks": [
+        {"type": "heading", "level": 3, "text": "你心里的两个逃生口", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "读到这里，你可能已经在找退路了。让我猜猜你心里的两句话。", "fx": "fx-fade-up"},
+        {"type": "divider"},
+        {"type": "heading", "level": 4, "text": "逃生口一：「这只是文化传播，不需要超自然。」", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "好。那请你回答一个问题：<strong>为什么全世界「传播」的是这一份？</strong>", "fx": "fx-fade-up"},
+        {"type": "list", "ordered": false, "items": [
+          "汉谟拉比法典比十诫更早。为什么没有人「传播」它？",
+          "摩奴法典比十诫更详细。为什么没有人「传播」它？",
+          "罗马十二铜表法比十诫更精密。为什么没有人「传播」它？"
+        ]},
+        {"type": "paragraph", "text": "它们都死了。变成了博物馆里的展品。只有十诫活着。不仅活着，而且正在被全球执行。", "fx": "fx-fade-up"},
+        {"type": "quote", "text": "「文化传播」不是解释。「文化传播」是需要被解释的现象本身。", "fx": "fx-quote"},
+        {"type": "paragraph", "text": "为什么偏偏是这一份古代文献，具有穿透所有文化、所有意识形态、所有时代的力量？抹掉答案的人不知道源头，不代表源头不存在。", "fx": "fx-fade-up"},
+        {"type": "divider"},
+        {"type": "heading", "level": 4, "text": "逃生口二：「人类试错后自然收敛到最优解，十诫只是碰巧猜对了。」", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "好。那请你解释：为什么「最优解」恰好是十诫指定的具体值？", "fx": "fx-fade-up"},
+        {"type": "list", "ordered": false, "items": [
+          "为什么是7天，不是5天或10天？苏联试过5天。失败了。",
+          "为什么是一夫一妻，不是一夫四妻？全球趋势仍在收敛向一夫一妻。",
+          "为什么是生命绝对平等，不是「按贡献定价」？汉谟拉比按阶级定价人命，人类最终没有收敛到那个「最优解」。"
+        ]},
+        {"type": "paragraph", "text": "如果这是「试错后自然收敛」，那为什么收敛的终点，每一次都恰好落在三千五百年前那两块石板上写的具体数字上？", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "一次巧合，可以。两次巧合，勉强。", "fx": "fx-fade-up"},
+        {"type": "typewriter", "text": "十个维度全部「巧合」？那不叫巧合。那叫蓝图。"},
+        {"type": "divider"},
+        {"type": "paragraph", "text": "两个逃生口都堵死了。剩下的是一个简单的事实：", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "一份三千五百年前的文献，在十个维度上，写下了全人类文明的最终走向。它不是「影响」了世界。它是「预写」了世界。", "fx": "fx-glow"},
+        {"type": "paragraph", "text": "现在我们来看，它是怎么预写的。", "fx": "fx-fade-up"}
+      ]
+    },
+    {
+      "mood": "awe",
+      "blocks": [
+        {"type": "heading", "level": 3, "text": "预言之父：从律法到轨迹", "fx": "fx-reveal"},
+        {"type": "paragraph", "text": "「影响了人类法律」这个说法，还可以被解释为借鉴。但十诫的情况不是这样。", "fx": "fx-fade-up"},
+        {"type": "quote", "text": "预言的定义是：在事件发生之前，写下事件的轨迹。", "fx": "fx-quote"},
+        {"type": "paragraph", "text": "十诫写于公元前1400年。那时候——没有任何一个文明实行一夫一妻，没有任何一个文明保证工人每周休息，没有任何一个文明承认所有生命平等，没有任何一个文明禁止以神之名行恶，没有任何一个文明把诚实作为法律基石。", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "三千五百年后——一夫一妻是全球绝大多数国家的唯一合法婚姻形式。每周休息是全球劳工的基本权利。生命平等是国际法的核心原则。伪证罪存在于每一个法律体系。", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "<strong>这不是「影响」。这是「轨迹」。</strong>", "fx": "fx-glow"},
+        {"type": "paragraph", "text": "影响是：我看了你的东西，我学了。我可以学，也可以不学。轨迹是：你写下了一条路，三千五百年后，全人类——包括那些最激烈否认你来源的人——都走在这条路上。", "fx": "fx-fade-up"},
+        {"type": "divider"},
+        {"type": "heading", "level": 4, "text": "不可杀人：生命平等的预言", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "「不可杀人。」四个字。没有附加条件。没有阶级限定。没有例外条款。今天，这四个字看起来理所当然。但「理所当然」本身，就是三千五百年预言运行的结果。", "fx": "fx-fade-up"},
+        {"type": "list", "ordered": false, "items": [
+          "古罗马：角斗场里，奴隶互相残杀供贵族娱乐。怜悯是软弱的标志。",
+          "古印度：种姓制度将人分为四等。低种姓的生命价值远低于高种姓。",
+          "古中国：诛九族——一人犯罪，父族、母族、妻族全部处死。连坐制度延续了两千多年。"
+        ]},
+        {"type": "paragraph", "text": "「不可杀人」真正挑战的不是凶杀——而是「谁的生命算数」。当十诫写下这句话的时候，它实际上在说：<strong>每一条命都算数。</strong>不分阶级。不分种族。不分性别。不分年龄。", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "这个概念，在公元前1400年是荒谬的。今天，它是国际法的基石——刑事凶杀罪、战争罪公约、国际刑事法院、《禁止灭绝种族罪公约》[CMD10-006]。", "fx": "fx-fade-up"},
+        {"type": "typewriter", "text": "从「诛九族」到「每一条命都算数」——三千五百年。这不是人类自然进化的结果。这是预言的轨迹。"},
+        {"type": "divider"},
+        {"type": "heading", "level": 4, "text": "不可奸淫：两性平等的预言", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "在所有父权社会里——东方的、西方的、古代的、近代的——多妻制是权力的象征，是地位的证明。中国皇帝有三宫六院，伊斯兰法律允许四妻，罗马贵族妻妾并存。", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "它符合生物本能。它巩固政治联盟。它在人类有史以来的所有文明中稳定运作了数千年。没有进化压力去改变它。没有任何父权社会会从内部产生这个动力。", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "然后第七诫说：<strong>不可奸淫。</strong>婚姻是两个人之间的神圣契约。一方不可被另一方当作物品占有。一夫一妻，是两性平等在制度上的体现。", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "1950年，中华人民共和国《婚姻法》第二条：废除包办婚姻、纳妾等封建婚姻制度 [CMD10-010]。一个明确拒绝基督教的共产主义政权，用国家强制力在中国土地上执行了第七诫。", "fx": "fx-glow"},
+        {"type": "paragraph", "text": "三千五百年前写下的一条命令，颠覆了人类有史以来最根深蒂固、最符合本能、覆盖面最广的社会制度。这不是影响。这是预言的应验。", "fx": "fx-fade-up"}
+      ]
+    },
+    {
+      "mood": "awe",
+      "blocks": [
+        {"type": "heading", "level": 4, "text": "当守安息日：休息是权利的预言", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "这一条，是十诫中最容易被低估的。因为今天，你已经很习惯周末了。但请你回到公元前1400年，看这条诫命真正说了什么。", "fx": "fx-fade-up"},
+        {"type": "quote", "text": "休息，是每个人的权利。不是特权，不是赏赐，不是恩准——是权利。而且覆盖到社会最底层的人：仆婢、客旅、甚至牲畜。", "fx": "fx-quote"},
+        {"type": "paragraph", "text": "在人类历史上，这是第一次有人把「休息」写成了不可剥夺的权利。", "fx": "fx-fade-up"},
+        {"type": "divider"},
+        {"type": "lens", "label": "中国古代：没有每周休息的概念", "paragraphs": [
+          "中国传统历法使用「旬」——十天一个循环。官员每十天休息一天，称为「旬休」。但这是官员的特权。",
+          "农民、手工业者、商人呢？中国新闻网记载：「对于农民、手工业者及商人来说，其作息并无定例，有些劳动者终年劳作，长年无休。」",
+          "<strong>终年劳作，长年无休。</strong>这是中国几千年文明的常态。"
+        ]},
+        {"type": "lens", "label": "苏联：与第四诫对抗了11年 [CMD10-008]", "paragraphs": [
+          "7天工作周来自哪里？宇宙中没有任何天文现象对应7天的周期。《辞海》明确记载：七日一周的制度源于《创世纪》中上帝六日创造万物、第七日休息的记载 [CMD10-009]。",
+          "苏联知道这个来源。所以他们决定废除它。1929年，布尔什维克设计了「连续工作周」——5天循环，工人轮流休息，没有共同的休息日。",
+          "工人们在《真理报》上写信：「如果妻子在工厂，孩子在学校，没有人和我在同一天休息——这算什么假日？」机器故障率暴增。旷工率上升。社会凝聚力崩溃。",
+          "<strong>1940年6月26日，苏联最高苏维埃主席团颁布正式法令，恢复7天工作周。世界上最激进的无神论政权，与第四诫对抗了11年，在政府文件上签字投降。</strong>"
+        ]},
+        {"type": "lens", "label": "中国：1995年，13亿人获得每周休息的权利 [CMD10-009]", "paragraphs": [
+          "1995年5月1日，国务院第174号令，总理李鹏签署：正式确立五天工作制，星期六和星期日为法定休息日。",
+          "一个官方无神论的国家，在1995年给了13亿人每周两天的休息。",
+          "不是因为马克思主义——马克思没有写「每周休息」。不是因为中国传统文化——中国几千年没有这个概念。",
+          "<strong>是因为三千五百年前，摩西写下了第四条诫命。</strong>"
+        ]},
+        {"type": "divider"},
+        {"type": "paragraph", "text": "没有任何一个文明，从内部自发产生了「每周休息」的概念。古埃及没有。古巴比伦没有。古中国没有。古印度没有。这个概念，只有一个来源：公元前1400年，西奈旷野，两块石板上的第四条诫命。", "fx": "fx-fade-up"},
+        {"type": "typewriter", "text": "三千五百年后，它从一条宗教律法，变成了全球劳工的基本权利。这就是预言。"}
+      ]
+    },
+    {
+      "mood": "awe",
+      "blocks": [
+        {"type": "heading", "level": 3, "text": "预言的覆盖面", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "现在，把视角拉远。比较一下圣经中其他著名的预言：", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "以赛亚书53章，在耶稣出生前700年预言了一个人的命运。那是一个人，一次事件，700年的时间跨度。", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "十诫呢？", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "<strong>3,500年时间跨度。仍未完成。所有国家。所有民族。80亿活着的人每周休息。每一份劳工合同。每一张婚姻证书。每一个法庭。每一次周末。</strong>", "fx": "fx-glow"},
+        {"type": "table", "headers": ["维度", "以赛亚书53章", "十诫"], "rows": [
+          ["覆盖对象", "一个人的命运", "全人类文明的轨迹"],
+          ["时间跨度", "700年", "3,500年（仍在运行）"],
+          ["影响人数", "一次事件", "今天所有活着的人"]
+        ]},
+        {"type": "paragraph", "text": "以赛亚书53章是一枚手术刀：精准，深入，关于一个人的命运。", "fx": "fx-fade-up"},
+        {"type": "typewriter", "text": "十诫是一张蓝图：宽阔，持久，关于全人类文明的轨迹。它是万预言之父。"},
+        {"type": "divider"},
+        {"type": "heading", "level": 3, "text": "预言尚未完成", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "把十诫分成两组：", "fx": "fx-fade-up"},
+        {"type": "lens", "label": "第一组（第四至第十诫）：人与人之间的关系", "paragraphs": [
+          "当守安息日、当孝敬父母、不可杀人、不可奸淫、不可偷盗、不可作假见证、不可贪婪。",
+          "<strong>今天，这七条已被全球法律体系全部不同程度地采纳。</strong>"
+        ]},
+        {"type": "lens", "label": "第二组（第一至第三诫）：人与神之间的关系", "paragraphs": [
+          "不可有别的神、不可拜偶像、不可妄称神的名。",
+          "<strong>这三条，尚未被全球普遍执行。</strong>"
+        ]},
+        {"type": "paragraph", "text": "注意这个顺序。神没有从「你必须承认我的存在」开始强制推行。祂从人类最基本的需要开始——休息、安全、公平、家庭——让3,500年的文明演进一步步把人类引向最后三条。", "fx": "fx-fade-up"},
+        {"type": "list", "ordered": false, "items": [
+          "当每一个法庭都在执行「不可作假见证」时，它在无意中承认了有一个比人类更高的真理标准。",
+          "当每一份劳工合同都保障工人休息的权利时，它在无意中承认了有一个比权力更高的道德来源。",
+          "当《世界人权宣言》宣告每一个人都有不可剥夺的尊严时 [CMD10-006]，它在无意中引用了一个它甚至不敢明说的前提：每个人都按神的形象被造。"
+        ]},
+        {"type": "paragraph", "text": "<strong>人类文明正在被一步步带向那三条。预言的程序仍在运行。程序的作者站在时间之外。</strong>", "fx": "fx-glow"}
+      ]
+    },
+    {
+      "mood": "awe",
+      "blocks": [
+        {"type": "heading", "level": 3, "text": "结语", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "三千五百年前，在西奈旷野，一个奴隶民族的领袖从神的手中接过两块石板，上面刻着十条命令。那时候，四周没有一个文明在遵守这些命令。", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "今天——", "fx": "fx-fade-up"},
+        {"type": "list", "ordered": false, "items": [
+          "80亿人每周休息，因为第四诫。",
+          "每个国家的谋杀者被审判，因为第六诫。",
+          "中华人民共和国的婚姻法禁止多妻，因为第七诫。",
+          "《世界人权宣言》保护所有人，因为创世记1:27。",
+          "苏联的1940年法令档案记录了一个无神论帝国向一条诫命投降的历史。",
+          "英国历史学家汤姆·霍兰花了数年研究后得出结论：现代世界是基督教文明的产物。"
+        ]},
+        {"type": "paragraph", "text": "没有一个人类文件做到过这件事。三千五百年。所有国家。所有文化。所有意识形态——包括那些最激烈地否认它来源的。", "fx": "fx-fade-up"},
+        {"type": "divider"},
+        {"type": "paragraph", "text": "<strong>它是律法之母：</strong>它生育了所有人类法律体系。不是因为最古老，而是因为最完整、最公正、最接近文明的最优解。", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "<strong>它是预言之父：</strong>它是人类历史上覆盖最广、时间最长、被应验人数最多的预言——而且尚未完成。", "fx": "fx-fade-up"},
+        {"type": "paragraph", "text": "一个人做不到。一个民族做不到。一个时代做不到。", "fx": "fx-fade-up"},
+        {"type": "typewriter", "text": "只有一位站在时间之外的存在者，才能在石板上写下全人类文明未来三千五百年的完整轨迹。"},
+        {"type": "paragraph", "text": "而祂已经告诉你祂是谁了。", "fx": "fx-glow"},
+        {"type": "next", "text": "下一章：全人类的记忆"}
+      ]
+    }
+  ]
+}

@@ -102,6 +102,7 @@
         {"type":"heading","level":3,"text":"结论","fx":"fx-fade-up"},
         {"type":"paragraph","text":"意识不是大脑制造的东西。意识是独立存在的，大脑只是它在这个世界里的窗口。","fx":"fx-fade-up"},
         {"type":"paragraph","text":"当窗口关上，意识没有消失——它回到了窗外那个更大的世界。","fx":"fx-glow"},
+        {"type":"countdown","label":"我们身体窗口关上的倒数","subtitle":"不要害怕。我会证明给你看，这不是结束。","verse":"「今夜必要你的灵魂。」— 路加福音 12:20"},
         {"type":"divider"},
         {"type":"heading","level":3,"text":"逻辑","fx":"fx-fade-up"},
         {"type":"paragraph","text":"意识从来不是大脑「生产」出来的。","fx":"fx-fade-up"},

@@ -28,9 +28,9 @@ canvas{position:fixed;inset:0;z-index:1;pointer-events:none}
 .bb-overlay.active{opacity:1;pointer-events:auto}
 .bb-text{text-align:center;opacity:0;transition:opacity 1.2s;font-family:'Noto Serif SC',serif;color:rgba(60,55,50,0.88)}
 .bb-text.show{opacity:1}
-.bb-sub{font-size:0.85rem;letter-spacing:0.4em;margin-bottom:1.2rem;color:rgba(100,95,85,0.6)}
-.bb-title{font-size:2.2rem;letter-spacing:0.08em;font-weight:400}
-.bb-cursor{display:inline-block;width:2px;height:1.1em;background:rgba(80,75,65,0.6);margin-left:3px;vertical-align:text-bottom;animation:blink .8s step-end infinite}
+.bb-sub{font-size:0.85rem;letter-spacing:0.4em;margin-bottom:1.2rem;color:rgba(26,26,24,0.6) !important}
+.bb-title{font-size:2.2rem;letter-spacing:0.08em;font-weight:400;color:#1a1a18 !important}
+.bb-cursor{display:inline-block;width:2px;height:1.1em;background:rgba(26,26,24,0.6);margin-left:3px;vertical-align:text-bottom;animation:blink .8s step-end infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 </style>
 </head>
@@ -41,27 +41,92 @@ canvas{position:fixed;inset:0;z-index:1;pointer-events:none}
 <button class="music-toggle" id="musicToggle">&#9835;</button>
 <div class="music-toast" id="musicToast"><span class="toast-icon">&#9835;</span><span class="toast-text" id="toastText"></span></div>
 <div class="bb-overlay" id="bbOverlay"><div class="bb-text" id="bbText"><p class="bb-sub" id="bbSub"></p><h1 class="bb-title" id="bbTitle"></h1></div></div>
+<!-- Reference Details Slide-up Panel -->
+<div class="ref-panel" id="refPanel">
+  <button class="ref-panel-close" id="refPanelClose">&times;</button>
+  <h3 class="ref-title" id="refPanelTitle"></h3>
+  <div class="ref-author" id="refPanelAuthor"></div>
+  <div class="ref-meta" id="refPanelMeta"></div>
+  <div class="ref-used" id="refPanelUsed"></div>
+</div>
+<!-- Reader Floating Control Panel -->
+<div class="control-widget" id="controlWidget" style="display:none;">
+  <button class="control-trigger" id="controlTrigger" aria-label="Open Reader Settings">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+  </button>
+  <div class="control-panel" id="controlPanel">
+    <div class="control-section">
+      <div class="control-label">章节导航</div>
+      <div class="control-row">
+        <button class="control-btn" id="ctrlPrev" title="上一章">◀</button>
+        <button class="control-btn" id="ctrlTOC" title="返回目录">目录</button>
+        <button class="control-btn" id="ctrlNext" title="下一章">▶</button>
+      </div>
+    </div>
+    <div class="control-section">
+      <div class="control-label">字体大小</div>
+      <div class="control-row">
+        <button class="control-btn" id="ctrlFontDec">A-</button>
+        <span class="control-value" id="ctrlFontVal">100%</span>
+        <button class="control-btn" id="ctrlFontInc">A+</button>
+      </div>
+    </div>
+    <div class="control-section">
+      <div class="control-label">背景音乐</div>
+      <div class="control-row">
+        <button class="control-btn" id="ctrlMusicToggle">静音</button>
+      </div>
+    </div>
+    <div class="control-section">
+      <div class="control-label">语音朗读</div>
+      <div class="control-row">
+        <button class="control-btn" id="ctrlTTSPlay">朗读</button>
+        <button class="control-btn" id="ctrlTTSStop" disabled>停止</button>
+      </div>
+    </div>
+  </div>
+</div>
 <audio id="track-calm" loop preload="auto"><source src="../music_asset/Scott Buckley - Snowfall.mp3" type="audio/mpeg"></audio>
 <audio id="track-wonder" loop preload="auto"><source src="../music_asset/Scott Buckley - Filaments.mp3" type="audio/mpeg"></audio>
 <audio id="track-awe" loop preload="auto"><source src="../music_asset/Scott Buckley - Horizons.mp3" type="audio/mpeg"></audio>
 <audio id="track-weight" loop preload="auto"><source src="../music_asset/Sappheiros - Escape.mp3" type="audio/mpeg"></audio>
+<div class="book-cover-container" id="bookCover">
+  <div class="cover-content">
+    <img src="jesus_crown.png" alt="Crown of Thorns" class="crown-image">
+    <div class="ornament"></div>
+    <h1 class="cover-title">你不是不需要神<br>而是<span class="title-ellipsis">……</span></h1>
+    <p class="cover-subtitle">科学 · 历史 · 哲学<br>回答一个终极问题</p>
+    <p class="cover-author">Zhihong</p>
+    <button class="start-reading-btn" id="startReadingBtn">开始阅读</button>
+  </div>
+  <div class="bottom-ornament">
+    <span class="line"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="line"></span>
+  </div>
+  <p class="cover-copyright">© 2026 Zhihong. All Rights Reserved.</p>
+</div>
 <div id="content"></div>
 <script>
 (function(){
 'use strict';
-
 // === INJECTED STYLES ===
 var s=document.createElement('style');
 s.textContent=`
+:root {
+  --reader-font-size: 1.05rem;
+}
 h1,h2,h3,h4{font-family:'Noto Serif SC',serif;color:rgba(255,255,255,0.92);letter-spacing:0.04em}
 h2{font-size:1.8rem;margin-bottom:1.5rem;border-bottom:1px solid rgba(255,255,255,0.06);padding-bottom:0.6rem}
 h3{font-size:1.2rem;color:rgba(230,230,240,0.85);margin-top:2.5rem;margin-bottom:1rem}
 h4{font-size:1rem;color:rgba(200,200,215,0.8);margin-top:2rem;margin-bottom:0.8rem;font-weight:500}
-p{margin-bottom:1.4rem;font-size:1.05rem;color:rgba(215,215,225,0.85)}
+p{margin-bottom:1.4rem;font-size:var(--reader-font-size);color:rgba(215,215,225,0.85)}
 strong{color:#fff;font-weight:600}
 .lead{font-size:1.25rem;color:#e2e1e9;font-weight:300;margin-bottom:1.6rem}
 ul,ol{padding-left:1.5rem;margin-bottom:1.5rem}
-li{margin-bottom:0.6rem;font-size:1rem;color:rgba(205,205,218,0.85)}
+li{margin-bottom:0.6rem;font-size:calc(var(--reader-font-size) * 0.95);color:rgba(205,205,218,0.85)}
 blockquote{border-left:2px solid rgba(255,255,255,0.08);padding:0.8rem 1.5rem;margin:1.5rem 0;color:rgba(195,195,210,0.75);font-style:italic;background:rgba(255,255,255,0.01)}
 blockquote.fx-quote{font-family:'Noto Serif SC',serif;border-left:3px solid rgba(160,130,220,0.3);padding:1.5rem 2rem;margin:2.5rem 0;background:rgba(160,130,220,0.02);border-radius:6px;font-style:normal;font-size:1.2rem;line-height:1.8;color:#f1ebd9;opacity:0;transform:scale(0.97);transition:opacity 1.8s,transform 1.8s,border-color 2s ease 0.5s,box-shadow 2s ease 0.5s}
 blockquote.fx-quote.visible{opacity:1;transform:scale(1);border-left-color:rgba(160,130,220,0.7);box-shadow:-4px 0 20px rgba(160,130,220,0.1)}
@@ -84,30 +149,256 @@ tbody tr:hover{background:rgba(255,255,255,0.015)}
 .fx-typewriter{opacity:0;transition:opacity 0.5s}.fx-typewriter.visible{opacity:1}
 .tw-cursor{display:inline-block;width:2px;height:1.1em;background:rgba(200,210,240,0.7);margin-left:2px;vertical-align:text-bottom;animation:blink .8s step-end infinite}
 .next-chapter{margin-top:3rem;color:rgba(140,140,160,0.5);font-style:italic;font-size:0.9rem}
+/* Countdown Widget */
+.countdown-widget{text-align:center;margin:4rem 0;padding:3rem 1.5rem;border-radius:12px;background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.04);position:relative;overflow:hidden}
+.countdown-widget::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(180,60,60,0.06) 0%,transparent 70%);pointer-events:none}
+.countdown-display{font-family:'Courier New',monospace;font-size:clamp(1.6rem,5vw,2.8rem);font-weight:700;letter-spacing:0.06em;color:rgba(255,255,255,0.92);margin-bottom:1.5rem;text-shadow:0 0 20px rgba(255,100,80,0.15)}
+.cd-unknown{color:rgba(255,80,60,0.7);animation:cdPulse 2s ease-in-out infinite}
+.cd-sep{color:rgba(255,255,255,0.3);margin:0 0.05em}
+.cd-sep-ms{margin:0}
+.cd-hours,.cd-minutes,.cd-seconds{color:rgba(255,220,200,0.9);transition:color 0.1s}
+.cd-ms{font-size:0.7em;color:rgba(255,180,160,0.7);min-width:2.2em;display:inline-block;text-align:left}
+.countdown-label{font-family:'Noto Serif SC',serif;font-size:0.85rem;letter-spacing:0.2em;color:rgba(255,180,160,0.6);margin-bottom:0.8rem;font-weight:500}
+.countdown-verse{font-family:'Noto Serif SC',serif;font-size:0.9rem;color:rgba(255,220,200,0.55);font-style:italic;margin-bottom:1.2rem;letter-spacing:0.05em}
+.countdown-subtitle{font-size:1rem;color:rgba(215,215,225,0.75);font-style:italic;margin-bottom:0}
+@keyframes cdPulse{0%,100%{opacity:0.7}50%{opacity:1;text-shadow:0 0 12px rgba(255,80,60,0.4)}}
 .chapter-label{font-family:'Noto Serif SC',serif;font-size:0.7rem;letter-spacing:0.5em;text-transform:uppercase;color:rgba(140,150,180,0.5);margin-bottom:2rem;border-left:2px solid rgba(140,150,180,0.25);padding-left:0.8rem}
 .end-trigger{height:30vh;display:flex;align-items:center;justify-content:center;cursor:pointer}
-.end-trigger p{font-size:0.8rem;color:rgba(140,150,180,0.4);letter-spacing:0.1em}
+.end-trigger p{font-size:0.8rem;color:rgba(140,150,180,0.4);letter-spacing:0.1em;transition:all 0.3s ease}
+.end-trigger:hover p{color:rgba(180,200,255,0.85);text-shadow:0 0 12px rgba(140,160,220,0.6);transform:scale(1.05)}
+.ref-panel{position:fixed;bottom:0;left:0;right:0;background:rgba(10,10,18,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,0.08);border-radius:16px 16px 0 0;padding:2rem;z-index:1000;transform:translateY(100%);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);box-shadow:0 -10px 40px rgba(0,0,0,0.5)}
+.ref-panel.open{transform:translateY(0)}
+.ref-panel-close{position:absolute;top:1rem;right:1.5rem;background:none;border:none;color:rgba(255,255,255,0.4);font-size:1.8rem;cursor:pointer;line-height:1}
+.ref-panel-close:hover{color:#fff}
+.ref-title{font-family:'Noto Serif SC',serif;font-size:1.2rem;color:#fff;margin-bottom:0.4rem;border-bottom:none;padding-bottom:0}
+.ref-author{font-size:0.85rem;color:rgba(180,195,230,0.85);margin-bottom:1rem}
+.ref-meta{font-size:0.75rem;color:rgba(140,150,185,0.7);margin-bottom:1rem;display:flex;gap:1.5rem;border-bottom:1px solid rgba(255,255,255,0.05);padding-bottom:0.8rem}
+.ref-meta strong{color:rgba(130,160,220,0.9)}
+.ref-used{font-size:0.9rem;line-height:1.7;color:rgba(215,215,225,0.9);background:rgba(255,255,255,0.02);padding:1rem 1.2rem;border-radius:8px;border-left:3px solid rgba(130,160,220,0.7)}
 @media(max-width:640px){#content{padding:4rem 1.2rem 6rem}h2{font-size:1.4rem}table{min-width:0}}
+
+.book-cover-container{position:fixed;inset:0;z-index:100;background:#fbfcf8;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:1;transition:opacity 1.5s ease;font-family:'Noto Serif SC',serif}
+.book-cover-container.fade-out{opacity:0;pointer-events:none}
+.cover-content{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;max-width:600px;text-align:center}
+.crown-image{width:clamp(200px,45vw,320px);height:auto;margin-bottom:48px;animation:coverFloat 6s ease-in-out infinite}
+@keyframes coverFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.ornament{width:60px;height:1px;background:linear-gradient(90deg,transparent,rgba(80,60,30,0.4),transparent);margin-bottom:32px}
+.cover-title{font-size:clamp(28px,7vw,48px);font-weight:900;line-height:1.4;letter-spacing:0.02em;color:#1a1a18;margin-bottom:16px}
+.title-ellipsis{color:rgba(120,80,20,0.7)}
+.cover-subtitle{font-size:clamp(13px,3vw,16px);font-weight:400;color:rgba(40,40,35,0.55);line-height:1.8;letter-spacing:0.06em;margin-bottom:32px;max-width:28ch}
+.cover-author{font-size:clamp(12px,2.5vw,14px);font-weight:600;letter-spacing:0.12em;color:rgba(80,60,20,0.6);text-transform:uppercase;margin-bottom:40px}
+.start-reading-btn{padding:0.8rem 2.2rem;font-size:0.95rem;font-family:'Noto Serif SC',serif;font-weight:600;color:#503c14;background:rgba(80,60,20,0.05);border:1px solid rgba(80,60,20,0.2);border-radius:4px;cursor:pointer;letter-spacing:0.15em;transition:all 0.3s ease}
+.start-reading-btn:hover{background:rgba(80,60,20,0.1);border-color:rgba(80,60,20,0.4);transform:translateY(-2px);box-shadow:0 4px 15px rgba(80,60,20,0.08)}
+.bottom-ornament{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:12px}
+.bottom-ornament .dot{width:3px;height:3px;border-radius:50%;background:rgba(80,60,30,0.35)}
+.bottom-ornament .line{width:24px;height:1px;background:rgba(80,60,30,0.2)}
+.cover-copyright{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);font-size:10px;color:rgba(40,40,35,0.3);letter-spacing:0.05em}
+@media(max-width:480px){.crown-image{width:180px;margin-bottom:36px}.cover-content{padding:32px 20px}.ornament{margin-bottom:24px}.cover-subtitle{margin-bottom:24px}}
+
+/* Reader Controls Styling */
+.control-widget {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 950;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+.control-trigger {
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  background: rgba(15, 15, 25, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.control-trigger:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(20, 20, 35, 0.6);
+  transform: scale(1.05);
+}
+.control-panel {
+  position: absolute;
+  bottom: 3.2rem;
+  right: 0;
+  width: 200px;
+  background: rgba(10, 10, 18, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  opacity: 0;
+  transform: translateY(10px) scale(0.95);
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.control-panel.open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+.control-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.control-label {
+  font-size: 0.65rem;
+  color: rgba(140, 150, 180, 0.5);
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+.control-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.control-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  color: rgba(215, 215, 225, 0.85);
+  padding: 0.35rem 0.5rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  font-family: inherit;
+}
+.control-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: #fff;
+}
+.control-btn:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
+.control-value {
+  font-size: 0.75rem;
+  color: rgba(215, 215, 225, 0.8);
+  width: 2.4rem;
+  text-align: center;
+  font-weight: 500;
+}
+.tts-active-para {
+  background: rgba(140, 160, 220, 0.08);
+  border-left: 3px solid rgba(140, 160, 220, 0.6);
+  padding-left: 0.8rem;
+  border-radius: 0 6px 6px 0;
+  transition: all 0.4s ease;
+}
 `;
 document.head.appendChild(s);
 
 // === MANIFEST & STATE ===
 var manifest=null, chapters=[], currentIdx=0, transitioning=false;
 
+// === REFERENCE FORMATTER & PANEL ===
+function fmt(str) {
+  if (!str) return '';
+  var clean = str.replace(/<span class="ref-tag" data-ref="[^"]*">([^<]+)<\/span>/g, '$1');
+  return clean.replace(/\[([A-Z0-9]+-[0-9]+)\]/g, function(match, refId) {
+    return '<span class="ref-tag" data-ref="' + refId + '">[' + refId + ']</span>';
+  });
+}
+
+function showReferenceDetails(refId) {
+  var registry = chapters[currentIdx] && chapters[currentIdx].referenceRegistry;
+  var ref = registry && registry[refId];
+  if (!ref) {
+    console.warn('Reference not found in current chapter registry:', refId);
+    return;
+  }
+  document.getElementById('refPanelTitle').textContent = ref.title || refId;
+  document.getElementById('refPanelAuthor').textContent = (ref.author || 'Unknown Author') + (ref.year ? ' (' + ref.year + ')' : '');
+  document.getElementById('refPanelMeta').innerHTML = '<span><strong>来源:</strong> ' + (ref.source || 'N/A') + '</span> <span><strong>类型:</strong> ' + (ref.type || 'PRIMARY') + '</span>';
+  document.getElementById('refPanelUsed').innerHTML = ref.used_for || 'No description available.';
+  document.getElementById('refPanel').classList.add('open');
+}
+
+document.addEventListener('click', function(e) {
+  var tag = e.target.closest('.ref-tag');
+  if (tag) {
+    var refId = tag.getAttribute('data-ref');
+    showReferenceDetails(refId);
+  } else {
+    var panel = document.getElementById('refPanel');
+    if (panel && panel.classList.contains('open') && !panel.contains(e.target)) {
+      panel.classList.remove('open');
+    }
+  }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  var closeBtn = document.getElementById('refPanelClose');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      document.getElementById('refPanel').classList.remove('open');
+    });
+  }
+});
+
 // === RENDERER ===
 function renderBlock(b){
   switch(b.type){
-    case 'heading': return '<h'+b.level+' class="'+(b.fx||'fx-fade-up')+'">'+b.text+'</h'+b.level+'>';
-    case 'paragraph': return '<p class="'+(b.class?b.class+' ':'')+(b.fx||'fx-fade-up')+'">'+b.text+'</p>';
-    case 'quote': return '<blockquote class="'+(b.fx||'')+'">'+b.text+'</blockquote>';
+    case 'heading': return '<h'+b.level+' class="'+(b.fx||'fx-fade-up')+'">'+fmt(b.text)+'</h'+b.level+'>';
+    case 'paragraph': return '<p class="'+(b.class?b.class+' ':'')+(b.fx||'fx-fade-up')+'">'+fmt(b.text)+'</p>';
+    case 'quote': return '<blockquote class="'+(b.fx||'')+'">'+fmt(b.text)+'</blockquote>';
     case 'divider': return '<div class="divider"></div>';
-    case 'lens': var h='<div class="lens-block fx-fade-up"><p class="lens-label">'+b.label+'</p>';b.paragraphs.forEach(function(p){h+='<p>'+p+'</p>';});return h+'</div>';
-    case 'table': var h='<div class="table-wrap fx-fade-up"><table><thead><tr>';b.headers.forEach(function(t){h+='<th>'+t+'</th>';});h+='</tr></thead><tbody>';b.rows.forEach(function(r){h+='<tr>';r.forEach(function(c){h+='<td>'+c+'</td>';});h+='</tr>';});return h+'</tbody></table></div>';
-    case 'list': var tag=b.ordered?'ol':'ul';var h='<'+tag+' class="fx-fade-up">';b.items.forEach(function(i){h+='<li>'+i+'</li>';});return h+'</'+tag+'>';
-    case 'typewriter': return '<p class="fx-typewriter" data-text="'+b.text.replace(/"/g,'&quot;')+'">'+b.text+'</p>';
-    case 'next': return '<p class="next-chapter fx-fade-up"><em>'+b.text+'</em></p>';
+    case 'lens': var h='<div class="lens-block fx-fade-up"><p class="lens-label">'+fmt(b.label)+'</p>';b.paragraphs.forEach(function(p){h+='<p>'+fmt(p)+'</p>';});return h+'</div>';
+    case 'table': var h='<div class="table-wrap fx-fade-up"><table><thead><tr>';b.headers.forEach(function(t){h+='<th>'+fmt(t)+'</th>';});h+='</tr></thead><tbody>';b.rows.forEach(function(r){h+='<tr>';r.forEach(function(c){h+='<td>'+fmt(c)+'</td>';});h+='</tr>';});return h+'</tbody></table></div>';
+    case 'list': var tag=b.ordered?'ol':'ul';var h='<'+tag+' class="fx-fade-up">';b.items.forEach(function(i){h+='<li>'+fmt(i)+'</li>';});return h+'</'+tag+'>';
+    case 'typewriter': return '<p class="fx-typewriter" data-text="'+fmt(b.text).replace(/"/g,'&quot;')+'">'+fmt(b.text)+'</p>';
+    case 'next': return '<p class="next-chapter fx-fade-up"><em>'+fmt(b.text)+'</em></p>';
+    case 'countdown': return renderCountdown(b);
     default: return '';
   }
+}
+
+// === COUNTDOWN WIDGET ===
+// Renders a dramatic countdown clock: ??:??:HH:MM:SS:ms
+// Starts from 12:00:00:000 and ticks down fast.
+// The ??:?? represents unknown years/days — always shown as question marks.
+function renderCountdown(b) {
+  var label = b.label || '我们身体窗口关上的倒数';
+  var subtitle = b.subtitle || '不要害怕。我会证明给你看，这不是结束。';
+  var verse = b.verse || '';
+  var id = 'countdown-' + Math.random().toString(36).substr(2, 6);
+  var verseHtml = verse ? '<p class="countdown-verse">' + fmt(verse) + '</p>' : '';
+  return '<div class="countdown-widget fx-fade-up" id="' + id + '">' +
+    '<div class="countdown-display">' +
+      '<span class="cd-unknown">??</span><span class="cd-sep">:</span>' +
+      '<span class="cd-unknown">??</span><span class="cd-sep">:</span>' +
+      '<span class="cd-hours">--</span><span class="cd-sep">:</span>' +
+      '<span class="cd-minutes">--</span><span class="cd-sep">:</span>' +
+      '<span class="cd-seconds">--</span><span class="cd-sep cd-sep-ms">.</span>' +
+      '<span class="cd-ms">00</span>' +
+    '</div>' +
+    verseHtml +
+    '<p class="countdown-label">' + fmt(label) + '</p>' +
+    '<p class="countdown-subtitle">' + fmt(subtitle) + '</p>' +
+  '</div>';
 }
 
 function renderChapter(ch){
@@ -117,74 +408,159 @@ function renderChapter(ch){
     zone.blocks.forEach(function(b){html+=renderBlock(b);});
     html+='</section>';
   });
-  // End trigger to go to next chapter
-  if(currentIdx<chapters.length-1){
+  if(currentIdx<manifest.chapters.length-1){
     html+='<div class="end-trigger" id="endTrigger"><p>▼ 继续下一章 ▼</p></div>';
   }
   return html;
 }
 
-function loadChapter(idx){
+async function getChapter(idx) {
+  if (idx < 0 || idx >= manifest.chapters.length) return null;
+  if (chapters[idx]) return chapters[idx];
+  var file = manifest.chapters[idx].file;
+  var ch = await (await fetch(file)).json();
+  chapters[idx] = ch;
+  return ch;
+}
+
+async function loadChapter(idx){
+  if (typeof TTSManager !== 'undefined') {
+    TTSManager.stop();
+  }
+  stopAllCountdowns();
   currentIdx=idx;
+  var ch = await getChapter(idx);
+  if (!ch) return;
+  
+  var widget = document.getElementById('controlWidget');
+  if (widget) widget.style.display = 'flex';
+  var prevBtn = document.getElementById('ctrlPrev');
+  if (prevBtn) prevBtn.disabled = (idx === 0);
+  var nextBtn = document.getElementById('ctrlNext');
+  if (nextBtn) nextBtn.disabled = (idx === manifest.chapters.length - 1);
+  
   var contentEl=document.getElementById('content');
-  contentEl.innerHTML=renderChapter(chapters[idx]);
+  contentEl.innerHTML=renderChapter(ch);
   window.scrollTo(0,0);
   initEffects();
   initMoodEngine();
+  
   // Set initial mood
-  var firstMood=chapters[idx].zones[0].mood;
+  var firstMood=ch.zones[0].mood;
   setMood(firstMood);
+  
+  // Update state/hash
+  var chMeta = manifest.chapters[idx];
+  if (chMeta) {
+    window.history.replaceState(null, null, '#' + chMeta.id);
+    localStorage.setItem('yng_current_chapter', chMeta.id);
+  }
+  
   // Bind end trigger
   var trigger=document.getElementById('endTrigger');
   if(trigger){
-    var obs=new IntersectionObserver(function(entries){
-      if(entries[0].isIntersecting&&!transitioning){
-        obs.disconnect();
+    trigger.addEventListener('click', function(){
+      if(!transitioning){
         goNextChapter();
       }
-    },{threshold:0.5});
-    obs.observe(trigger);
+    });
+  }
+  
+  // Pre-fetch next chapter in background
+  if (idx < manifest.chapters.length - 1) {
+    getChapter(idx + 1).catch(function(err){ console.error('Prefetch error:', err); });
   }
 }
 
 // === CHAPTER TRANSITION (Big Bang style) ===
-function goNextChapter(){
-  if(transitioning||currentIdx>=chapters.length-1)return;
+async function goNextChapter(){
+  if(transitioning||currentIdx>=manifest.chapters.length-1)return;
   transitioning=true;
-  var nextCh=chapters[currentIdx+1];
-  // Phase 1: Stars collapse to center (3s)
-  bbPhase='collapse';bbTimer=0;
-  // Fade content out
-  document.getElementById('content').style.transition='opacity 1.5s';
-  document.getElementById('content').style.opacity='0';
+  
+  // Close control panel immediately
+  var panel = document.getElementById('controlPanel');
+  if (panel) panel.classList.remove('open');
+  
+  // Start preloading the next chapter immediately if not already done
+  var nextChPromise = getChapter(currentIdx+1);
+  var nextMeta = manifest.chapters[currentIdx+1];
+  
+  // Phase 0: Fade content out and slide up to get a full empty page (1.2s)
+  var contentEl = document.getElementById('content');
+  contentEl.style.transition = 'opacity 1.2s ease-in, transform 1.2s ease-in';
+  contentEl.style.opacity = '0';
+  contentEl.style.transform = 'translateY(-60px)';
+  
+  // Fade out control widgets
+  var widget = document.getElementById('controlWidget');
+  if (widget) {
+    widget.style.transition = 'opacity 1s';
+    widget.style.opacity = '0';
+  }
+  var musicToggle = document.getElementById('musicToggle');
+  if (musicToggle) {
+    musicToggle.style.transition = 'opacity 1s';
+    musicToggle.style.opacity = '0';
+  }
+  
   setTimeout(function(){
-    // Phase 2: Flash + title (after collapse)
-    bbPhase='flash';bbTimer=0;
+    // Hide containers from layout to remove scrollbar
+    contentEl.style.display = 'none';
+    if (widget) widget.style.display = 'none';
+    if (musicToggle) musicToggle.style.display = 'none';
+    window.scrollTo(0, 0);
+    
+    // Phase 1: Stars collapse to center (3s) - starts AFTER page is fully empty
+    bbPhase='collapse';bbTimer=0;
+    
     setTimeout(function(){
-      // Show title overlay
-      var ov=document.getElementById('bbOverlay');
-      ov.classList.add('active');
-      ov.style.background='rgba(248,245,240,0.5)';
-      startBBTypewriter(nextCh.label, nextCh.title);
-      setTimeout(function(){
-        // Phase 3: Fade out overlay, load new chapter
-        ov.style.transition='opacity 2s';
-        ov.style.opacity='0';
-        bbPhase='idle';bbTimer=0;bbStarRadius=0;bbScreenFade=0;
+      // Phase 2: Flash + title (after collapse)
+      bbPhase='flash';bbTimer=0;
+      setTimeout(async function(){
+        // Show title overlay
+        var ov=document.getElementById('bbOverlay');
+        ov.classList.add('active');
+        ov.style.background='rgba(248,245,240,0.95)';
+        
+        var nextCh = await nextChPromise;
+        var label = nextCh ? nextCh.label : ('第' + (currentIdx+2) + '章 · ' + nextMeta.id);
+        var title = nextCh ? nextCh.title : '加载中...';
+        
+        startBBTypewriter(label, title);
         setTimeout(function(){
-          ov.classList.remove('active');
-          ov.style.opacity='';ov.style.transition='';ov.style.background='';
-          document.getElementById('bbText').classList.remove('show');
-          document.getElementById('bbSub').textContent='';
-          document.getElementById('bbTitle').textContent='';
-          // Load next chapter
-          loadChapter(currentIdx+1);
-          document.getElementById('content').style.opacity='1';
-          transitioning=false;
-        },2000);
-      },6000); // hold title 6s
-    },2000); // flash 2s
-  },3000); // collapse 3s
+          // Phase 3: Fade out overlay, load new chapter
+          ov.style.transition='opacity 2s';
+          ov.style.opacity='0';
+          bbPhase='idle';bbTimer=0;bbStarRadius=0;bbScreenFade=0;
+          setTimeout(function(){
+            ov.classList.remove('active');
+            ov.style.opacity='';ov.style.transition='';ov.style.background='';
+            document.getElementById('bbText').classList.remove('show');
+            document.getElementById('bbSub').textContent='';
+            document.getElementById('bbTitle').textContent='';
+            
+            // Restore layouts
+            contentEl.style.display = 'block';
+            contentEl.style.transform = '';
+            
+            if (widget) {
+              widget.style.display = 'flex';
+              widget.style.opacity = '';
+            }
+            if (musicToggle) {
+              musicToggle.style.display = 'flex';
+              musicToggle.style.opacity = '';
+            }
+            
+            // Load next chapter
+            loadChapter(currentIdx+1);
+            contentEl.style.opacity='1';
+            transitioning=false;
+          },2000);
+        },6000); // hold title 6s
+      },2000); // flash 2s
+    },3000); // collapse 3s
+  },1200); // wait for fade out to complete (1.2s)
 }
 
 function startBBTypewriter(sub,title){
@@ -203,8 +579,69 @@ function initEffects(){
   document.querySelectorAll('.fx-fade-up,.fx-glow,.fx-quote').forEach(function(el){obs.observe(el);});
   var twObs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){startTW(e.target);twObs.unobserve(e.target);}});},{threshold:0.4});
   document.querySelectorAll('.fx-typewriter').forEach(function(el){twObs.observe(el);});
+  // Countdown widgets
+  var cdObs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){startCountdown(e.target);cdObs.unobserve(e.target);}});},{threshold:0.3});
+  document.querySelectorAll('.countdown-widget').forEach(function(el){cdObs.observe(el);});
 }
 function startTW(el){var text=el.getAttribute('data-text')||el.textContent;el.textContent='';el.classList.add('visible');var cursor=document.createElement('span');cursor.className='tw-cursor';el.appendChild(cursor);var i=0;(function t(){if(i<text.length){el.insertBefore(document.createTextNode(text.charAt(i)),cursor);i++;setTimeout(t,50+Math.random()*20);}else{setTimeout(function(){cursor.style.transition='opacity 1s';cursor.style.opacity='0';},1500);}})();}
+
+// === COUNTDOWN TICKER ===
+// Counts down to midnight (tomorrow 00:00:00.00). ??:?? for unknown days/years.
+// Based on Luke 12:20 — "今晚就要你的灵魂" — always counting toward tonight's end.
+var activeCountdowns = [];
+function startCountdown(el) {
+  el.classList.add('visible');
+  var hoursEl = el.querySelector('.cd-hours');
+  var minsEl = el.querySelector('.cd-minutes');
+  var secsEl = el.querySelector('.cd-seconds');
+  var msEl = el.querySelector('.cd-ms');
+  if (!hoursEl) return;
+  
+  var cdObj = { el: el, active: true };
+  activeCountdowns.push(cdObj);
+  
+  function tick() {
+    if (!cdObj.active) return;
+    var now = new Date();
+    // Midnight tonight = start of tomorrow
+    var midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0, 0);
+    var remaining = midnight - now; // ms until midnight
+    
+    if (remaining <= 0) remaining = 0;
+    
+    var h = Math.floor(remaining / 3600000);
+    var m = Math.floor((remaining % 3600000) / 60000);
+    var s = Math.floor((remaining % 60000) / 1000);
+    var cs = Math.floor((remaining % 1000) / 10); // centiseconds 00-99
+    
+    hoursEl.textContent = h < 10 ? '0' + h : h;
+    minsEl.textContent = m < 10 ? '0' + m : m;
+    secsEl.textContent = s < 10 ? '0' + s : s;
+    msEl.textContent = cs < 10 ? '0' + cs : cs;
+    
+    // Color shift in final hour
+    if (h < 1) {
+      hoursEl.style.color = 'rgba(255,100,80,0.95)';
+      minsEl.style.color = 'rgba(255,120,90,0.9)';
+    }
+    if (remaining <= 0) {
+      hoursEl.textContent = '00';
+      minsEl.textContent = '00';
+      secsEl.textContent = '00';
+      msEl.textContent = '00';
+      el.style.borderColor = 'rgba(255,80,60,0.3)';
+      return;
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+// Stop countdowns on chapter change
+function stopAllCountdowns() {
+  activeCountdowns.forEach(function(c) { c.active = false; });
+  activeCountdowns = [];
+}
 
 // === MOOD ENGINE ===
 function initMoodEngine(){
@@ -285,7 +722,142 @@ var TRACK_INFO={'track-calm':{title:'Snowfall',artist:'Scott Buckley'},'track-wo
 var MOOD_TRACK={calm:'track-calm',wonder:'track-wonder',awe:'track-awe',weight:'track-weight'};
 function fadeVol(audio,from,to,dur,cb){var ex=activeFades.get(audio);if(ex)clearInterval(ex);var steps=50,st=dur/steps,step=0;audio.volume=Math.max(0,Math.min(1,from));var iv=setInterval(function(){step++;var p=step/steps,e=0.5-0.5*Math.cos(Math.PI*p);audio.volume=Math.max(0,Math.min(1,from+(to-from)*e));if(step>=steps){clearInterval(iv);activeFades.delete(audio);audio.volume=Math.max(0,Math.min(1,to));if(cb)cb();}},st);activeFades.set(audio,iv);}
 function transitionMusic(trackId){var a=document.getElementById(trackId);if(!a||a===currentAudio)return;if(currentAudio){var old=currentAudio;fadeVol(old,old.volume,0,FADE_MS,function(){old.pause();});}var vol=isMuted?0:MAX_VOL;a.volume=0;a.play().catch(function(){});setTimeout(function(){fadeVol(a,0,vol,FADE_MS);},600);currentAudio=a;}
-document.getElementById('musicToggle').addEventListener('click',function(){isMuted=!isMuted;this.classList.toggle('muted',isMuted);if(currentAudio){if(isMuted)fadeVol(currentAudio,currentAudio.volume,0,1500);else fadeVol(currentAudio,0,MAX_VOL,1500);}});
+
+function updateMusicButtonState() {
+  var btn = document.getElementById('ctrlMusicToggle');
+  if (btn) btn.textContent = isMuted ? '播放' : '静音';
+  var mainToggle = document.getElementById('musicToggle');
+  if (mainToggle) mainToggle.classList.toggle('muted', isMuted);
+}
+function toggleMuteState() {
+  isMuted = !isMuted;
+  updateMusicButtonState();
+  if (currentAudio) {
+    if (isMuted) fadeVol(currentAudio, currentAudio.volume, 0, 1500);
+    else fadeVol(currentAudio, 0, MAX_VOL, 1500);
+  }
+}
+document.getElementById('musicToggle').addEventListener('click', toggleMuteState);
+
+// === CONTROL WIDGET LOGIC ===
+var FONT_SIZES = [
+  { size: '0.9rem', label: '85%' },
+  { size: '0.975rem', label: '93%' },
+  { size: '1.05rem', label: '100%' },
+  { size: '1.15rem', label: '110%' },
+  { size: '1.25rem', label: '120%' },
+  { size: '1.35rem', label: '130%' }
+];
+var currentFontIdx = 2;
+
+function setFontSize(idx) {
+  currentFontIdx = Math.max(0, Math.min(FONT_SIZES.length - 1, idx));
+  var fontObj = FONT_SIZES[currentFontIdx];
+  document.documentElement.style.setProperty('--reader-font-size', fontObj.size);
+  var valEl = document.getElementById('ctrlFontVal');
+  if (valEl) valEl.textContent = fontObj.label;
+  var decEl = document.getElementById('ctrlFontDec');
+  if (decEl) decEl.disabled = (currentFontIdx === 0);
+  var incEl = document.getElementById('ctrlFontInc');
+  if (incEl) incEl.disabled = (currentFontIdx === FONT_SIZES.length - 1);
+  localStorage.setItem('yng_font_size_idx', currentFontIdx);
+}
+
+async function navigateToChapter(idx) {
+  if (transitioning || idx < 0 || idx >= manifest.chapters.length) return;
+  transitioning = true;
+  
+  var panel = document.getElementById('controlPanel');
+  if (panel) panel.classList.remove('open');
+  
+  var contentEl = document.getElementById('content');
+  contentEl.style.transition = 'opacity 0.4s ease';
+  contentEl.style.opacity = '0';
+  
+  setTimeout(async function() {
+    await loadChapter(idx);
+    contentEl.style.opacity = '1';
+    setTimeout(function() {
+      transitioning = false;
+    }, 400);
+  }, 400);
+}
+
+function initControlWidget() {
+  var trigger = document.getElementById('controlTrigger');
+  var panel = document.getElementById('controlPanel');
+  
+  if (trigger && panel) {
+    trigger.addEventListener('click', function(e) {
+      e.stopPropagation();
+      panel.classList.toggle('open');
+    });
+    
+    document.addEventListener('click', function(e) {
+      var widget = document.getElementById('controlWidget');
+      if (widget && !widget.contains(e.target)) {
+        panel.classList.remove('open');
+      }
+    });
+  }
+  
+  var decEl = document.getElementById('ctrlFontDec');
+  if (decEl) {
+    decEl.addEventListener('click', function() {
+      setFontSize(currentFontIdx - 1);
+    });
+  }
+  var incEl = document.getElementById('ctrlFontInc');
+  if (incEl) {
+    incEl.addEventListener('click', function() {
+      setFontSize(currentFontIdx + 1);
+    });
+  }
+  
+  var prevEl = document.getElementById('ctrlPrev');
+  if (prevEl) {
+    prevEl.addEventListener('click', function() {
+      if (currentIdx > 0) navigateToChapter(currentIdx - 1);
+    });
+  }
+  var nextEl = document.getElementById('ctrlNext');
+  if (nextEl) {
+    nextEl.addEventListener('click', function() {
+      if (currentIdx < manifest.chapters.length - 1) navigateToChapter(currentIdx + 1);
+    });
+  }
+  var tocEl = document.getElementById('ctrlTOC');
+  if (tocEl) {
+    tocEl.addEventListener('click', function() {
+      var tocIdx = 0;
+      for (var i = 0; i < manifest.chapters.length; i++) {
+        if (manifest.chapters[i].id === 'TOCNT') {
+          tocIdx = i;
+          break;
+        }
+      }
+      navigateToChapter(tocIdx);
+    });
+  }
+  
+  var musicCtrl = document.getElementById('ctrlMusicToggle');
+  if (musicCtrl) {
+    musicCtrl.addEventListener('click', toggleMuteState);
+  }
+  
+  var savedFontIdx = localStorage.getItem('yng_font_size_idx');
+  if (savedFontIdx !== null) {
+    setFontSize(parseInt(savedFontIdx, 10));
+  } else {
+    setFontSize(2);
+  }
+  
+  updateMusicButtonState();
+  if (typeof TTSManager !== 'undefined') {
+    TTSManager.init();
+  }
+}
+
 var toastTimer=null;
 function showToast(trackId){var info=TRACK_INFO[trackId];if(!info)return;var t=document.getElementById('musicToast'),tx=document.getElementById('toastText');tx.textContent=info.title+' \u2014 '+info.artist;if(toastTimer)clearTimeout(toastTimer);t.classList.remove('visible','glow');setTimeout(function(){t.classList.add('visible');},50);setTimeout(function(){t.classList.add('glow');},400);setTimeout(function(){t.classList.remove('glow');},1800);toastTimer=setTimeout(function(){t.classList.remove('visible');},5000);}
 function flashScene(){var el=document.getElementById('sceneFlash');el.classList.add('flash');setTimeout(function(){el.classList.remove('flash');},1200);}
@@ -294,15 +866,276 @@ function setMood(mood){var m=MOODS_SF[mood];if(!m)return;currentMood=mood;target
 // Autoplay on first click
 document.addEventListener('click',function(){if(currentAudio)return;var a=document.getElementById('track-calm');if(a){a.volume=0;a.play().catch(function(){});fadeVol(a,0,isMuted?0:MAX_VOL,FADE_MS);currentAudio=a;showToast('track-calm');}},{once:true});
 
+function showBookCover(hasSavedProgress) {
+  var coverEl = document.getElementById('bookCover');
+  if (coverEl) {
+    coverEl.style.display = 'flex';
+    coverEl.style.opacity = '1';
+    coverEl.classList.remove('fade-out');
+  }
+  var btn = document.getElementById('startReadingBtn');
+  if (btn) {
+    btn.textContent = hasSavedProgress ? '继续阅读' : '开始阅读';
+  }
+  // Disable canvas and controls on cover display
+  document.getElementById('c').style.opacity = '0';
+  document.getElementById('musicToggle').style.display = 'none';
+  var widget = document.getElementById('controlWidget');
+  if (widget) widget.style.display = 'none';
+  window.history.replaceState(null, null, '#cover');
+}
+
+function startReading() {
+  var coverEl = document.getElementById('bookCover');
+  if (!coverEl) return;
+  coverEl.classList.add('fade-out');
+  
+  var canvasEl = document.getElementById('c');
+  canvasEl.style.transition = 'opacity 2s ease';
+  canvasEl.style.opacity = '1';
+  document.getElementById('musicToggle').style.display = 'flex';
+  var widget = document.getElementById('controlWidget');
+  if (widget) widget.style.display = 'flex';
+  
+  setTimeout(function() {
+    coverEl.style.display = 'none';
+    var startIdx = 0;
+    var savedId = localStorage.getItem('yng_current_chapter');
+    if (savedId && manifest) {
+      for (var i = 0; i < manifest.chapters.length; i++) {
+        if (manifest.chapters[i].id === savedId) {
+          startIdx = i;
+          break;
+        }
+      }
+    }
+    loadChapter(startIdx);
+  }, 1500);
+}
+
+// Bind button listener
+document.addEventListener('DOMContentLoaded', function() {
+  var btn = document.getElementById('startReadingBtn');
+  if (btn) btn.addEventListener('click', startReading);
+});
+
+// === TTS NATIVE SPEECH SYNTHESIS ===
+var TTSManager = {
+  elements: [],
+  utterances: [],
+  currentIndex: -1,
+  isPlaying: false,
+  isPaused: false,
+  
+  init: function() {
+    var self = this;
+    var playBtn = document.getElementById('ctrlTTSPlay');
+    var stopBtn = document.getElementById('ctrlTTSStop');
+    
+    if (playBtn) {
+      playBtn.addEventListener('click', function() {
+        if (!self.isPlaying) {
+          self.start();
+        } else if (self.isPaused) {
+          self.resume();
+        } else {
+          self.pause();
+        }
+      });
+    }
+    
+    if (stopBtn) {
+      stopBtn.addEventListener('click', function() {
+        self.stop();
+      });
+    }
+  },
+  
+  start: function() {
+    var self = this;
+    self.stop(); // Clear any existing speech
+    
+    // Find all readable block elements inside #content
+    var contentEl = document.getElementById('content');
+    if (!contentEl) return;
+    
+    // Gather readable tags
+    var query = 'p, li, blockquote, h1, h2, h3, h4';
+    var rawEls = contentEl.querySelectorAll(query);
+    self.elements = [];
+    self.utterances = [];
+    
+    rawEls.forEach(function(el) {
+      // Skip the endTrigger itself, and hidden/empty blocks
+      if (el.closest('.end-trigger') || el.classList.contains('end-trigger')) return;
+      var text = el.textContent || '';
+      // Strip citation tags: [NDEXP-010], [RSDLT-012], etc.
+      text = text.replace(/\[[A-Z0-9]+-[0-9]+\]/g, '').trim();
+      if (text.length > 0) {
+        self.elements.push(el);
+        self.utterances.push(text);
+      }
+    });
+    
+    if (self.elements.length === 0) return;
+    
+    self.isPlaying = true;
+    self.isPaused = false;
+    self.currentIndex = 0;
+    self.updateUI();
+    self.speakCurrent();
+  },
+  
+  speakCurrent: function() {
+    var self = this;
+    if (self.currentIndex < 0 || self.currentIndex >= self.elements.length) {
+      self.stop();
+      return;
+    }
+    
+    // Cancel first just in case to prevent getting stuck
+    window.speechSynthesis.cancel();
+    
+    var text = self.utterances[self.currentIndex];
+    var el = self.elements[self.currentIndex];
+    
+    var u = new SpeechSynthesisUtterance(text);
+    
+    // Choose Chinese voice if available
+    var voices = window.speechSynthesis.getVoices();
+    var zhVoice = voices.find(function(v) { return v.lang.startsWith('zh') || v.lang.startsWith('ZH'); });
+    if (zhVoice) u.voice = zhVoice;
+    
+    u.onstart = function() {
+      // Highlight the paragraph
+      self.clearHighlights();
+      el.classList.add('tts-active-para');
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    };
+    
+    u.onend = function() {
+      el.classList.remove('tts-active-para');
+      if (self.isPlaying && !self.isPaused) {
+        self.currentIndex++;
+        self.speakCurrent();
+      }
+    };
+    
+    u.onerror = function(e) {
+      console.warn('TTS utterance error:', e);
+      // If error (e.g. interrupted), don't break loop unless stopped
+      if (self.isPlaying && !self.isPaused) {
+        self.currentIndex++;
+        self.speakCurrent();
+      }
+    };
+    
+    window.speechSynthesis.speak(u);
+  },
+  
+  pause: function() {
+    var self = this;
+    if (self.isPlaying && !self.isPaused) {
+      window.speechSynthesis.pause();
+      self.isPaused = true;
+      self.updateUI();
+    }
+  },
+  
+  resume: function() {
+    var self = this;
+    if (self.isPlaying && self.isPaused) {
+      window.speechSynthesis.resume();
+      self.isPaused = false;
+      self.updateUI();
+    }
+  },
+  
+  stop: function() {
+    var self = this;
+    window.speechSynthesis.cancel();
+    self.clearHighlights();
+    self.isPlaying = false;
+    self.isPaused = false;
+    self.currentIndex = -1;
+    self.elements = [];
+    self.utterances = [];
+    self.updateUI();
+  },
+  
+  clearHighlights: function() {
+    var active = document.querySelectorAll('.tts-active-para');
+    active.forEach(function(el) {
+      el.classList.remove('tts-active-para');
+    });
+  },
+  
+  updateUI: function() {
+    var playBtn = document.getElementById('ctrlTTSPlay');
+    var stopBtn = document.getElementById('ctrlTTSStop');
+    
+    if (playBtn) {
+      if (!this.isPlaying) {
+        playBtn.textContent = '朗读';
+      } else if (this.isPaused) {
+        playBtn.textContent = '继续';
+      } else {
+        playBtn.textContent = '暂停';
+      }
+    }
+    
+    if (stopBtn) {
+      stopBtn.disabled = !this.isPlaying;
+    }
+  }
+};
+
 // === BOOT ===
 async function boot(){
   var resp=await fetch('manifest.json');manifest=await resp.json();
-  for(var i=0;i<manifest.chapters.length;i++){
-    var ch=await(await fetch(manifest.chapters[i].file)).json();
-    chapters.push(ch);
+  chapters = new Array(manifest.chapters.length).fill(null);
+  
+  initControlWidget();
+  
+  var hash = window.location.hash.substring(1);
+  var savedId = localStorage.getItem('yng_current_chapter');
+  
+  if (hash === 'cover' || (!hash && !savedId)) {
+    showBookCover(false);
+  } else if (!hash && savedId) {
+    showBookCover(true);
+  } else {
+    var coverEl = document.getElementById('bookCover');
+    if (coverEl) coverEl.style.display = 'none';
+    
+    var startIdx = 0;
+    for (var i = 0; i < manifest.chapters.length; i++) {
+      if (manifest.chapters[i].id === hash) {
+        startIdx = i;
+        break;
+      }
+    }
+    loadChapter(startIdx);
   }
-  loadChapter(0);
 }
+
+window.addEventListener('hashchange', function() {
+  var hash = window.location.hash.substring(1);
+  if (hash === 'cover') {
+    var savedId = localStorage.getItem('yng_current_chapter');
+    showBookCover(!!savedId);
+  } else if (hash && manifest) {
+    for (var i = 0; i < manifest.chapters.length; i++) {
+      if (manifest.chapters[i].id === hash && i !== currentIdx) {
+        var coverEl = document.getElementById('bookCover');
+        if (coverEl) coverEl.style.display = 'none';
+        loadChapter(i);
+        break;
+      }
+    }
+  }
+});
+
 resize();initStars(rt.count);document.getElementById('au').style.background=targetSF.aurora;sfLoop();
 window.addEventListener('resize',resize);
 boot();

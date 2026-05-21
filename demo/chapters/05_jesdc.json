@@ -1,0 +1,187 @@
+{
+  "id": "JESDC",
+  "label": "第五章 · JESDC",
+  "title": "他说他就是神",
+  "referenceRegistry": {
+    "JESDC-001": {
+      "author": "John the Evangelist (traditional)",
+      "title": "Gospel of John 8:58",
+      "source": "New Testament",
+      "year": "c. AD 90-100",
+      "type": "PRIMARY",
+      "used_for": "Jesus claims eternal self-existence using the divine name 'I AM'."
+    },
+    "JESDC-002": {
+      "author": "John the Evangelist (traditional)",
+      "title": "Gospel of John 8:59",
+      "source": "New Testament",
+      "year": "c. AD 90-100",
+      "type": "PRIMARY",
+      "used_for": "Hostile crowd attempts to stone Jesus for blasphemy, showing they understood his claim to be God."
+    },
+    "JESDC-003": {
+      "author": "John the Evangelist (traditional)",
+      "title": "Gospel of John 10:30",
+      "source": "New Testament",
+      "year": "c. AD 90-100",
+      "type": "PRIMARY",
+      "used_for": "Jesus claims essential unity ('I and the Father are one'), asserting divinity."
+    },
+    "JESDC-004": {
+      "author": "John the Evangelist (traditional)",
+      "title": "Gospel of John 10:31",
+      "source": "New Testament",
+      "year": "c. AD 90-100",
+      "type": "PRIMARY",
+      "used_for": "Crowd attempts to stone Jesus again for claiming divinity."
+    },
+    "JESDC-005": {
+      "author": "John the Evangelist (traditional)",
+      "title": "Gospel of John 10:33",
+      "source": "New Testament",
+      "year": "c. AD 90-100",
+      "type": "PRIMARY",
+      "used_for": "Jewish leaders state their reason for stoning: 'You, a mere man, claim to be God.'"
+    },
+    "JESDC-006": {
+      "author": "John the Evangelist (traditional)",
+      "title": "Gospel of John 14:9",
+      "source": "New Testament",
+      "year": "c. AD 90-100",
+      "type": "PRIMARY",
+      "used_for": "Jesus equates seeing himself with seeing the Father."
+    },
+    "JESDC-007": {
+      "author": "John the Evangelist (traditional)",
+      "title": "Gospel of John 5:18",
+      "source": "New Testament",
+      "year": "c. AD 90-100",
+      "type": "PRIMARY",
+      "used_for": "Narrator's note: Jews wanted to kill Jesus because he was making himself equal with God."
+    },
+    "JESDC-008": {
+      "author": "John the Evangelist (traditional)",
+      "title": "Gospel of John 1:1-3",
+      "source": "New Testament",
+      "year": "c. AD 90-100",
+      "type": "PRIMARY",
+      "used_for": "The prologue declares the Word was God and created all things."
+    },
+    "JESDC-009": {
+      "author": "John the Evangelist (traditional)",
+      "title": "Gospel of John 1:14",
+      "source": "New Testament",
+      "year": "c. AD 90-100",
+      "type": "PRIMARY",
+      "used_for": "Declares the Word became flesh and dwelt among us as Jesus."
+    },
+    "JESDC-010": {
+      "author": "John the Evangelist (traditional)",
+      "title": "Gospel of John 18:5-6",
+      "source": "New Testament",
+      "year": "c. AD 90-100",
+      "type": "PRIMARY",
+      "used_for": "Soldiers fall backwards when Jesus says 'I AM' during his arrest."
+    },
+    "JESDC-011": {
+      "author": "John the Evangelist (traditional)",
+      "title": "Gospel of John 20:28",
+      "source": "New Testament",
+      "year": "c. AD 90-100",
+      "type": "PRIMARY",
+      "used_for": "Thomas declares 'My Lord and my God!' and Jesus accepts the worship."
+    },
+    "JESDC-012": {
+      "author": "Mark the Evangelist (traditional)",
+      "title": "Gospel of Mark 14:61-64",
+      "source": "New Testament",
+      "year": "c. AD 65-70",
+      "type": "PRIMARY",
+      "used_for": "High priest's trial of Jesus, tearing of robes, and condemnation for blasphemy."
+    },
+    "JESDC-013": {
+      "author": "Moses (traditional)",
+      "title": "Book of Exodus 3:14",
+      "source": "Hebrew Bible",
+      "year": "c. 14th-13th century BC",
+      "type": "PRIMARY",
+      "used_for": "God reveals His name to Moses as 'I AM WHO I AM'."
+    },
+    "JESDC-014": {
+      "author": "C.S. Lewis",
+      "title": "Mere Christianity (《返璞归真》)",
+      "source": "Geoffrey Bles",
+      "year": "1952",
+      "type": "BOOK",
+      "used_for": "Lays out the Lord/Liar/Lunatic trilemma regarding Jesus' claims."
+    }
+  },
+  "zones": [
+    {
+      "mood": "wonder",
+      "blocks": [
+        {"type":"heading","level":2,"text":"他说他就是神","fx":"fx-reveal"},
+        {"type":"paragraph","text":"我们已经走到了这里：33条预言命中同一个人——耶稣是被预言的那位；四条独立证据线指向同一个事件——他复活了。","class":"lead","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"但是，这里有一个关键的缝隙：被拣选并不等于「祂就是神」。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"在圣经历史中，先知也是被拣选的，摩西也行了神迹，以利亚也叫死人复活。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"如果耶稣仅仅是一个被神拣选的人，一个超级先知或道德导师，那么他和穆罕默德、释迦牟尼的区别就只是程度问题，而不是类别问题。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"所以，这一章我们必须回答一个最核心的问题：耶稣有没有声称自己就是神本人？","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"祂不是以「神的使者」或「神的代言人」的身份说话，祂声称的是——我就是那一位，创造宇宙的那一位。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"如果祂没有这样声称，那基督教就是后人的过度解读；如果祂确实声称了，那么你面对的就不是一个「好老师」，而是一个必须做出理智判断的宣告：祂要么是疯子，要么是骗子，要么——祂说的是真的。","fx":"fx-fade-up"},
+        {"type":"divider"},
+        {"type":"heading","level":3,"text":"一、「我是」：没有起点的存在","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"耶稣在《约翰书信》记录的对话中，至少七次用不同方式表达了同一件事：我就是神。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"祂在想杀祂的犹太人群面前亲口宣告：「还没有亚伯拉罕，就有了我。」[JESDC-001]","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"希腊原文是：πρὶν Ἀβραὰμ γενέσθαι ἐγὼ εἰμί。其中两个动词的时态形成了鲜明对比：亚伯拉罕是 γενέσθαι（成为，过去时，表示有起点的存在），而我是 εἰμί（是，现在时，表示没有起点的自我存在）。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"祂没有说「在亚伯拉罕之前我就存在了」，而是说「亚伯拉罕有一个开始，而我没有，我一直『是』」。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"在犹太神学中，这种「没有起点的存在者」只有一个名字：耶和华（即出埃及记 3:14 中的「我是自有永有的」[JESDC-013]）。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"听众的即时反应证实了这一点：「于是他们拿石头要打他。」[JESDC-002]","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"根据犹太律法，亵渎神名者处以石刑。如果祂只是说自己年纪大或是一个普通先知，没人会拿石头。这群犹太人的石头，就是他们的「已读回执」。","fx":"fx-fade-up"},
+        {"type":"divider"},
+        {"type":"heading","level":3,"text":"二、「我与父原为一」：本质的合一","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"在《约翰福音》10:30 中，耶稣给出了最简洁的宣告：「我与父原为一。」[JESDC-003]","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"这里的「父」指的是造物主耶和华，而希腊文中的「一」（ἕν）是一个中性词，表示本质与神性上的完全合一，而非单纯的「意见一致」。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"人群再次迅速给出了反馈：「犹太人又拿起石头来要打他。」[JESDC-004]","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"当耶稣询问祂因为哪件善事被掷石时，对方给出了明确的敌方证词：「我们不是为善事拿石头打你，是为你说僭妄的话；又为你是个人，反将自己当作神。」[JESDC-005]","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"连祂最坚决的反对者都完全听懂了祂的意思，排除了所有温和的、非神性的解读。","fx":"fx-fade-up"}
+      ]
+    },
+    {
+      "mood": "awe",
+      "blocks": [
+        {"type":"heading","level":3,"text":"三、三难推理：被排除的「好老师」","fx":"fx-reveal"},
+        {"type":"paragraph","text":"C.S. Lewis 在《返璞归真》中提出了极具逻辑分量的「三难推理」[JESDC-014]。一个声称自己是神的人，在理智上只有三种可能：","fx":"fx-fade-up"},
+        {"type":"table","headers":["可能性","含义","核心矛盾"],"rows":[
+          ["他是骗子","他知道自己不是神，但故意撒谎欺骗世人","骗子不会为自己的谎言甘愿承受十字架的死刑"],
+          ["他是疯子","他真心以为自己是神，但实际上搞错了","疯子不可能留下人类历史上最深刻、最理性的道德法则"],
+          ["他是主","他说的是事实，他确实是神","逻辑终点：你必须在理智上做出接受或拒绝的裁决"]
+        ],"fx":"fx-fade-up"},
+        {"type":"paragraph","text":"你不能折中地声称「他是一个伟大的道德导师，但他不是神」。因为一个声称自己是宇宙建造者的人，如果他撒了谎或是疯了，就绝不可能是「伟大的道德导师」。这个温和的选项，在祂开口宣告的那一刻起，就已经彻底失效了。","fx":"fx-fade-up"},
+        {"type":"lens","label":"直觉窗口","paragraphs":[
+          "设想一个人走进你家，对你说：「这栋房子是我建的。」",
+          "你只有三个理智的选择：第一，他在故意骗你；第二，他疯了，陷在妄想中；第三，他说的是真的，他确实是这栋房子的建筑师。",
+          "你唯独不能说：「他是个好人，只是在建房子的事情上他记错了。」",
+          "耶稣宣告祂是这整座宇宙的建筑师。因此，你必须在「骗子」、「疯子」和「救主」之间做出你的裁决。"
+        ]},
+        {"type":"divider"},
+        {"type":"heading","level":3,"text":"四、法庭上的敌方证词与神圣威严","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"在司法审判中，最有说服力的往往是敌方证人。耶稣的激烈反对者们拥有淡化祂言论的动机，但最终他们因为祂的宣告将祂送上死刑。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"在大祭司公会的审判中，大祭司问祂：「你是那当称颂者的儿子基督不是？」耶稣回答：「我是。你们必看见人子坐在那权能者的右边，驾着天上的云降临。」[JESDC-012]","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"大祭司当即撕开衣服——这是犹太律法中听到亵渎之词时的法定程序，证明连审判祂的人都确证祂是在称自己与神同等。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"除了法庭，还有更多细节。在客西马尼园被捕的晚上，面对全副武装的士兵，耶稣问「你们找谁」，他们说「找拿撒勒人耶稣」。耶稣用神圣名字宣告「我就是」，士兵们便惊惶退后倒在地上[JESDC-010]。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"在约翰的记载中，耶稣对门徒腓力说：「人看见了我，就是看见了父。」[JESDC-006] 福音书的叙述者也写下旁注：「将自己和神当作平等。」[JESDC-007]","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"《约翰福音》开篇便确立了宏大的本质宣示：「太初有道，道与神同在，道就是神。……万物是藉着他造的。」[JESDC-008] 而后「道成了肉身，住在我们中间。」[JESDC-009]","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"复活后，原本充满怀疑的门徒多马亲手触摸到伤口，震撼宣告：「我的主！我的神！」[JESDC-011] 耶稣没有纠正，而是平静地接受了多马的敬拜，因为这本是历史事实。","fx":"fx-fade-up"},
+        {"type":"divider"},
+        {"type":"heading","level":3,"text":"五、理性证据链的交汇","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"现在，所有的证据链条最终在同一个点上合拢：","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"1. 预言指纹（MFPRT）锁定了祂是被拣选的「那一位」；","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"2. 复活事实（RSDLT）以物理证据证明了超自然大能的发生；","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"3. 亲口宣告（JESDC）则由祂自己明确说出了身份——祂不是先知，不是使者，祂就是神本人。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"复活印证了祂的自称，因为唯有宇宙的创造主能战胜死亡。这一切都不是主观的唯心跳跃，而是逻辑证据一路将你推到了这个唯一的终点。","fx":"fx-fade-up"},
+        {"type":"typewriter","text":"祂称自己是神。祂用复活证明了这一切。"},
+        {"type":"next","text":"下一章，我们将探讨维持全人类文明的超时空法度——十诫。"}
+      ]
+    }
+  ]
+}

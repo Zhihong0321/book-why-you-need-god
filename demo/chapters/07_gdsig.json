@@ -1,0 +1,127 @@
+{
+  "id": "GDSIG",
+  "label": "第七章 · GDSIG",
+  "title": "上帝的签名：三重手笔",
+  "referenceRegistry": {
+    "GDSIG-001": {
+      "author": "Moses (traditional)",
+      "title": "Book of Genesis 12:2-3 & 17:4-5",
+      "source": "Hebrew Bible (Pentateuch)",
+      "year": "c. 14th-13th century BC",
+      "type": "PRIMARY",
+      "used_for": "God's promise to Abraham that he will be the father of many nations and all peoples will be blessed through him."
+    },
+    "GDSIG-002": {
+      "author": "Pew Research Center",
+      "title": "The Global Religious Landscape",
+      "source": "Pew Research Religion & Public Life Report",
+      "year": "2023",
+      "type": "WEBSITE",
+      "used_for": "Demographic data confirming over 4.3 billion adherents across Christianity (~2.4B), Islam (~1.9B), and Judaism (~15M) claiming Abrahamic heritage."
+    },
+    "GDSIG-003": {
+      "author": "Matthew the Evangelist (traditional)",
+      "title": "Gospel of Matthew 16:18",
+      "source": "New Testament (磐石之约)",
+      "year": "c. AD 70-80",
+      "type": "PRIMARY",
+      "used_for": "Jesus declares Peter the rock upon which he will build his church, promising the gates of Hades will not overcome it."
+    },
+    "GDSIG-003b": {
+      "author": "John the Evangelist (traditional)",
+      "title": "Gospel of John 21:17",
+      "source": "New Testament",
+      "year": "c. AD 90-100",
+      "type": "PRIMARY",
+      "used_for": "Jesus commands Peter to 'Feed my sheep' after his three denials."
+    },
+    "GDSIG-004": {
+      "author": "Mark the Evangelist (traditional)",
+      "title": "Gospel of Mark 14:66-72",
+      "source": "New Testament",
+      "year": "c. AD 65-70",
+      "type": "PRIMARY",
+      "used_for": "The account of Peter's three denials of Jesus before the servant girl, demonstrating his initial psychological breakdown."
+    },
+    "GDSIG-005": {
+      "author": "Luke the Evangelist (traditional)",
+      "title": "Book of Acts 2:14-41",
+      "source": "New Testament",
+      "year": "c. AD 80-90",
+      "type": "PRIMARY",
+      "used_for": "Peter's bold sermon at Pentecost leading to 3,000 conversions, illustrating his dramatic post-resurrection transformation."
+    },
+    "GDSIG-006": {
+      "author": "Clement of Rome; Eusebius of Caesarea",
+      "title": "First Epistle of Clement (V); Church History (Book III)",
+      "source": "Early Christian Writings / Historiographical Compilation",
+      "year": "c. AD 96 (Clement) / c. AD 325 (Eusebius)",
+      "type": "PRIMARY",
+      "used_for": "Historical confirmation of Peter's martyrdom in Rome by upside-down crucifixion under Nero."
+    },
+    "GDSIG-007": {
+      "author": "Vatican Secretariat",
+      "title": "Annuario Pontificio (Official List of Popes)",
+      "source": "Vatican Official Registry",
+      "year": "c. 1st century - present",
+      "type": "OTHER",
+      "used_for": "Unbroken line of 266 Popes extending from Saint Peter as the first Bishop of Rome."
+    }
+  },
+  "zones": [
+    {
+      "mood": "wonder",
+      "blocks": [
+        {"type":"heading","level":2,"text":"上帝的签名：三重手笔","fx":"fx-reveal"},
+        {"type":"paragraph","text":"我们已经走到了这里：宇宙有一个创造者；祂只能是一位；你有永恒的灵魂；耶稣声称自己是那位创造者，并且祂用复活证明了这一切。","class":"lead","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"现在的问题是：我们怎么知道这一切不是巧合？","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"判断一封信是否为某人所写，最直接的方法就是检验签名。上帝在历史中同样留下了三重签名——每一重都连祂的敌人也无法否认。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"如果我们读到一份连对手和千年死敌都不得不承认的签字文件，那我们就不是在盲目「相信」，而是在面对一个物理事实。","fx":"fx-fade-up"},
+        {"type":"table","headers":["签名类型","内容","应验跨度","见证人"],"rows":[
+          ["命令","十诫","3500年，全球法律体系","苏联、中国、联合国（敌对政权）"],
+          ["预言","弥赛亚","700年，33条命中一人","五位敌对史学家、死海古卷"],
+          ["承诺","亚伯拉罕","4000年，三方死敌","犹太教、基督教、伊斯兰教"]
+        ],"fx":"fx-fade-up"},
+        {"type":"paragraph","text":"反驳者需要同时推翻这三个案例才能否定结论。而这三个案例的见证人，分别是最不可能提供偏袒证据的对手。","fx":"fx-fade-up"},
+        {"type":"lens","label":"直觉窗口","paragraphs":[
+          "三个互相起诉的家族，在法庭上同时指认同一个人是他们的祖父。",
+          "他们彼此仇恨，否认彼此的继承权，在每一件事上互相拆台。",
+          "但DNA报告出来了——三份独立的检测，得出同一个无可争议的结论。",
+          "亚伯拉罕就是那份让人类文明死敌无法抵赖的DNA报告。"
+        ]},
+        {"type":"divider"},
+        {"type":"heading","level":3,"text":"一、亚伯拉罕：四千年前的游牧承诺","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"公元前约1800年，迦南地。一个年迈且没有后代的游牧人，得到了神的一句宣告：「你要作多国的父……地上的万族都要因你得福。」[GDSIG-001]","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"如果你是他的邻居，你会觉得这只是个无子老人在发疯。但疯话不会在历史中连续兑现四千年。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"根据 Pew Research Center 的统计，今天全球三大宗教（基督教约24亿、伊斯兰教约19亿、犹太教约1500万）总计超过43亿人，全部遵奉亚伯拉罕为信仰之父[GDSIG-002]。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"这一承诺在三个维度上的兑现力度极其反常：","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"第一，影响规模之巨：割礼、朝圣、一神论等核心生命实践直接绑定在亚伯拉罕之约上，绵延至今3800年从未中断。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"第二，时间纵深之久：相比人类历史上短命的强权——罗马帝国（~500年）、蒙古帝国（~160年）、大英帝国（~350年），亚伯拉罕的约在4000年后仍在强劲扩张。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"第三，死敌共识之深：三大宗教在这两千年中爆发过惨烈的冲突（十字军东征、宗教裁判所、中东战争），它们在彼此的核心教义上完全敌对、互相否定。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"它们可以否定彼此的神、彼此的先知、彼此的救赎论——但唯独否定不了亚伯拉罕。这种共识不是文化惯性，而是印刻在死敌骨髓深处的铁律签名，唯有时间之外的那一位才能植入得如此牢固。","fx":"fx-fade-up"}
+      ]
+    },
+    {
+      "mood": "awe",
+      "blocks": [
+        {"type":"heading","level":3,"text":"二、彼得：加利利渔夫与罗马磐石","fx":"fx-reveal"},
+        {"type":"paragraph","text":"公元约30年，加利利——犹太宗教领袖眼中愚昧偏远的穷乡僻壤。耶稣对一个卑微的加利利渔夫彼得说：「你是彼得，我要把我的教会建造在这磐石上，阴间的权柄不能胜过它。」[GDSIG-003]","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"这是一个木匠对渔夫说的天方夜谭。然而，事情很快变得更糟——耶稣预言彼得会在当夜鸡叫前三次否认祂。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"在耶稣被捕当晚，面对一个社会底层的使女，彼得的心理防线彻底崩溃，连续三次发咒起誓宣称：「我不认识这个人。」[GDSIG-004]","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"如果这是人类编造的伟人传奇，绝不会让第一号领袖在关键时刻以如此难堪、窝囊的方式背叛老师，且将耶稣的事前警告完整记下。这段真实的软弱，证明了记录并非虚构。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"耶稣遇难后，彼得说「我打鱼去」，运动散了，他回去打鱼。每一个失败的伪弥赛亚运动都是这样消亡的。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"但故事没有结束。复活后，耶稣在提比哩亚海边三次追问「你爱我吗」，以三次托付重塑了彼得：「你牧养我的羊。」[GDSIG-003b]","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"在此之后，这个胆小的渔夫发生了极具心理反差的转变：他在五旬节公开讲道，单日引领三千人归信[GDSIG-005]；他来到帝国的心脏罗马，最终被倒钉十字架殉道[GDSIG-006]。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"两千年后，横霸一时的罗马帝国早已化为废墟，而圣彼得大教堂就矗立在帝国的遗址中心。全球最大的宗教机构至今延续了266任未曾中断的教皇名录，源头正是这个渔夫[GDSIG-007]。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"一个在使女面前颤抖崩溃的渔夫，成为了横跨两千年至今最巍然不动的磐石。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"这种起点与终点之间的绝大反差，正是上帝的第二重签名。人做不到，唯有掌控历史的主宰，才能在一开始便将结局写定。","fx":"fx-fade-up"},
+        {"type":"divider"},
+        {"type":"heading","level":3,"text":"三、终极的抉择","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"一个游牧人，后代覆盖43亿人，死敌一致认祖；一个卑微渔夫，成为矗立于帝国废墟之上的两千年基石。","fx":"fx-fade-up"},
+        {"type":"paragraph","text":"这究竟是历史巧合的连续累加，还是上帝留在时间长河里的亲笔签名？","fx":"fx-fade-up"},
+        {"type":"typewriter","text":"这三重签名，连祂的敌人也无法抹杀。"},
+        {"type":"next","text":"下一章，我们将探讨上帝写在文字中的超时空预知。"}
+      ]
+    }
+  ]
+}

@@ -5,7 +5,6 @@
 | TOCNT | P0_01_table_content.md | Table of Contents |
 | CAST | P0_02_cast_of_contributors.md | Cast of Contributors |
 | INTRO | P0_03_front_note.md | Introduction / Front Note |
-| LNSML | P0_04_lens_manual.md | Lens Manual |
 | NDEXP | PART1_01_nde_research_report.md | NDE Experience — Soul Exists |
 | ONEGD | PART1_02_onegod.md | One God — There Can Only Be One |
 | MFPRT | PART1_03_messianic_fingerprint.md | Messianic Fingerprint — God Identified |

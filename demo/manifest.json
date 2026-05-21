@@ -2,8 +2,20 @@
   "title": "You Need God",
   "subtitle": "理性对话系列",
   "chapters": [
+    { "id": "TOCNT", "file": "chapters/00a_toc.json", "template": "codex", "transition": "lightspeed" },
+    { "id": "CAST", "file": "chapters/00b_cast.json", "template": "codex", "transition": "lightspeed" },
+    { "id": "INTRO", "file": "chapters/00c_intro.json", "template": "codex", "transition": "lightspeed" },
     { "id": "NDEXP", "file": "chapters/01_ndexp.json", "template": "starfield", "transition": "lightspeed" },
     { "id": "ONEGD", "file": "chapters/02_onegd.json", "template": "starfield", "transition": "lightspeed" },
-    { "id": "MFPRT", "file": "chapters/03_mfprt.json", "template": "starfield", "transition": "lightspeed" }
+    { "id": "MFPRT", "file": "chapters/03_mfprt.json", "template": "starfield", "transition": "lightspeed" },
+    { "id": "RSDLT", "file": "chapters/04_rsdlt.json", "template": "starfield", "transition": "lightspeed" },
+    { "id": "JESDC", "file": "chapters/05_jesdc.json", "template": "starfield", "transition": "lightspeed" },
+    { "id": "CMD10", "file": "chapters/06_cmd10.json", "template": "starfield", "transition": "lightspeed" },
+    { "id": "GDSIG", "file": "chapters/07_gdsig.json", "template": "starfield", "transition": "lightspeed" },
+    { "id": "BPRSC", "file": "chapters/08_bprsc.json", "template": "starfield", "transition": "lightspeed" },
+    { "id": "FNLQA", "file": "chapters/11_fnlqa.json", "template": "starfield", "transition": "lightspeed" },
+    { "id": "ROADS", "file": "chapters/09_roads.json", "template": "starfield", "transition": "lightspeed" },
+    { "id": "UNVRS", "file": "chapters/10_unvrs.json", "template": "starfield", "transition": "lightspeed" },
+    { "id": "P1END", "file": "chapters/12_p1end.json", "template": "starfield", "transition": "bigbang" }
   ]
 }

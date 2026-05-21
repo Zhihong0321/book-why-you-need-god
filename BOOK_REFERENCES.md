@@ -2932,3 +2932,268 @@ YEAR: 1945
 USED_FOR: 首次通过核试验及原子弹爆炸证实，物质的基本元素（有形质的）能够在极度的高温（烈火）中被瞬间销化（裂变解体） (对应彼得后书 3:10)。
 URL: NONE
 ---
+
+[PRSCN-027]
+CHAPTER: PRSCN
+TYPE: JOURNAL
+AUTHOR: Albert Einstein
+TITLE: Zur Elektrodynamik bewegter Körper (On the Electrodynamics of Moving Bodies) / Die Feldgleichungen der Gravitation (The Field Equations of Gravitation)
+SOURCE: Annalen der Physik / Königlich Preußische Akademie der Wissenschaften
+YEAR: 1905 / 1915
+USED_FOR: 证实时间的相对性与引力场/速度的时间膨胀效应，不同参照系的时间流速不同 (对应诗篇 90:4 与 彼得后书 3:8)。
+URL: NONE
+---
+
+[PRSCN-028]
+CHAPTER: PRSCN
+TYPE: WEBSITE
+AUTHOR: NASA / James Webb Space Telescope (JWST) & SETI Institute
+TITLE: Cosmic Scarcity of Biospheres: Exoplanet Atmospheric Characterization and Search for Extra-Terrestrial Intelligence Reports
+SOURCE: NASA Astrobiology / SETI Survey Logs
+YEAR: 1960 - present
+USED_FOR: 证实生命在已知宇宙中极其罕见（一朵野花的物理价值远超外太空无穷的无机黄金和星体财富） (对应马太福音 6:28-29)。
+URL: https://www.nasa.gov
+---
+
+
+[JESDC-001]
+CHAPTER: JESDC
+TYPE: PRIMARY
+AUTHOR: John the Evangelist (traditional)
+TITLE: Gospel of John 8:58
+SOURCE: New Testament (πρὶν Ἀβραὰμ γενέσθαι ἐγὼ εἰμί)
+YEAR: c. AD 90-100
+USED_FOR: Jesus claims eternal self-existence using the divine name "I AM".
+URL: NONE
+---
+
+[JESDC-002]
+CHAPTER: JESDC
+TYPE: PRIMARY
+AUTHOR: John the Evangelist (traditional)
+TITLE: Gospel of John 8:59
+SOURCE: New Testament
+YEAR: c. AD 90-100
+USED_FOR: Hostile crowd attempts to stone Jesus for blasphemy, showing they understood his claim to be God.
+URL: NONE
+---
+
+[JESDC-003]
+CHAPTER: JESDC
+TYPE: PRIMARY
+AUTHOR: John the Evangelist (traditional)
+TITLE: Gospel of John 10:30
+SOURCE: New Testament (ἐγὼ καὶ ὁ πατὴρ ἕν ἐσμεν)
+YEAR: c. AD 90-100
+USED_FOR: Jesus claims essential unity ("I and the Father are one"), asserting divinity.
+URL: NONE
+---
+
+[JESDC-004]
+CHAPTER: JESDC
+TYPE: PRIMARY
+AUTHOR: John the Evangelist (traditional)
+TITLE: Gospel of John 10:31
+SOURCE: New Testament
+YEAR: c. AD 90-100
+USED_FOR: Crowd attempts to stone Jesus again for claiming divinity.
+URL: NONE
+---
+
+[JESDC-005]
+CHAPTER: JESDC
+TYPE: PRIMARY
+AUTHOR: John the Evangelist (traditional)
+TITLE: Gospel of John 10:33
+SOURCE: New Testament
+YEAR: c. AD 90-100
+USED_FOR: Jewish leaders state their reason for stoning: "You, a mere man, claim to be God."
+URL: NONE
+---
+
+[JESDC-006]
+CHAPTER: JESDC
+TYPE: PRIMARY
+AUTHOR: John the Evangelist (traditional)
+TITLE: Gospel of John 14:9
+SOURCE: New Testament
+YEAR: c. AD 90-100
+USED_FOR: Jesus equates seeing himself with seeing the Father.
+URL: NONE
+---
+
+[JESDC-007]
+CHAPTER: JESDC
+TYPE: PRIMARY
+AUTHOR: John the Evangelist (traditional)
+TITLE: Gospel of John 5:18
+SOURCE: New Testament
+YEAR: c. AD 90-100
+USED_FOR: Narrator's note: Jews wanted to kill Jesus because he was making himself equal with God.
+URL: NONE
+---
+
+[JESDC-008]
+CHAPTER: JESDC
+TYPE: PRIMARY
+AUTHOR: John the Evangelist (traditional)
+TITLE: Gospel of John 1:1-3
+SOURCE: New Testament
+YEAR: c. AD 90-100
+USED_FOR: The prologue declares the Word was God and created all things.
+URL: NONE
+---
+
+[JESDC-009]
+CHAPTER: JESDC
+TYPE: PRIMARY
+AUTHOR: John the Evangelist (traditional)
+TITLE: Gospel of John 1:14
+SOURCE: New Testament
+YEAR: c. AD 90-100
+USED_FOR: Declares the Word became flesh and dwelt among us as Jesus.
+URL: NONE
+---
+
+[JESDC-010]
+CHAPTER: JESDC
+TYPE: PRIMARY
+AUTHOR: John the Evangelist (traditional)
+TITLE: Gospel of John 18:5-6
+SOURCE: New Testament
+YEAR: c. AD 90-100
+USED_FOR: Soldiers fall backwards when Jesus says "I AM" during his arrest.
+URL: NONE
+---
+
+[JESDC-011]
+CHAPTER: JESDC
+TYPE: PRIMARY
+AUTHOR: John the Evangelist (traditional)
+TITLE: Gospel of John 20:28
+SOURCE: New Testament
+YEAR: c. AD 90-100
+USED_FOR: Thomas declares "My Lord and my God!" and Jesus accepts the worship.
+URL: NONE
+---
+
+[JESDC-012]
+CHAPTER: JESDC
+TYPE: PRIMARY
+AUTHOR: Mark the Evangelist (traditional)
+TITLE: Gospel of Mark 14:61-64
+SOURCE: New Testament
+YEAR: c. AD 65-70
+USED_FOR: High priest's trial of Jesus, tearing of robes, and condemnation for blasphemy.
+URL: NONE
+---
+
+[JESDC-013]
+CHAPTER: JESDC
+TYPE: PRIMARY
+AUTHOR: Moses (traditional)
+TITLE: Book of Exodus 3:14
+SOURCE: Hebrew Bible (אֶהְיֶה אֲשֶׁר אֶהְיֶה)
+YEAR: c. 14th-13th century BC
+USED_FOR: God reveals His name to Moses as "I AM WHO I AM".
+URL: NONE
+---
+
+[JESDC-014]
+CHAPTER: JESDC
+TYPE: BOOK
+AUTHOR: C.S. Lewis
+TITLE: Mere Christianity (《返璞归真》)
+SOURCE: Geoffrey Bles
+YEAR: 1952
+USED_FOR: Lays out the Lord/Liar/Lunatic trilemma regarding Jesus' claims.
+URL: NONE
+---
+
+[GDSIG-001]
+CHAPTER: GDSIG
+TYPE: PRIMARY
+AUTHOR: Moses (traditional)
+TITLE: Book of Genesis 12:2-3 & 17:4-5
+SOURCE: Hebrew Bible (Pentateuch)
+YEAR: c. 14th-13th century BC
+USED_FOR: God's promise to Abraham that he will be the father of many nations and all peoples will be blessed through him.
+URL: NONE
+---
+
+[GDSIG-002]
+CHAPTER: GDSIG
+TYPE: WEBSITE
+AUTHOR: Pew Research Center
+TITLE: The Global Religious Landscape
+SOURCE: Pew Research Religion & Public Life Report
+YEAR: 2023
+USED_FOR: Demographic data confirming over 4.3 billion adherents across Christianity (~2.4B), Islam (~1.9B), and Judaism (~15M) claiming Abrahamic heritage.
+URL: https://www.pewresearch.org
+---
+
+[GDSIG-003]
+CHAPTER: GDSIG
+TYPE: PRIMARY
+AUTHOR: Matthew the Evangelist (traditional)
+TITLE: Gospel of Matthew 16:18
+SOURCE: New Testament (磐石之约)
+YEAR: c. AD 70-80
+USED_FOR: Jesus declares Peter the rock upon which he will build his church, promising the gates of Hades will not overcome it.
+URL: NONE
+---
+
+[GDSIG-003b]
+CHAPTER: GDSIG
+TYPE: PRIMARY
+AUTHOR: John the Evangelist (traditional)
+TITLE: Gospel of John 21:17
+SOURCE: New Testament
+YEAR: c. AD 90-100
+USED_FOR: Jesus commands Peter to "Feed my sheep" after his three denials.
+URL: NONE
+---
+
+[GDSIG-004]
+CHAPTER: GDSIG
+TYPE: PRIMARY
+AUTHOR: Mark the Evangelist (traditional)
+TITLE: Gospel of Mark 14:66-72
+SOURCE: New Testament
+YEAR: c. AD 65-70
+USED_FOR: The account of Peter's three denials of Jesus before the servant girl, demonstrating his initial psychological breakdown.
+URL: NONE
+---
+
+[GDSIG-005]
+CHAPTER: GDSIG
+TYPE: PRIMARY
+AUTHOR: Luke the Evangelist (traditional)
+TITLE: Book of Acts 2:14-41
+SOURCE: New Testament
+YEAR: c. AD 80-90
+USED_FOR: Peter's bold sermon at Pentecost leading to 3,000 conversions, illustrating his dramatic post-resurrection transformation.
+URL: NONE
+---
+
+[GDSIG-006]
+CHAPTER: GDSIG
+TYPE: PRIMARY
+AUTHOR: Clement of Rome; Eusebius of Caesarea
+TITLE: First Epistle of Clement (V); Church History (Book III)
+SOURCE: Early Christian Writings / Historiographical Compilation
+YEAR: c. AD 96 (Clement) / c. AD 325 (Eusebius)
+USED_FOR: Historical confirmation of Peter's martyrdom in Rome by upside-down crucifixion under Nero.
+URL: NONE
+---
+
+[GDSIG-007]
+CHAPTER: GDSIG
+TYPE: OTHER
+AUTHOR: Vatican Secretariat
+TITLE: Annuario Pontificio (Official List of Popes)
+SOURCE: Vatican Official Registry
+YEAR: c. 1st century - present
+USED_FOR: Unbroken line of 266 Popes extending from Saint Peter as the first Bishop of Rome.
+URL: NONE
+---
